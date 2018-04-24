@@ -30,7 +30,7 @@
 <br><br>
 ## 流程图
 <br><br>
-![如果图片炸了就是显示]("https://www.processon.com/diagraming/5a02e8fce4b06c8e108e854c")
+<div align=center><img width="150" height="150" src="https://www.processon.com/diagraming/5a02e8fce4b06c8e108e854c"/></div>
 <br><br>
 ## To do list
 * 收藏夹
