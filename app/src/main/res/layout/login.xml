@@ -60,7 +60,8 @@
             app:qmui_borderColor="@color/qmui_s_link_color"
             app:qmui_borderWidth="2px" />
 
-        <TextView
+        <EditText
+            android:background="@drawable/editedit_bg_selector"
             android:id="@+id/textView"
             android:layout_width="277dp"
             android:layout_height="51dp"
@@ -68,33 +69,34 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:textColor="@color/white"
             android:hint="密码"
-            android:textSize="30dp"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
             android:textColorHint="@color/white"
-
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
+
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             app:layout_constraintVertical_bias="0.069" />
 
-        <TextView
-
+        <EditText
+            android:background="@drawable/editedit_bg_selector"
             android:id="@+id/textView2"
             android:layout_width="277dp"
             android:layout_height="51dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="120dp"
-android:textColor="@color/white"
-            android:textColorHint="@color/white"
             android:hint="账号"
-            android:textSize="30dp"
-            android:visibility="visible"
+            android:singleLine="false"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -186,6 +188,7 @@ android:textColor="@color/white"
             app:pb_textComplete="汤不热账号登录成功！"
             app:pb_textError="汤不热账号登录失败！"
             app:pb_textProgress="汤不热账号正在登录！" />
+
 
     </android.support.constraint.ConstraintLayout>
 

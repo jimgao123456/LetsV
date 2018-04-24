@@ -2,9 +2,11 @@ package com.example.gao.letsv;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    Button  finisires=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
