@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        <com.dd.processbutton.iml.SubmitProcessButton
             android:id="@+id/test1"
             android:layout_width="283dp"
             android:layout_height="48dp"
@@ -37,8 +37,20 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="10dp"
-            android:text="注册"
-            android:textSize="20dp"
+            android:text="现在注册！"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+
+            app:pb_colorComplete="@color/green_complete"
+            app:pb_colorError="@color/green_complete"
+            app:pb_colorNormal="@color/green_complete"
+            app:pb_colorPressed="@color/green_complete"
+            app:pb_colorProgress="@color/green_complete"
+            app:pb_textComplete="现在注册！"
+            app:pb_textError="现在注册！"
+            app:pb_textProgress="现在注册！"
+
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
