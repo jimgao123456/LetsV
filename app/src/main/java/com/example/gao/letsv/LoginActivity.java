@@ -1,5 +1,6 @@
 package com.example.gao.letsv;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.dd.processbutton.iml.SubmitProcessButton;
 public class LoginActivity extends AppCompatActivity {
     private LoginVideoView videoview;
     SubmitProcessButton btnlogin = null;
+    SubmitProcessButton btnres=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initView() {
         btnlogin = (SubmitProcessButton) findViewById(R.id.btnSignIn);
-
+btnres=(SubmitProcessButton)findViewById(R.id.test1) ;
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,7 +41,14 @@ public class LoginActivity extends AppCompatActivity {
                     btnlogin.setProgress(0);
             }
         });
-
+btnres.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        Intent mainIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+        LoginActivity.this.startActivity(mainIntent);
+     
+    }
+});
         videoview = (LoginVideoView) findViewById(R.id.videoview);
         //circularProgressButton=(CircularProgressButton) findViewById(R.id.btnWithText) ;
         videoview.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.logvideo));
