@@ -1,8 +1,10 @@
 package com.example.gao.letsv;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -16,6 +18,7 @@ import com.dd.processbutton.iml.SubmitProcessButton;
 public class LoginActivity extends AppCompatActivity {
     private LoginVideoView videoview;
     SubmitProcessButton btnlogin = null;
+    SubmitProcessButton btnres=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,19 +30,42 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initView() {
         btnlogin = (SubmitProcessButton) findViewById(R.id.btnSignIn);
-
+        btnres=(SubmitProcessButton)findViewById(R.id.test1) ;
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (btnlogin.getProgress() == 0)
-                    btnlogin.setProgress(50);
-                else if (btnlogin.getProgress() == 50)
-                    btnlogin.setProgress(100);
-                else
-                    btnlogin.setProgress(0);
+//                if (btnlogin.getProgress() == 0)
+//                    btnlogin.setProgress(50);
+//                else if (btnlogin.getProgress() == 50)
+//                    btnlogin.setProgress(100);
+//                else
+//                    btnlogin.setProgress(0);
+
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                /* Create an Intent that will start the Main WordPress Activity. */
+                  int i=0;
+                  while(i<101){
+                      btnlogin.setProgress(i);
+                      try {
+                          Thread.sleep(100);
+                      } catch (InterruptedException e) {
+                          e.printStackTrace();
+                      }
+                      i++;
+                  }
+                    }
+                },0);
             }
         });
-
+btnres.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        Intent mainIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+        LoginActivity.this.startActivity(mainIntent);
+     
+    }
+});
         videoview = (LoginVideoView) findViewById(R.id.videoview);
         //circularProgressButton=(CircularProgressButton) findViewById(R.id.btnWithText) ;
         videoview.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.logvideo));

@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.gao.letsv.MainActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/homepage_vp"
+        android:layout_above="@+id/tabbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <com.jpeng.jptabbar.JPTabBar
+        android:layout_alignParentBottom="true"
+        android:id="@+id/tabbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="#fff"
+        app:BadgePadding="4dp"
+        app:BadgeTextSize="10dp"
+        app:TabIconFilter="true"
+        app:TabMargin="2dp"
+        app:TabIconSize="30dp"
+        app:TabTextSize="15sp"
+        app:TabPageAnimateEnable="true"
+        />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

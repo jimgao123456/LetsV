@@ -17,6 +17,10 @@ android {
         }
     }
     buildToolsVersion '27.0.3'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 allprojects {
@@ -24,7 +28,6 @@ allprojects {
         jcenter()
         maven {
             url "https://jitpack.io"
-
         }
     }
 }
@@ -41,4 +44,9 @@ dependencies {
     compile 'com.qmuiteam:qmui:1.0.6'
     compile 'com.github.zcweng:switch-button:0.0.3@aar'
     compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
+    implementation 'com.google.android.gms:play-services-ads:15.0.0'
+    implementation 'cn.bingoogolapple:bga-badgeview-api:1.1.8'
+    annotationProcessor "cn.bingoogolapple:bga-badgeview-compiler:1.1.8"
+    compile 'com.jpeng:JPTabBar:1.4.0'
+    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
 }
