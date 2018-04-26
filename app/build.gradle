@@ -48,6 +48,7 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-badgeview-api:1.1.8'
     annotationProcessor "cn.bingoogolapple:bga-badgeview-compiler:1.1.8"
     compile 'com.jpeng:JPTabBar:1.4.0'
+    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-5'
 

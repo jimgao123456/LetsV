@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.dd.CircularProgressButton;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -159,18 +160,11 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
-        final CircularProgressButton circularButton1 = (CircularProgressButton) findViewById(R.id.btn_register);
-        circularButton1.setIndeterminateProgressMode(true);
+        final QMUIRoundButton circularButton1 = (QMUIRoundButton) findViewById(R.id.btn_register);
         circularButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (circularButton1.getProgress() == 0) {
-                    circularButton1.setProgress(50);
-                } else if (circularButton1.getProgress() == 100) {
-                    circularButton1.setProgress(0);
-                } else {
-                    circularButton1.setProgress(100);
-                }
+
             }
         });
     }

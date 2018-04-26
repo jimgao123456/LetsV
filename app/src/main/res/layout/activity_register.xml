@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:theme="@android:style/Theme.NoTitleBar"
     tools:context="com.example.gao.letsv.RegisterActivity"
-    android:background="@drawable/ResgiterBG">
+    android:background="@drawable/resgiterbg">
 
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_width="200dp"
         android:layout_height="15dp"
         android:text="用户名小于6位"
-        android:textColor="@color/red"
+        android:textColor="@color/white"
         android:textSize="30px"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +29,7 @@
         android:layout_width="200dp"
         android:layout_height="15dp"
         android:text="密码小于6位"
-        android:textColor="@color/red"
+        android:textColor="@color/white"
         android:textSize="30px"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -44,7 +44,7 @@
         android:layout_width="200dp"
         android:layout_height="15dp"
         android:text="请输入正确的手机号"
-        android:textColor="@color/red"
+        android:textColor="@color/white"
         android:textSize="30px"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +58,7 @@
         android:layout_width="200dp"
         android:layout_height="15dp"
         android:text="两次输入的密码不同"
-        android:textColor="@color/red"
+        android:textColor="@color/white"
         android:textSize="30px"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -152,7 +152,7 @@
         app:layout_constraintVertical_bias="0.593" />
 
 
-    <com.dd.CircularProgressButton
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
         android:id="@+id/btn_register"
         android:layout_width="196dp"
         android:layout_height="64dp"
@@ -161,12 +161,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:textColor="@color/white"
-        android:textSize="18sp"
-        app:cpb_cornerRadius="48dp"
-        app:cpb_selectorIdle="@color/dodgerblue"
-        app:cpb_textComplete="@string/RegisterComplete"
-        app:cpb_textError="@string/Error"
-        app:cpb_textIdle="@string/register"
+        android:textSize="20sp"
+        android:text="汤不热账号注册"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
