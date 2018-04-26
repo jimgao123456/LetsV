@@ -15,50 +15,12 @@
             android:id="@+id/videoview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.dd.processbutton.iml.SubmitProcessButton
-            android:id="@+id/test1"
-            android:layout_width="283dp"
-            android:layout_height="48dp"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="10dp"
-            android:text="现在注册！"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-
-            app:pb_colorComplete="@color/green_complete"
-            app:pb_colorError="@color/green_complete"
-            app:pb_colorNormal="@color/green_complete"
-            app:pb_colorPressed="@color/green_complete"
-            app:pb_colorProgress="@color/green_complete"
-            app:pb_textComplete="现在注册！"
-            app:pb_textError="现在注册！"
-            app:pb_textProgress="现在注册！"
-
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.892"
-            app:qmui_borderColor="@color/qmui_s_link_color"
-            app:qmui_borderWidth="2px" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <EditText
             android:background="@drawable/editedit_bg_selector"
@@ -100,74 +62,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.suke.widget.SwitchButton
-
-            android:id="@+id/switch_button"
-            android:layout_width="80dp"
-            android:layout_height="41dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="92dp"
-            android:layout_marginRight="92dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/test1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.091" />
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="65dp"
-            android:layout_height="28dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="92dp"
-            android:layout_marginStart="92dp"
-            android:layout_marginTop="8dp"
-            android:enabled="false"
-            android:text="保存密码"
-
-            android:textSize="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/test1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch_button1"
-            app:layout_constraintVertical_bias="0.02" />
-
-        <com.suke.widget.SwitchButton
-            android:id="@+id/switch_button1"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="84dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="84dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/test1"
-            app:layout_constraintEnd_toStartOf="@+id/switch_button"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.09" />
-
-        <TextView
-            android:id="@+id/editText4"
-            android:layout_width="65dp"
-            android:layout_height="29dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="92dp"
-            android:layout_marginRight="92dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:text="自动登录"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/test1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switch_button"
-            app:layout_constraintVertical_bias="0.0" />
-
         <com.dd.processbutton.iml.SubmitProcessButton
             android:id="@+id/btnSignIn"
-            android:layout_width="284dp"
-            android:layout_height="48dp"
+            android:layout_width="277dp"
+            android:layout_height="46dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
@@ -175,11 +73,12 @@
             android:text="汤不热账号登录！"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/test1"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.85"
+            app:layout_constraintVertical_bias="0.055"
             app:pb_colorComplete="@color/green_complete"
             app:pb_colorError="@color/red_error"
             app:pb_colorNormal="@color/blue_normal"
@@ -188,6 +87,74 @@
             app:pb_textComplete="汤不热账号登录成功！"
             app:pb_textError="汤不热账号登录失败！"
             app:pb_textProgress="汤不热账号正在登录！" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="67dp"
+            android:layout_height="27dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="忘记密码?"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView4"
+            app:layout_constraintHorizontal_bias="0.31"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSignIn"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginTop="8dp"
+            android:text="新用户注册"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/videoview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSignIn"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginRight="60dp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="登录即代表阅读并同意"
+            android:textSize="15dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView6"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSignIn"
+            app:layout_constraintVertical_bias="0.895"
+            android:layout_marginLeft="8dp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="88dp"
+            android:layout_marginTop="8dp"
+            android:text="服务条款"
+            android:textColor="@color/blue_pressed"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSignIn"
+            app:layout_constraintVertical_bias="0.895"
+            android:layout_marginRight="88dp" />
 
 
     </android.support.constraint.ConstraintLayout>

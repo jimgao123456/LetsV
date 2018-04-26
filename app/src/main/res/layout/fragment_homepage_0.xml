@@ -5,6 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/homepage_fra0_background" />
 
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
         android:id="@+id/button_startstudy"
@@ -13,15 +24,18 @@
         android:layout_marginEnd="8dp"
         android:text="开始学习"
         android:textSize="30dp"
+        android:textColor="@color/red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498"
-        app:qmui_borderWidth="2px"
+        app:layout_constraintVertical_bias="0.712"
+        app:qmui_borderColor="@color/red"
+        app:qmui_borderWidth="5px"
         app:qmui_isRadiusAdjustBounds="true"
-        tools:layout_editor_absoluteY="192dp"
         android:layout_marginRight="8dp" />
+
+
 
 </android.support.constraint.ConstraintLayout>

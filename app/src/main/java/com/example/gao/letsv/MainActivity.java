@@ -17,16 +17,17 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 public class MainActivity extends AppCompatActivity {
     @Titles
-    private static final String[] mTitles = {"首页","社区","商城","个人中心"};
+    private static final String[] mTitles = {"首页", "社区", "商城", "个人中心"};
 
     @SeleIcons
-    private static final int[] mSeleIcons = {R.drawable.homepage_fragment_0_0,R.drawable.homepage_fragment_0_0,R.drawable.homepage_fragment_0_0,R.drawable.homepage_fragment_0_0};
+    private static final int[] mSeleIcons = {R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_0_0};
 
     @NorIcons
-    private static final int[] mNormalIcons = {R.drawable.homepage_fragment_0_0,R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_0_0};
+    private static final int[] mNormalIcons = {R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_0_0};
 
     private ViewPager mVp;
     private JPTabBar mTabBar;
+    Fragment[] fragmentarray = new Fragment[4];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,12 @@ public class MainActivity extends AppCompatActivity {
         mVp = (ViewPager) findViewById(R.id.homepage_vp);
         mTabBar = (JPTabBar) findViewById(R.id.tabbar);
 
-        ViewPagerAdapter adapter=new ViewPagerAdapter(getSupportFragmentManager());
+        //切换
+        fragmentarray[0] = new Fragment_Homepage_0();
+        fragmentarray[1] = new Fragment_Homepage_1();
+        fragmentarray[2] = new Fragment_Homepage_2();
+        fragmentarray[3] = new Fragment_Homepage_3();
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         mVp.setAdapter(adapter);
         mTabBar.setContainer(mVp);
     }
@@ -48,24 +54,23 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Bundle bundle=new Bundle();
-            bundle.putInt("position",position+1);
-            Fragment fragment =null;
-            switch (position){
+            Fragment fragment = null;
+            switch (position) {
                 case 0:
-                case 1:
-                case 2:
-                case 3:
-                default:
-                    fragment = new Fragment_Homepage_0();
-                    fragment.setArguments(bundle);
+                    fragment = fragmentarray[0];
                     break;
-
+                case 1:
+                    fragment = fragmentarray[1];
+                    break;
+                case 2:
+                    fragment = fragmentarray[2];
+                    break;
+             case 3:
+                  fragment = fragmentarray[3];
+                break;
             }
-
             return fragment;
         }
-
         @Override
         public int getCount() {
             return 4;

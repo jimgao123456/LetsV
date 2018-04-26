@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 import com.dd.processbutton.iml.SubmitProcessButton;
 
@@ -18,7 +19,7 @@ import com.dd.processbutton.iml.SubmitProcessButton;
 public class LoginActivity extends AppCompatActivity {
     private LoginVideoView videoview;
     SubmitProcessButton btnlogin = null;
-    SubmitProcessButton btnres=null;
+    TextView btnres=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initView() {
         btnlogin = (SubmitProcessButton) findViewById(R.id.btnSignIn);
-btnres=(SubmitProcessButton)findViewById(R.id.test1) ;
+         btnres=(TextView)findViewById(R.id.textView4) ;
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
