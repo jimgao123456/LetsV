@@ -3,4 +3,6 @@
     <string name="Complete">汤不热登录成功</string>
     <string name="Error">汤不热登录出错</string>
     <string name="Upload">正在登录汤不热</string>
+    <string name="register">注册汤不热账号</string>
+    <string name="RegisterComplete">注册成功</string>
 </resources>
