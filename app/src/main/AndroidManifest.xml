@@ -41,6 +41,12 @@
             android:name=".RegisterActivity"
             >
         </activity>
+
+
+        <activity
+            android:name=".PhraseActivity"
+            >
+        </activity>
     </application>
 
 </manifest>
