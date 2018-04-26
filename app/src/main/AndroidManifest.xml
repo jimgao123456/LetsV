@@ -47,6 +47,10 @@
             android:name=".PhraseActivity"
             >
         </activity>
+
+        <activity android:name=".DetailActivity"
+            >
+        </activity>
     </application>
 
 </manifest>
