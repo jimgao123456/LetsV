@@ -9,8 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dd.processbutton.iml.SubmitProcessButton;
+import com.loopj.android.http.*;
+
+
+import cz.msebera.android.httpclient.Header;
 
 
 /**
@@ -20,9 +26,10 @@ import com.dd.processbutton.iml.SubmitProcessButton;
 public class LoginActivity extends AppCompatActivity {
     private LoginVideoView videoview;
     SubmitProcessButton btnlogin = null;
-    TextView btnres=null;
-EditText zhanghao=null;
-EditText mima=null;
+    TextView btnres = null;
+    EditText zhanghao = null;
+    EditText mima = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +39,10 @@ EditText mima=null;
     }
 
     private void initView() {
-        btnlogin = (SubmitProcessButton) findViewById(R.id.btnSignIn);
-         btnres=(TextView)findViewById(R.id.login_zhuce) ;
+        btnlogin = (SubmitProcessButton) findViewById(R.id.login_btnSignIn);
+        btnres = (TextView) findViewById(R.id.login_zhuce);
+        zhanghao = (EditText) findViewById(R.id.login_zhanghao);
+        mima = (EditText) findViewById(R.id.login_password);
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,33 +52,42 @@ EditText mima=null;
 //                    btnlogin.setProgress(100);
 //                else
 //                    btnlogin.setProgress(0);
+                AsyncHttpClient client = new AsyncHttpClient();
+                //封装需要传递的参数
+                RequestParams params = new RequestParams();
+                params.put("username", zhanghao.getText());
+                params.put("password", mima.getText());
+                String url = "http://58.87.108.125:8080/login";
+                client.post(url, params, new AsyncHttpResponseHandler() {
 
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                /* Create an Intent that will start the Main WordPress Activity. */
-                  int i=0;
-                  while(i<101){
-                      btnlogin.setProgress(i);
-                      try {
-                          Thread.sleep(100);
-                      } catch (InterruptedException e) {
-                          e.printStackTrace();
-                      }
-                      i++;
-                  }
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        String str = new String(responseBody);
+                        JSONObject jsonObject = JSONObject.parseObject(str);
+                        int state = jsonObject.getInteger("state");
+                        if (state == 0) {
+                            Toast.makeText(LoginActivity.this, "成功", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "账号密码错误", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                },0);
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        Toast.makeText(LoginActivity.this, "错误", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
-btnres.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        Intent mainIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-        LoginActivity.this.startActivity(mainIntent);
-     
-    }
-});
-        videoview = (LoginVideoView) findViewById(R.id.videoview);
+        btnres.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mainIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                LoginActivity.this.startActivity(mainIntent);
+
+            }
+        });
+        videoview = (LoginVideoView) findViewById(R.id.login_videoview);
         //circularProgressButton=(CircularProgressButton) findViewById(R.id.btnWithText) ;
         videoview.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.logvideo));
         videoview.start();
