@@ -1,5 +1,6 @@
 package com.example.gao.letsv;
 
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.CountDownTimer;
@@ -15,8 +16,11 @@ import android.widget.Toast;
 import com.dd.CircularProgressButton;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import java.sql.Time;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText siname = null;
@@ -63,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
         this.passwordTips2 = (TextView)super.findViewById(R.id.register_passwordtip2);
         this.teleTips = (TextView)super.findViewById(R.id.register_teletip);
         this.checkBtn = (Button)super.findViewById(R.id.register_check_button);
+        this.time=  new TimeCount(60000, 1000);
         sipassword.setOnKeyListener(new EditText.OnKeyListener() {
             @Override
             public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
@@ -99,9 +104,9 @@ public class RegisterActivity extends AppCompatActivity {
                 if(hasFocus) {
                     // 此处为得到焦点时的处理内容
                     if(sipassword2.getText().toString().equals(sipassword.getText().toString())) {
-                        passwordTips2.setVisibility(View.VISIBLE);
-                    }else{
                         passwordTips2.setVisibility(View.INVISIBLE);
+                    }else{
+                        passwordTips2.setVisibility(View.VISIBLE);
                     }
                 } else {
                     // 此处为失去焦点时的处理内容
@@ -169,6 +174,48 @@ public class RegisterActivity extends AppCompatActivity {
         circularButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //判断输入内容
+                if(siname.getText().toString().length()<6||siname.getText().toString().length()>18 || !isusername(siname.getText().toString())) {
+                    SweetAlertDialog pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.ERROR_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                    pDialog.setTitleText("用户名须为6-18的数字及字母组合");
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                }else if(sipassword.getText().toString().length()<6|| sipassword.getText().toString().length()>18){
+                    SweetAlertDialog pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.ERROR_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                    pDialog.setTitleText("密码须为6-18的数字及字母组合");
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                }else if(!sipassword2.getText().toString().equals(sipassword.getText().toString())){
+                    SweetAlertDialog pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.ERROR_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                    pDialog.setTitleText("两次密码输入不一致");
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                }else if(sitele.getText().toString().length() != 11) {
+                    SweetAlertDialog pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.ERROR_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                    pDialog.setTitleText("请输入正确手机号");
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                }else if(checknum.getText().length()!=4) {
+                    SweetAlertDialog pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.ERROR_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                    pDialog.setTitleText("请输入正确验证码");
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                }else{
+                    SweetAlertDialog pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                    pDialog.setTitleText("Loading");
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                    //注册
+                    finish();
+                }
+
             }
         });
     }
