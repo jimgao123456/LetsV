@@ -57,10 +57,10 @@ public class RegisterActivity extends AppCompatActivity {
         this.sipassword2 = (EditText)super.findViewById(R.id.register_sign_password2);
         this.sitele = (EditText)super.findViewById(R.id.register_sign_tele);
         this.checknum = (EditText)super.findViewById(R.id.register_checknumber);
-        this.nameTips = (TextView)super.findViewById(R.id.nametip);
-        this.passwordTips = (TextView)super.findViewById(R.id.passwordtip);
-        this.passwordTips2 = (TextView)super.findViewById(R.id.passwordtip2);
-        this.teleTips = (TextView)super.findViewById(R.id.teletip);
+        this.nameTips = (TextView)super.findViewById(R.id.register_nametip);
+        this.passwordTips = (TextView)super.findViewById(R.id.register_passwordtip);
+        this.passwordTips2 = (TextView)super.findViewById(R.id.register_passwordtip2);
+        this.teleTips = (TextView)super.findViewById(R.id.register_teletip);
         this.checkBtn = (Button)super.findViewById(R.id.register_check_button);
         sipassword.setOnKeyListener(new EditText.OnKeyListener() {
             @Override
