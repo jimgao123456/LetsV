@@ -1,6 +1,7 @@
 package com.example.gao.letsv;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,8 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dd.processbutton.iml.SubmitProcessButton;
+import com.loopj.android.http.*;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import cz.msebera.android.httpclient.Header;
 
 
 /**
@@ -20,9 +27,10 @@ import com.dd.processbutton.iml.SubmitProcessButton;
 public class LoginActivity extends AppCompatActivity {
     private LoginVideoView videoview;
     SubmitProcessButton btnlogin = null;
-    TextView btnres=null;
-EditText zhanghao=null;
-EditText mima=null;
+    TextView btnres = null;
+    EditText zhanghao = null;
+    EditText mima = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,42 +41,58 @@ EditText mima=null;
 
     private void initView() {
         btnlogin = (SubmitProcessButton) findViewById(R.id.login_btnSignIn);
-         btnres=(TextView)findViewById(R.id.login_zhuce) ;
+        btnres = (TextView) findViewById(R.id.login_zhuce);
+        zhanghao = (EditText) findViewById(R.id.login_zhanghao);
+        mima = (EditText) findViewById(R.id.login_password);
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (btnlogin.getProgress() == 0)
-//                    btnlogin.setProgress(50);
-//                else if (btnlogin.getProgress() == 50)
-//                    btnlogin.setProgress(100);
-//                else
-//                    btnlogin.setProgress(0);
+                SweetAlertDialog pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                pDialog.setTitleText("Loading");
+                pDialog.setCancelable(false);
+                pDialog.show();
+                AsyncHttpClient client = new AsyncHttpClient();
+                //封装需要传递的参数
+                RequestParams params = new RequestParams();
+                params.put("username", zhanghao.getText());
+                params.put("password", mima.getText());
+                String url = "http://58.87.108.125:8080/login";
+                client.post(url, params, new AsyncHttpResponseHandler() {
 
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                /* Create an Intent that will start the Main WordPress Activity. */
-                  int i=0;
-                  while(i<101){
-                      btnlogin.setProgress(i);
-                      try {
-                          Thread.sleep(100);
-                      } catch (InterruptedException e) {
-                          e.printStackTrace();
-                      }
-                      i++;
-                  }
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        String str = new String(responseBody);
+                        JSONObject jsonObject = JSONObject.parseObject(str);
+                        int state = jsonObject.getInteger("state");
+                        if (state == 0) {
+                            pDialog.setTitleText("登录成功")
+                                    .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                        } else {
+                            pDialog.setTitleText("密码错误")
+                                    .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                        }
                     }
-                },0);
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                       // Toast.makeText(LoginActivity.this, "错误", Toast.LENGTH_SHORT).show();
+                        pDialog.setTitleText("登录失败")
+                        .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+
+
+                    }
+                });
             }
         });
-btnres.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        Intent mainIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-        LoginActivity.this.startActivity(mainIntent);
-     
-    }
-});
+        btnres.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mainIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                LoginActivity.this.startActivity(mainIntent);
+
+            }
+        });
         videoview = (LoginVideoView) findViewById(R.id.login_videoview);
         //circularProgressButton=(CircularProgressButton) findViewById(R.id.btnWithText) ;
         videoview.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.logvideo));
