@@ -32,7 +32,7 @@ EditText mima=null;
     }
 
     private void initView() {
-        btnlogin = (SubmitProcessButton) findViewById(R.id.btnSignIn);
+        btnlogin = (SubmitProcessButton) findViewById(R.id.login_btnSignIn);
          btnres=(TextView)findViewById(R.id.login_zhuce) ;
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +69,7 @@ btnres.setOnClickListener(new View.OnClickListener() {
      
     }
 });
-        videoview = (LoginVideoView) findViewById(R.id.videoview);
+        videoview = (LoginVideoView) findViewById(R.id.login_videoview);
         //circularProgressButton=(CircularProgressButton) findViewById(R.id.btnWithText) ;
         videoview.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.logvideo));
         videoview.start();
