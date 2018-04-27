@@ -198,6 +198,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
         checkBtn.setEnabled(false);
+        //fuck
     }
 
 }
