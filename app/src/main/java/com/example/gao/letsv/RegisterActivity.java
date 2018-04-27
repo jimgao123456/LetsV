@@ -31,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView passwordTips2 = null;
     private CustomVideoView videoview;
     private Button checkBtn=null;
+    private TimeCount time;
 
     //TODO:判断是否位邮箱
     public boolean isEmail(String email) {
@@ -199,6 +200,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         checkBtn.setEnabled(false);
         //fuck
+        time.start();
     }
 
 }
