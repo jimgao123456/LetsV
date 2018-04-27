@@ -2,6 +2,7 @@ package com.example.gao.letsv;
 
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dd.CircularProgressButton;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -28,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView mailTips = null;
     private TextView passwordTips2 = null;
     private CustomVideoView videoview;
+    private Button checkBtn=null;
 
     //TODO:判断是否位邮箱
     public boolean isEmail(String email) {
@@ -49,15 +52,16 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        this.siname = (EditText)super.findViewById(R.id.signname);
-        this.sipassword = (EditText)super.findViewById(R.id.sign_password);
-        this.sipassword2 = (EditText)super.findViewById(R.id.sign_password2);
-        this.sitele = (EditText)super.findViewById(R.id.sign_tele);
-        this.checknum = (EditText)super.findViewById(R.id.checknumber);
-        this.nameTips = (TextView)super.findViewById(R.id.nametip);
-        this.passwordTips = (TextView)super.findViewById(R.id.passwordtip);
-        this.passwordTips2 = (TextView)super.findViewById(R.id.passwordtip2);
-        this.teleTips = (TextView)super.findViewById(R.id.teletip);
+        this.siname = (EditText)super.findViewById(R.id.register_signname);
+        this.sipassword = (EditText)super.findViewById(R.id.register_sign_password);
+        this.sipassword2 = (EditText)super.findViewById(R.id.register_sign_password2);
+        this.sitele = (EditText)super.findViewById(R.id.register_sign_tele);
+        this.checknum = (EditText)super.findViewById(R.id.register_checknumber);
+        this.nameTips = (TextView)super.findViewById(R.id.register_nametip);
+        this.passwordTips = (TextView)super.findViewById(R.id.register_passwordtip);
+        this.passwordTips2 = (TextView)super.findViewById(R.id.register_passwordtip2);
+        this.teleTips = (TextView)super.findViewById(R.id.register_teletip);
+        this.checkBtn = (Button)super.findViewById(R.id.register_check_button);
         sipassword.setOnKeyListener(new EditText.OnKeyListener() {
             @Override
             public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
@@ -160,13 +164,41 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
-        final QMUIRoundButton circularButton1 = (QMUIRoundButton) findViewById(R.id.btn_register);
+        final QMUIRoundButton circularButton1 = (QMUIRoundButton) findViewById(R.id.register_btn_register);
         circularButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
+    }
+    class TimeCount extends CountDownTimer {
+
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            checkBtn.setClickable(false);
+            checkBtn.setText(millisUntilFinished / 1000 +"秒重新发送");
+        }
+
+        @Override
+        public void onFinish() {
+            checkBtn.setText("获取验证码");
+            checkBtn.setClickable(true);
+        }
+    }
+
+    public void getCheckNum(View source){
+        String user_tele = sitele.getText().toString();
+        if (user_tele.length() != 11) {
+            Toast.makeText(getApplicationContext(), "请输入正确手机号",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        checkBtn.setEnabled(false);
+        //fuck
     }
 
 }
