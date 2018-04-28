@@ -1,15 +1,253 @@
 package com.example.gao.letsv;
 
+import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.dd.CircularProgressButton;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+import java.sql.Time;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class RegisterActivity extends AppCompatActivity {
+    private EditText siname = null;
+    private EditText sipassword = null;
+    private EditText sitele = null;
+    private EditText checknum = null;
+    private EditText sipassword2 = null;
+    private TextView nameTips = null;
+    private TextView passwordTips = null;
+    private TextView teleTips = null;
+    private TextView mailTips = null;
+    private TextView passwordTips2 = null;
+    private CustomVideoView videoview;
+    private Button checkBtn=null;
+    private TimeCount time;
 
+    //TODO:判断是否位邮箱
+    public boolean isEmail(String email) {
+        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(email);
+        return m.matches();
+    }
+
+    //TODO:判断用户名合法性
+    public boolean isusername(String user) {
+        String str = "^[A-Za-z0-9]+$";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(user);
+        return m.matches();
+    }
     Button  finisires=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        this.siname = (EditText)super.findViewById(R.id.register_signname);
+        this.sipassword = (EditText)super.findViewById(R.id.register_sign_password);
+        this.sipassword2 = (EditText)super.findViewById(R.id.register_sign_password2);
+        this.sitele = (EditText)super.findViewById(R.id.register_sign_tele);
+        this.checknum = (EditText)super.findViewById(R.id.register_checknumber);
+        this.nameTips = (TextView)super.findViewById(R.id.register_nametip);
+        this.passwordTips = (TextView)super.findViewById(R.id.register_passwordtip);
+        this.passwordTips2 = (TextView)super.findViewById(R.id.register_passwordtip2);
+        this.teleTips = (TextView)super.findViewById(R.id.register_teletip);
+        this.checkBtn = (Button)super.findViewById(R.id.register_check_button);
+        this.time=  new TimeCount(60000, 1000);
+        sipassword.setOnKeyListener(new EditText.OnKeyListener() {
+            @Override
+            public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
+                if(sipassword.getText().toString().length()<6) {
+                    passwordTips.setText("密码不得小于六位");
+                }else if(sipassword.getText().toString().length()>18){
+                    passwordTips.setText("密码不得大于18位");
+                }else if(sipassword2.getText().toString().equals(sipassword.getText().toString())){
+                    passwordTips2.setVisibility(View.INVISIBLE);
+                } else{
+                    passwordTips.setText(" ");
+                }
+                return false;
+            }
+        });
+        //TODO;添加密码焦点框监听
+        sipassword.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                    passwordTips.setVisibility(View.VISIBLE);
+                } else {
+                    // 此处为失去焦点时的处理内容
+                    passwordTips.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        //TODO;添加密码确认焦点框监听
+        sipassword2.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                    if(sipassword2.getText().toString().equals(sipassword.getText().toString())) {
+                        passwordTips2.setVisibility(View.INVISIBLE);
+                    }else{
+                        passwordTips2.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    // 此处为失去焦点时的处理内容
+                    passwordTips2.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        //TODO;添加密码确认输入框监听
+        sipassword2.setOnKeyListener(new EditText.OnKeyListener() {
+            @Override
+            public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
+                if(sipassword2.getText().toString().equals(sipassword.getText().toString())) {
+                    passwordTips2.setVisibility(View.INVISIBLE);
+                }else{
+                    passwordTips2.setVisibility(View.VISIBLE);
+                }
+                return false;
+            }
+        });
+
+        //TODO:添加用户名输入框监听
+        siname.setOnKeyListener(new EditText.OnKeyListener() {
+            @Override
+            public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
+                if(siname.getText().toString().length()<6) {
+                    nameTips.setText("用户名不得小于六位");
+                }else if(siname.getText().toString().length()>18){
+                    nameTips.setText("用户名不得大于18位");
+                }else if(!isusername(siname.getText().toString())) {
+                    nameTips.setText("用户名只能由数字和英文字母组成");
+                }else{
+                    nameTips.setText(" ");
+                }
+                return false;
+            }
+        });
+        //TODO：添加用户名焦点监听
+        siname.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                    nameTips.setVisibility(View.VISIBLE);
+                } else {
+                    // 此处为失去焦点时的处理内容
+                    nameTips.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        sitele.setOnKeyListener(new EditText.OnKeyListener() {
+            @Override
+            public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
+                if(sitele.getText().toString().length() != 11) {
+                    teleTips.setText("请输入正确的手机号");
+                    teleTips.setVisibility(View.VISIBLE);
+                }else{
+                    teleTips.setVisibility(View.INVISIBLE);
+                }
+                return false;
+            }
+        });
+
+
+        final QMUIRoundButton circularButton1 = (QMUIRoundButton) findViewById(R.id.register_btn_register);
+        circularButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //判断输入内容
+                if(siname.getText().toString().length()<6||siname.getText().toString().length()>18 || !isusername(siname.getText().toString())) {
+                    SweetAlertDialog pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.ERROR_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                    pDialog.setTitleText("用户名须为6-18的数字及字母组合");
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                }else if(sipassword.getText().toString().length()<6|| sipassword.getText().toString().length()>18){
+                    SweetAlertDialog pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.ERROR_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                    pDialog.setTitleText("密码须为6-18的数字及字母组合");
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                }else if(!sipassword2.getText().toString().equals(sipassword.getText().toString())){
+                    SweetAlertDialog pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.ERROR_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                    pDialog.setTitleText("两次密码输入不一致");
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                }else if(sitele.getText().toString().length() != 11) {
+                    SweetAlertDialog pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.ERROR_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                    pDialog.setTitleText("请输入正确手机号");
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                }else if(checknum.getText().length()!=4) {
+                    SweetAlertDialog pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.ERROR_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                    pDialog.setTitleText("请输入正确验证码");
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                }else{
+                    SweetAlertDialog pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                    pDialog.setTitleText("Loading");
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                    //注册
+                    finish();
+                }
+
+            }
+        });
     }
+    class TimeCount extends CountDownTimer {
+
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            checkBtn.setClickable(false);
+            checkBtn.setText(millisUntilFinished / 1000 +"秒重新发送");
+        }
+
+        @Override
+        public void onFinish() {
+            checkBtn.setText("获取验证码");
+            checkBtn.setClickable(true);
+        }
+    }
+
+    public void getCheckNum(View source){
+        String user_tele = sitele.getText().toString();
+        if (user_tele.length() != 11) {
+            Toast.makeText(getApplicationContext(), "请输入正确手机号",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        checkBtn.setEnabled(false);
+        //fuck
+        time.start();
+    }
+
 }
