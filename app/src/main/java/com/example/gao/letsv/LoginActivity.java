@@ -97,6 +97,12 @@ public class LoginActivity extends AppCompatActivity {
                             if (state == 0) {
                                 pDialog.setTitleText("登录成功")
                                         .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                                pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        finish();
+                                    }
+                                });
                             } else {
                                 pDialog.setTitleText("密码错误")
                                         .changeAlertType(SweetAlertDialog.ERROR_TYPE);

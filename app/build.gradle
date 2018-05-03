@@ -29,6 +29,7 @@ allprojects {
         maven {
             url "https://jitpack.io"
         }
+
     }
 }
 
@@ -56,4 +57,13 @@ dependencies {
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
     compile 'com.github.f0ris.sweetalert:library:1.5.1'
 
+
+    //MOB
+    apply plugin: "com.mob.sdk"
+}
+MobSDK {
+    appKey "25760d6ba8c64"
+    appSecret "b9ff5be1227dd8756205acf5e68d98f6"
+
+    SMSSDK {}
 }
