@@ -47,6 +47,16 @@
             android:name=".activity_forgetpassword_inputphone"
             >
         </activity>
+
+
+        <activity
+            android:name=".PhraseActivity"
+            >
+        </activity>
+
+        <activity android:name=".DetailActivity"
+            >
+        </activity>
     </application>
 
 </manifest>
