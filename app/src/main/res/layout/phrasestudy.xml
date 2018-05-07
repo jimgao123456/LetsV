@@ -69,30 +69,35 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/phrase1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="explanation：*********"
                 android:textSize="18dp" />
 
             <TextView
+                android:id="@+id/phrase2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="imagination：*********"
                 android:textSize="18dp" />
 
             <TextView
+                android:id="@+id/phrase3"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="explanation：*********"
                 android:textSize="18dp" />
 
             <TextView
+                android:id="@+id/phrase4"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="explanation：*********"
                 android:textSize="18dp" />
 
             <TextView
+                android:id="@+id/phrase5"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="explanation：*********"
