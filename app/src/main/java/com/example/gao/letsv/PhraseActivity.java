@@ -1,5 +1,6 @@
 package com.example.gao.letsv;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
@@ -12,13 +13,15 @@ import java.util.ArrayList;
 
 public class PhraseActivity extends AppCompatActivity  implements  android.view.GestureDetector.OnGestureListener{
     GestureDetector detector;
+    Bundle bundle;
     TextView phrase1,phrase2,phrase3,phrase4,phrase5;
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.phrasestudy);
-        int nNum=savedInstanceState.getInt("nnum");
-        int nGroup=savedInstanceState.getInt("ngroup");
-        String[] group=savedInstanceState.getStringArray("group"+nGroup);
+        bundle=getIntent().getExtras();
+        int nNum=bundle.getInt("nnum");
+        int nGroup=bundle.getInt("ngroup");
+        String[] group=bundle.getStringArray("group"+nGroup);
         if(group==null) group=new String[5];
         phrase1=findViewById(R.id.phrase1);
         phrase2=findViewById(R.id.phrase2);
@@ -64,7 +67,7 @@ public class PhraseActivity extends AppCompatActivity  implements  android.view.
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        float minMove = 120;         //最小滑动距离
+        float minMove = 10;         //最小滑动距离
         float minVelocity = 0;      //最小滑动速度
         float beginX = e1.getX();
         float endX = e2.getX();
@@ -74,7 +77,9 @@ public class PhraseActivity extends AppCompatActivity  implements  android.view.
         if(beginX-endX>minMove&&Math.abs(velocityX)>minVelocity){   //左滑
             Toast.makeText(this,velocityX+"左滑",Toast.LENGTH_SHORT).show();
         }else if(endX-beginX>minMove&&Math.abs(velocityX)>minVelocity){   //右滑
-            Toast.makeText(this,velocityX+"右滑",Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(PhraseActivity.this,DetailActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }else if(beginY-endY>minMove&&Math.abs(velocityY)>minVelocity){   //上滑
             Toast.makeText(this,velocityX+"上滑",Toast.LENGTH_SHORT).show();
         }else if(endY-beginY>minMove&&Math.abs(velocityY)>minVelocity){   //下滑
