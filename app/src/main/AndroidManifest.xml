@@ -51,10 +51,12 @@
 
         <activity
             android:name=".PhraseActivity"
+            android:theme="@style/style"
             >
         </activity>
 
         <activity android:name=".DetailActivity"
+            android:theme="@style/style"
             >
         </activity>
     </application>

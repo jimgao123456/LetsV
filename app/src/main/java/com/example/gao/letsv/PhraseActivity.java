@@ -1,5 +1,7 @@
 package com.example.gao.letsv;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
@@ -7,12 +9,17 @@ import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.r0adkll.slidr.Slidr;
+import com.r0adkll.slidr.model.SlidrConfig;
+import com.r0adkll.slidr.model.SlidrPosition;
+
 import java.util.ArrayList;
 
 
-public class PhraseActivity extends AppCompatActivity  implements  android.view.GestureDetector.OnGestureListener{
-    GestureDetector detector;
+public class PhraseActivity extends AppCompatActivity implements GestureDetector.OnGestureListener{
     TextView phrase1,phrase2,phrase3,phrase4,phrase5;
+    private GestureDetector gestureDetector;                    //手势检测
+    private GestureDetector.OnGestureListener onSlideGestureListener = null;    //左右滑动手势检测监听器
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.phrasestudy);
@@ -30,11 +37,9 @@ public class PhraseActivity extends AppCompatActivity  implements  android.view.
         phrase3.setText(group[2]);
         phrase4.setText(group[3]);
         phrase5.setText(group[4]);
-        detector = new GestureDetector(this,this);
+        gestureDetector = new GestureDetector(this, this);
 
-    }
-    public boolean onTouchEvent(MotionEvent me){
-        return detector.onTouchEvent(me);
+
     }
 
     @Override
@@ -64,23 +69,34 @@ public class PhraseActivity extends AppCompatActivity  implements  android.view.
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        float minMove = 120;         //最小滑动距离
-        float minVelocity = 0;      //最小滑动速度
-        float beginX = e1.getX();
-        float endX = e2.getX();
-        float beginY = e1.getY();
-        float endY = e2.getY();
-
-        if(beginX-endX>minMove&&Math.abs(velocityX)>minVelocity){   //左滑
-            Toast.makeText(this,velocityX+"左滑",Toast.LENGTH_SHORT).show();
-        }else if(endX-beginX>minMove&&Math.abs(velocityX)>minVelocity){   //右滑
-            Toast.makeText(this,velocityX+"右滑",Toast.LENGTH_SHORT).show();
-        }else if(beginY-endY>minMove&&Math.abs(velocityY)>minVelocity){   //上滑
-            Toast.makeText(this,velocityX+"上滑",Toast.LENGTH_SHORT).show();
-        }else if(endY-beginY>minMove&&Math.abs(velocityY)>minVelocity){   //下滑
-            Toast.makeText(this,velocityX+"下滑",Toast.LENGTH_SHORT).show();
+        // 参数解释：
+        // e1：第1个ACTION_DOWN MotionEvent
+        // e2：最后一个ACTION_MOVE MotionEvent
+        // velocityX：X轴上的移动速度，像素/秒
+        // velocityY：Y轴上的移动速度，像素/秒
+        // 触发条件 ：
+        // X轴的坐标位移大于FLING_MIN_DISTANCE，且移动速度大于FLING_MIN_VELOCITY个像素/秒
+        if ((e1 == null) || (e2 == null)){
+            return false;
         }
-
+        int FLING_MIN_DISTANCE = 100;
+        int FLING_MIN_VELOCITY = 100;
+        if (e1.getX() - e2.getX() > FLING_MIN_DISTANCE
+                && Math.abs(velocityX) > FLING_MIN_VELOCITY)
+        {
+            // 向左滑动
+        } else if (e2.getX() - e1.getX() > FLING_MIN_DISTANCE
+//此处也可以加入对滑动速度的要求
+//                       && Math.abs(velocityX) > FLING_MIN_VELOCITY
+                )
+        {
+            // 向右滑动
+            Intent intent = new Intent();
+            intent.setClass(PhraseActivity.this, DetailActivity.class);
+//              intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT); //不重复打开多个界面
+            startActivity(intent);
+            overridePendingTransition(R.anim.move_left_in, R.anim.move_right_out);
+        }
         return false;
     }
 }
