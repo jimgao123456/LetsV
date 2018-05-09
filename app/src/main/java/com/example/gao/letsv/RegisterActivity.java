@@ -268,6 +268,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 RequestParams params = new RequestParams();
                                 params.put("username", sitele.getText().toString());
                                 params.put("password", sipassword.getText().toString());
+                                params.put("nickname",siname.getText().toString());
                                 String url = "http://58.87.108.125:8080/register";
 
                                 client.post(url, params, new AsyncHttpResponseHandler() {

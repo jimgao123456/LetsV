@@ -16,6 +16,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.dd.processbutton.iml.SubmitProcessButton;
 import com.loopj.android.http.*;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Properties;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import cz.msebera.android.httpclient.Header;
 
@@ -28,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginVideoView videoview;
     SubmitProcessButton btnlogin = null;
     TextView btnres = null;
-    TextView zhaohuimima=null;
+    TextView zhaohuimima = null;
     EditText zhanghao = null;
     EditText mima = null;
 
@@ -45,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         btnres = (TextView) findViewById(R.id.login_zhuce);
         zhanghao = (EditText) findViewById(R.id.login_zhanghao);
         mima = (EditText) findViewById(R.id.login_password);
-        zhaohuimima=(TextView) findViewById(R.id.login_wangjimima);
+        zhaohuimima = (TextView) findViewById(R.id.login_wangjimima);
 
 
         zhaohuimima.setOnClickListener(new View.OnClickListener() {
@@ -62,20 +66,19 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                if(zhanghao.getText().toString().length()<6 || zhanghao.getText().toString().length()>18){
+                if (zhanghao.getText().toString().length() < 6 || zhanghao.getText().toString().length() > 18) {
                     SweetAlertDialog pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.ERROR_TYPE);
                     pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                     pDialog.setTitleText("请输入正确的账号");
                     pDialog.setCancelable(false);
                     pDialog.show();
-                }else if(mima.getText().toString().length()<6 || mima.getText().toString().length()>18)
-                {
+                } else if (mima.getText().toString().length() < 6 || mima.getText().toString().length() > 18) {
                     SweetAlertDialog pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.ERROR_TYPE);
                     pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                     pDialog.setTitleText("请输入正确的密码");
                     pDialog.setCancelable(false);
                     pDialog.show();
-                }else {
+                } else {
                     SweetAlertDialog pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.PROGRESS_TYPE);
                     pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                     pDialog.setTitleText("Loading");
@@ -95,6 +98,23 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonObject = JSONObject.parseObject(str);
                             int state = jsonObject.getInteger("state");
                             if (state == 0) {
+                                //登录成功
+                                try {
+                                    File file = new File(getCacheDir().getPath(), "config.properties");
+                                    if (!file.exists())
+                                        file.createNewFile();
+                                    FileOutputStream fo = new FileOutputStream(file);
+                                    Properties properties = new Properties();
+                                    properties.put("username", zhanghao.getText().toString().trim());
+                                    properties.put("password", mima.getText().toString());
+                                    properties.store(fo, "");
+                                    fo.close();
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                                MainActivity.password=mima.getText().toString();
+                                MainActivity.username=zhanghao.getText().toString();
+                                MainActivity.autologin=true;
                                 pDialog.setTitleText("登录成功")
                                         .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                 pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
@@ -163,9 +183,4 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    //登录点击事件
-    void Button_login() {
-
-
-    }
 }
