@@ -56,9 +56,11 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
     compile 'com.github.f0ris.sweetalert:library:1.5.1'
+    compile 'com.r0adkll:slidableactivity:2.0.3'
 
     //MOB
     apply plugin: "com.mob.sdk"
+
 }
 MobSDK {
     appKey "25760d6ba8c64"
