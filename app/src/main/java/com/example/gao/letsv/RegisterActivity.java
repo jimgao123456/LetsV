@@ -99,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
                 if (sipassword.getText().toString().length() < 6) {
-                    passwordTips.setText("密码不得小于六位");
+                    passwordTips.setText("密码不得小于6位");
                 } else if (sipassword.getText().toString().length() > 18) {
                     passwordTips.setText("密码不得大于18位");
                 } else if (sipassword2.getText().toString().equals(sipassword.getText().toString())) {
