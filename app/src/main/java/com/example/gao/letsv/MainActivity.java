@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public static String password=null;
     public static boolean autologin=false;
     public static boolean haschecklogin=false;
+    public static String num="0";
 
     Fragment[] fragmentarray = new Fragment[4];
     @Override
@@ -139,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                         RequestParams params = new RequestParams();
                         params.put("username", username);
                         params.put("password", password);
-                        String url = "http://58.87.108.125:8080/login";
+                        String url = "http://58.87.108.125:8888/login";
                         client.post(url, params, new AsyncHttpResponseHandler() {
 
                             @Override

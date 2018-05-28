@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/myadapter_study_word_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="我是老给"
+        android:textColor="@color/gray_8f"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/myadapter_study_word_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/myadapter_study_word_title"
+        android:layout_marginTop="20dp"
+        android:ellipsize="none"
+        android:inputType="textMultiLine"
+        android:maxLines="100"
+        android:minLines="1"
+        android:scrollHorizontally="false"
+        android:text="不许笑"
+        android:textColor="@color/divider_line"
+        android:textSize="20dp"/>
+
+
+</RelativeLayout>

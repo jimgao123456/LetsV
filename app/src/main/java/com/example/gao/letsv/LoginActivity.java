@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                     RequestParams params = new RequestParams();
                     params.put("username", zhanghao.getText().toString());
                     params.put("password", mima.getText().toString());
-                    String url = "http://58.87.108.125:8080/login";
+                    String url = "http://58.87.108.125:8888/login";
                     client.post(url, params, new AsyncHttpResponseHandler() {
 
                         @Override

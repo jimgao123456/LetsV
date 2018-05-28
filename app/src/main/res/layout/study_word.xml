@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.gao.letsv.MyWidget.MyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/studay_word_MyScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:background="#181e1e">
+
+<android.support.constraint.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#181e1e">
+
+    <TextView
+        android:id="@+id/studay_word_title"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="persist"
+        android:layout_marginLeft="8dp" />
+
+    <ImageView
+        android:id="@+id/study_word_horn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/studay_word_title"
+        app:layout_constraintStart_toEndOf="@+id/studay_word_title"
+        app:layout_constraintTop_toTopOf="@+id/studay_word_title"
+        app:srcCompat="@drawable/word_horn"
+        android:layout_marginLeft="4dp" />
+
+    <com.example.gao.letsv.MyWidget.UnScrollListView
+        android:id="@+id/study_word_listitem"
+        android:layout_width="wrap_content"
+        android:layout_height="256dp"
+        android:layout_marginTop="8dp"
+        android:divider="@drawable/list_item_divide"
+        android:dividerHeight="1px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/study_word_sep1" />
+
+    <TextView
+        android:id="@+id/study_word_textView_PHONETIC_SYMBOL"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="[pəˈsɪst] "
+        android:textColor="@color/divider_line"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@+id/studay_word_title"
+        app:layout_constraintTop_toBottomOf="@+id/studay_word_title" />
+
+    <TextView
+        android:id="@+id/study_word_textView_explain"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="none"
+        android:inputType="textMultiLine"
+        android:maxLines="100"
+        android:minLines="1"
+        android:scrollHorizontally="false"
+        android:text="v.	坚持; 存留; 固执; 继续存在;"
+        android:textColor="@color/divider_line"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/study_word_textView_PHONETIC_SYMBOL"
+        app:layout_constraintTop_toBottomOf="@+id/study_word_textView_PHONETIC_SYMBOL"
+        android:layout_marginRight="8dp" />
+
+
+    <View
+        android:id="@+id/study_word_sep0"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="16dp"
+        android:background="#282d30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/study_word_textView_explain" />
+
+    <TextView
+        android:id="@+id/study_word_title_jiyifa"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:text="记忆法"
+        android:textColor="@color/gray_8f"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@+id/study_word_textView_explain"
+        app:layout_constraintTop_toBottomOf="@+id/study_word_sep0" />
+
+    <TextView
+        android:id="@+id/study_word_textView_TYPE_MEMORY_METHOD"
+        android:layout_width="0dp"
+        android:layout_height="69dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:inputType="textMultiLine"
+        android:maxLines="100"
+        android:minLines="1"
+        android:scrollHorizontally="false"
+        android:text="其实我也不知道怎么记忆，我就xjb测试的！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！1"
+        android:textColor="@color/divider_line"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/study_word_title_jiyifa"
+        app:layout_constraintTop_toBottomOf="@+id/study_word_title_jiyifa"
+        android:layout_marginRight="8dp" />
+
+    <View
+        android:id="@+id/study_word_sep1"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="16dp"
+        android:background="#282d30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/study_word_textView_TYPE_MEMORY_METHOD" />
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>
+</com.example.gao.letsv.MyWidget.MyScrollView>
