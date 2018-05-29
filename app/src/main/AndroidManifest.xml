@@ -5,6 +5,8 @@
 
     <application
         tools:replace="android:icon"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -41,6 +43,30 @@
 
         <activity
             android:name=".RegisterActivity"
+            >
+        </activity>
+        <activity
+            android:name=".activity_forgetpassword_inputphone"
+            >
+        </activity>
+
+
+        <activity
+            android:name=".PhraseActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            >
+        </activity>
+        <activity
+            android:name=".Ps"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            >
+        </activity>
+        <activity android:name=".DetailActivity"
+            android:theme="@style/style"
+            >
+        </activity>
+        <activity android:name=".activity_study_word_main"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             >
         </activity>
     </application>

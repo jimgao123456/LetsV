@@ -36,8 +36,31 @@ public class Fragment_Homepage_0 extends Fragment {
         btn_startstudy.setOnClickListener(new View.OnClickListener() {
           @Override
         public void onClick(View view) {
-               Intent mainIntent = new Intent(getActivity(), LoginActivity.class);
-               startActivity(mainIntent);
+//              Intent intent = new Intent(getActivity(), Ps.class);
+//                    startActivity(intent);
+              if(MainActivity.autologin!=true) {
+//                  String[] group1 = {"include", "conclude", "seclude", "exclude", "preclude", "occlude"};
+//                  String[] group2 = {"attain", "obtain", "retain", "sustain", "maintain"};
+//                  String[] group3 = {"resist", "consist", "subsist", "persist", "desist"};
+//                  int nGroup = 1;
+//                  int nNum = 1;
+//                  Bundle mBundle = new Bundle();
+//                  mBundle.putStringArray("group1", group1);
+//                  mBundle.putStringArray("group2", group2);
+//                  mBundle.putStringArray("group3", group3);
+//                  mBundle.putInt("ngroup", nGroup);
+//                  mBundle.putInt("nnum", nNum);
+//                  Intent mainIntent = new Intent(getActivity(), PhraseActivity.class);
+//                  mainIntent.putExtras(mBundle);
+//                  startActivity(mainIntent);
+
+                      Intent intent = new Intent(getActivity(), activity_study_word_main.class);
+                      startActivity(intent);
+
+              }else{
+                  Intent mainIntent = new Intent(getActivity(), LoginActivity.class);
+                  startActivity(mainIntent);
+              }
            }
        });
     }

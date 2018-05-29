@@ -23,7 +23,6 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <EditText
-            android:background="@drawable/editedit_bg_selector"
             android:id="@+id/login_password"
             android:layout_width="277dp"
             android:layout_height="51dp"
@@ -31,6 +30,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:background="@drawable/editedit_bg_selector"
             android:hint="密码"
             android:inputType="textPassword"
             android:textColor="@color/white"
@@ -45,13 +45,13 @@
             app:layout_constraintVertical_bias="0.069" />
 
         <EditText
-            android:background="@drawable/editedit_bg_selector"
             android:id="@+id/login_zhanghao"
             android:layout_width="277dp"
             android:layout_height="51dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="120dp"
+            android:background="@drawable/editedit_bg_selector"
             android:hint="账号"
             android:singleLine="false"
             android:textColor="@color/white"
@@ -70,7 +70,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="汤不热账号登录！"
+            android:text="登录"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -79,19 +79,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_password"
             app:layout_constraintVertical_bias="0.055"
-            app:pb_colorComplete="@color/green_complete"
+            app:pb_colorComplete="@color/blue_normal"
             app:pb_colorError="@color/red_error"
             app:pb_colorNormal="@color/blue_normal"
-            app:pb_colorPressed="@color/blue_pressed"
-            app:pb_colorProgress="@color/purple_progress"
+            app:pb_colorPressed="@color/blue_normal"
+            app:pb_colorProgress="@color/blue_normal"
             app:pb_textComplete="汤不热账号登录成功！"
             app:pb_textError="汤不热账号登录失败！"
             app:pb_textProgress="汤不热账号正在登录！" />
 
         <TextView
             android:id="@+id/login_wangjimima"
-            android:layout_width="67dp"
-            android:layout_height="27dp"
+            android:layout_width="111dp"
+            android:layout_height="37dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
@@ -99,9 +99,10 @@
             android:text="忘记密码?"
             android:textColor="@color/white"
             android:textSize="15dp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/login_zhuce"
-            app:layout_constraintHorizontal_bias="0.31"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.178"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_btnSignIn"
             app:layout_constraintVertical_bias="0.0" />
@@ -111,50 +112,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="60dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="新用户注册"
             android:textColor="@color/white"
             android:textSize="15dp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/login_videoview"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.844"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_btnSignIn"
-            app:layout_constraintVertical_bias="0.0"
-            android:layout_marginRight="60dp" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/textView5"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="85dp"
             android:text="登录即代表阅读并同意"
-            android:textSize="15dp"
             android:textColor="@color/white"
+            android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView6"
-            app:layout_constraintHorizontal_bias="1.0"
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_btnSignIn"
-            app:layout_constraintVertical_bias="0.895"
-            android:layout_marginLeft="8dp" />
+            android:layout_marginLeft="80dp" />
 
         <TextView
             android:id="@+id/textView6"
-            android:layout_width="wrap_content"
+            android:layout_width="97dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="88dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginEnd="100dp"
             android:text="服务条款"
             android:textColor="@color/blue_pressed"
+
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/textView5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_btnSignIn"
-            app:layout_constraintVertical_bias="0.895"
-            android:layout_marginRight="88dp" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textView5"
+            android:layout_marginRight="104dp" />
 
 
     </android.support.constraint.ConstraintLayout>

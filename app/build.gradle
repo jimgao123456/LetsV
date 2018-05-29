@@ -29,6 +29,7 @@ allprojects {
         maven {
             url "https://jitpack.io"
         }
+
     }
 }
 
@@ -45,7 +46,7 @@ dependencies {
     compile 'com.qmuiteam:qmui:1.0.6'
     compile 'com.github.zcweng:switch-button:0.0.3@aar'
     compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
-    implementation 'com.google.android.gms:play-services-ads:15.0.0'
+    implementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation 'cn.bingoogolapple:bga-badgeview-api:1.1.8'
     annotationProcessor "cn.bingoogolapple:bga-badgeview-compiler:1.1.8"
     compile 'com.jpeng:JPTabBar:1.4.0'
@@ -55,5 +56,15 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
     compile 'com.github.f0ris.sweetalert:library:1.5.1'
+    compile 'com.r0adkll:slidableactivity:2.0.3'
 
+    //MOB
+    apply plugin: "com.mob.sdk"
+
+}
+MobSDK {
+    appKey "25760d6ba8c64"
+    appSecret "b9ff5be1227dd8756205acf5e68d98f6"
+
+    SMSSDK {}
 }
