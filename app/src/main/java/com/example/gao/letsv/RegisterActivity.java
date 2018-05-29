@@ -63,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
         this.passwordTips2 = (TextView)super.findViewById(R.id.register_passwordtip2);
         this.teleTips = (TextView)super.findViewById(R.id.register_teletip);
         this.checkBtn = (Button)super.findViewById(R.id.register_check_button);
+        time = new TimeCount(60000, 1000);
         sipassword.setOnKeyListener(new EditText.OnKeyListener() {
             @Override
             public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
