@@ -36,13 +36,13 @@ import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
     @Titles
-    private static final String[] mTitles = {"首页", "社区", "商城", "个人中心"};
+    private static final String[] mTitles = {"单词", "阅读", "听说", "我"};
 
     @SeleIcons
-    private static final int[] mSeleIcons = {R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_0_0};
+    private static final int[] mSeleIcons = {R.drawable.homepage_fragment_0_1, R.drawable.homepage_fragment_1_1, R.drawable.homepage_fragment_2_1, R.drawable.homepage_fragment_3_1};
 
     @NorIcons
-    private static final int[] mNormalIcons = {R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_0_0};
+    private static final int[] mNormalIcons = {R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_1_0, R.drawable.homepage_fragment_2_0, R.drawable.homepage_fragment_3_0};
 
     private ViewPager mVp;
     private JPTabBar mTabBar;

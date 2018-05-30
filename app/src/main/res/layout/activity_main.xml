@@ -15,14 +15,15 @@
         android:id="@+id/tabbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
+        android:background="@color/divider_line"
+        app:TabNormalColor="@color/white"
+        app:TabSelectColor="@color/blue_normal"
+        app:TabIconSize="25dp"
+        app:TabTextSize="15sp"
+        app:TabMargin="2dp"
+        app:TabPageAnimateEnable="true"
         app:BadgePadding="4dp"
         app:BadgeTextSize="10dp"
         app:TabIconFilter="true"
-        app:TabMargin="2dp"
-        app:TabIconSize="30dp"
-        app:TabTextSize="15sp"
-        app:TabPageAnimateEnable="true"
         />
-
 </RelativeLayout>
