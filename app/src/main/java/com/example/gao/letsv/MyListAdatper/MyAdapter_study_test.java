@@ -1,4 +1,4 @@
-package com.example.gao.letsv;
+package com.example.gao.letsv.MyListAdatper;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.gao.letsv.R;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +17,7 @@ import java.util.Map;
  *
  * @author qiangzi
  */
-public class MyAdapter_study_main extends BaseAdapter {
+public class MyAdapter_study_test extends BaseAdapter {
     private List<Map<String, Object>> dataList;
     private Context context;
     private int resource;
@@ -30,7 +32,7 @@ public class MyAdapter_study_main extends BaseAdapter {
      * @param dataList 数据
      * @param resource 列表项资源文件
      */
-    public MyAdapter_study_main(Context context, List<Map<String, Object>> dataList,
+    public MyAdapter_study_test(Context context, List<Map<String, Object>> dataList,
                                 int resource) {
         this.context = context;
         this.dataList = dataList;
@@ -76,7 +78,7 @@ public class MyAdapter_study_main extends BaseAdapter {
     @Override
     public View getView(int index, View view, ViewGroup arg2) {
         // 声明内部类
-        Util util = null;
+        AdapterTestUtil util = null;
         // 中间变量
         final int flag = index;
 
@@ -86,25 +88,23 @@ public class MyAdapter_study_main extends BaseAdapter {
          * 之后就不会再创建列表项xml文件的对象，以及xml内部的组件，优化内存，性能效率
          */
         if (view == null) {
-            util = new Util();
+            util = new AdapterTestUtil();
             // 给xml布局文件创建java对象
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(resource, null);
             // 指向布局文件内部组件
-            util.titleview = (TextView) view
-                    .findViewById(R.id.myadapter_study_word_title);
-            util.explainview = (TextView) view.findViewById(R.id.myadapter_study_word_textview);
+            util.selectview = (TextView) view.findViewById(R.id.myadapter_study_word_test_textview);
 
             // 增加额外变量
             view.setTag(util);
         } else {
-            util = (Util) view.getTag();
+            util = (AdapterTestUtil) view.getTag();
         }
 
         // 获取数据显示在各组件
         Map<String, Object> map = dataList.get(index);
-        util.titleview.setText((String) map.get("titleview"));
-        util.explainview.setText((String) map.get("explainview"));
+        util.selectview.setText((String) map.get("selecttext"));
+
 
         // 删除按钮，添加点击事件
 //        util.deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +128,6 @@ public class MyAdapter_study_main extends BaseAdapter {
  *
  * @author qiangzi
  */
-class Util {
-    TextView titleview, explainview;
+class AdapterTestUtil {
+    TextView selectview;
 }

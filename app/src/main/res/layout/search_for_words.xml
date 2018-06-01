@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:layout_editor_absoluteX="8dp"
+    tools:layout_editor_absoluteY="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sharpe_gradient_background_homepage_f1"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_rounded_corner"
+            android:orientation="horizontal">
+            />
+
+            <org.angmarch.views.NiceSpinner
+                android:id="@+id/search_words_nice_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                app:arrowTint="#9299a8"
+                app:hideArrow="false"
+                app:textTint="#9299a8"
+               />
+
+            <TextView
+                android:id="@+id/search_words_nice_Rightslash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-15dp"
+                android:layout_marginTop="15dp"
+                android:text="/"
+                android:textColor="@color/divider_line"
+                android:textSize="30dp" />
+
+            <EditText
+                android:id="@+id/search_words_nice_input_Word"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="在此输入单词或者句子"
+                android:singleLine="true"
+                android:textColor="@color/common_text_black"
+                android:textColorHint="@color/divider_line"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/search_words_nice_searchword_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/searchword_photo" />
+
+            <ImageView
+                android:id="@+id/search_words_nice_searchword_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="40dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/searchword_voice" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

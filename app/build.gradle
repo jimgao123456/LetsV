@@ -44,7 +44,7 @@ dependencies {
     compile 'com.qmuiteam:qmui:1.0.6'
     compile 'com.github.zcweng:switch-button:0.0.3@aar'
     compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
-    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    implementation 'com.google.android.gms:play-services-ads:15.0.0'
     implementation 'cn.bingoogolapple:bga-badgeview-api:1.1.8'
     annotationProcessor "cn.bingoogolapple:bga-badgeview-compiler:1.1.8"
     compile 'com.jpeng:JPTabBar:1.4.0'
@@ -55,8 +55,8 @@ dependencies {
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
     compile 'com.github.f0ris.sweetalert:library:1.5.1'
     compile 'com.r0adkll:slidableactivity:2.0.3'
+    implementation 'com.github.arcadefire:nice-spinner:1.3.4'
     compile 'com.github.zcweng:switch-button:0.0.3@aar'
-
     //MOB
     apply plugin: "com.mob.sdk"
 }
