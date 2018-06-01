@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="picquality">
+        <item>自动</item>
+        <item>高清(土豪装备)</item>
+        <item>普通(流量党专属)</item>
+        <item>无图(极大影响体验！)</item>
+    </string-array>
+
+</resources>

@@ -33,8 +33,6 @@ allprojects {
     }
 }
 
-
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleCompatible
@@ -57,10 +55,10 @@ dependencies {
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
     compile 'com.github.f0ris.sweetalert:library:1.5.1'
     compile 'com.r0adkll:slidableactivity:2.0.3'
+    compile 'com.github.zcweng:switch-button:0.0.3@aar'
 
     //MOB
     apply plugin: "com.mob.sdk"
-
 }
 MobSDK {
     appKey "25760d6ba8c64"
