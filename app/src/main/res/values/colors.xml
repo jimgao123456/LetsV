@@ -163,4 +163,5 @@
         <color name="text_topbar">#694E42</color>
         <color name="div_white">#E5E5E5</color>
         <color name="text_blue">#F0FFFF</color><!--天蓝色 -->
+        <color name="background_white">#F3F3F3</color><!--玄学背景色，别动 -->
 </resources>
