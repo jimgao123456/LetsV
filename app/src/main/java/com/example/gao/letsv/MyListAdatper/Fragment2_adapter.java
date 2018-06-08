@@ -10,8 +10,6 @@ import android.widget.TextView;
 import com.example.gao.letsv.R;
 import com.example.gao.letsv.fragment2ListItem;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 /**
@@ -37,5 +35,4 @@ public class Fragment2_adapter extends ArrayAdapter {
         url.setText(item.getUrl());
         return view;
     }
-
 }

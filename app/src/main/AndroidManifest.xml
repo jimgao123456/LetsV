@@ -74,15 +74,21 @@
             android:theme="@style/style"
             >
         </activity>
-        <activity android:name=".activity_study_word_main"
+        <activity android:name=".Studyword.activity_study_word_main"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             >
         </activity>
-        <activity android:name=".activity_userpage_setting">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".Studyword.activity_study_word_test"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            >
+        </activity>
+        <activity android:name=".Studyword.activity_study_word_grouplist"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            >
+        </activity>
+        <activity android:name=".activity_userpage_setting"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            >
         </activity>
     </application>
 

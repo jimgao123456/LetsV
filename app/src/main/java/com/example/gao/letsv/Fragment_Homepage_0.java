@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.gao.letsv.Studyword.activity_study_word_grouplist;
+import com.example.gao.letsv.Studyword.activity_study_word_main;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 /**
@@ -54,7 +56,7 @@ public class Fragment_Homepage_0 extends Fragment {
 //                  mainIntent.putExtras(mBundle);
 //                  startActivity(mainIntent);
 
-                      Intent intent = new Intent(getActivity(), activity_study_word_main.class);
+                      Intent intent = new Intent(getActivity(), activity_study_word_grouplist.class);
                       startActivity(intent);
 
               }else{
