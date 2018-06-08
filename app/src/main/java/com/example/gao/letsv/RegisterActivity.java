@@ -381,7 +381,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        checkBtn.setEnabled(false);
+        //checkBtn.setEnabled(false);
         smsFlage=1;
         //获取验证码
         SMSSDK.getVerificationCode("86", sitele.getText().toString());
