@@ -1,4 +1,4 @@
-package com.example.gao.letsv;
+package com.example.gao.letsv.MainViews;
 
 
 import android.app.LauncherActivity;
@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.gao.letsv.R;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;

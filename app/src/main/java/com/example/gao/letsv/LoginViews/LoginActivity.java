@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dd.processbutton.iml.SubmitProcessButton;
-import com.example.gao.letsv.MainActivity;
+import com.example.gao.letsv.MainViews.MainActivity;
 import com.example.gao.letsv.R;
 import com.example.gao.letsv.RegisterViews.RegisterActivity;
 import com.example.gao.letsv.FindOrChangePassword.activity_forgetpassword_inputphone;

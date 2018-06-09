@@ -1,4 +1,4 @@
-package com.example.gao.letsv;
+package com.example.gao.letsv.MainViews;
 
 
 import android.content.Intent;
@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.gao.letsv.LoginViews.activity_media_player;
 import com.example.gao.letsv.MyListAdatper.Fragment2_adapter;
+import com.example.gao.letsv.R;
 
 import java.util.ArrayList;
 import java.util.List;

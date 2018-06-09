@@ -1,4 +1,4 @@
-package com.example.gao.letsv;
+package com.example.gao.letsv.MainViews;
 
 
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+
+import com.example.gao.letsv.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
