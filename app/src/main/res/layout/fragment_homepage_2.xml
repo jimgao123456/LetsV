@@ -4,30 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/fragment2_bg">
+    android:background="@drawable/fragment2_bg"
+    android:orientation="vertical">
 
     <com.arlib.floatingsearchview.FloatingSearchView
-        android:id="@+id/fragment2_floating_search_view"
+        android:id="@+id/fragment2_floating_search_view_Hidden"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:floatingSearch_close_search_on_keyboard_dismiss="true"
-        app:floatingSearch_leftActionMode="showHamburger"
+        app:floatingSearch_leftActionMode="showHome"
         app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"
         app:floatingSearch_searchBarMarginRight="@dimen/search_view_inset"
         app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"
-        app:floatingSearch_searchHint="Search..."
+        app:floatingSearch_searchHint="Search...H"
         app:floatingSearch_showSearchKey="false"
         app:floatingSearch_suggestionsListAnimDuration="250" />
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="80dp">
 
-        <ListView
-            android:id="@+id/fragment2_list_view"
+        <com.arlib.floatingsearchview.FloatingSearchView
+            android:id="@+id/fragment2_floating_search_view_Real"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
-    </RelativeLayout>
+            android:layout_height="80dp"
+            app:floatingSearch_close_search_on_keyboard_dismiss="true"
+            app:floatingSearch_leftActionMode="showHome"
+            app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"
+            app:floatingSearch_searchBarMarginRight="@dimen/search_view_inset"
+            app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"
+            app:floatingSearch_searchHint="Search...R"
+            app:floatingSearch_showSearchKey="false"
+            app:floatingSearch_suggestionsListAnimDuration="250" />
+
+        <View
+            android:id="@+id/fragment2_floating_search_view_Real_mm"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/transparent" />
+
+    </FrameLayout>
+
+    <ListView
+
+        android:id="@+id/fragment2_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2" />
+
 
 </LinearLayout>

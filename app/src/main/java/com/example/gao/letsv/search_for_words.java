@@ -18,12 +18,12 @@ public class search_for_words extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_for_words);
+        //setContentView(R.layout.search_for_words);
         niceSpinner = (NiceSpinner) findViewById(R.id.search_words_nice_spinner);
         List<String> dataset = new LinkedList<>(Arrays.asList("英汉", "汉英"));
         niceSpinner.attachDataSource(dataset);
         niceSpinner.setSelectedIndex(0);
         niceSpinner.setTextSize(18);
-        niceSpinner.setBackgroundResource(getResources().getIdentifier("search_for_words_spinner_selector", "drawable", getClass().getPackage().getName()));
+        niceSpinner.setBackgroundResource(getResources().getIdentifier("selector_search_for_words_spinner", "drawable", getClass().getPackage().getName()));
     }
 }
