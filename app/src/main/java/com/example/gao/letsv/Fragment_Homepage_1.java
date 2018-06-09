@@ -33,11 +33,8 @@ public class Fragment_Homepage_1 extends Fragment {
         return view;
     }
 
-    private void initView(View view) {
+    private void initView(View view)  {
 
     }
 
-    private void initDataList(){
-
-        }
     }
