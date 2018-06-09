@@ -17,9 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.gao.letsv.MyListAdatper.Fragment2_adapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by gangchang on 2018/4/25.
