@@ -1,4 +1,4 @@
-package com.example.gao.letsv;
+package com.example.gao.letsv.FindOrChangePassword;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,17 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.alibaba.fastjson.JSONObject;
 import com.dd.processbutton.iml.SubmitProcessButton;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
+import com.example.gao.letsv.R;
 import com.mob.MobSDK;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
-import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by gangchang on 2018/4/27.

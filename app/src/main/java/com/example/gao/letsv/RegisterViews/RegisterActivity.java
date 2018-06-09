@@ -1,11 +1,8 @@
-package com.example.gao.letsv;
+package com.example.gao.letsv.RegisterViews;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.CountDownTimer;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -16,22 +13,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dd.CircularProgressButton;
+import com.example.gao.letsv.LoginViews.CustomVideoView;
+import com.example.gao.letsv.MainViews.MainActivity;
+import com.example.gao.letsv.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.mob.MobSDK;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
-import java.sql.Time;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
-import cn.smssdk.gui.RegisterPage;
 import cz.msebera.android.httpclient.Header;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -51,6 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
     public int smsFlage = 0;//0:设置为初始化值 1：请求获取验证码 2：提交用户输入的验证码判断是否正确
     public SweetAlertDialog pDialog=null;
     private EventHandler eh;
+
+    public static String requsturl= MainActivity.serverip+"register";
     //TODO:判断是否位邮箱
     public boolean isEmail(String email) {
         String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
@@ -269,9 +267,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 params.put("username", sitele.getText().toString());
                                 params.put("password", sipassword.getText().toString());
                                 params.put("nickname",siname.getText().toString());
-                                String url = "http://58.87.108.125:8888/register";
-
-                                client.post(url, params, new AsyncHttpResponseHandler() {
+                                client.post(requsturl, params, new AsyncHttpResponseHandler() {
 
                                     @Override
                                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

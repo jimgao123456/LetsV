@@ -1,19 +1,21 @@
-package com.example.gao.letsv;
+package com.example.gao.letsv.LoginViews;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dd.processbutton.iml.SubmitProcessButton;
+import com.example.gao.letsv.MainViews.MainActivity;
+import com.example.gao.letsv.R;
+import com.example.gao.letsv.RegisterViews.RegisterActivity;
+import com.example.gao.letsv.FindOrChangePassword.activity_forgetpassword_inputphone;
 import com.loopj.android.http.*;
 
 import java.io.File;
@@ -35,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView zhaohuimima = null;
     EditText zhanghao = null;
     EditText mima = null;
-
+public static String requsturl=MainActivity.serverip+"login";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,8 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                     RequestParams params = new RequestParams();
                     params.put("username", zhanghao.getText().toString());
                     params.put("password", mima.getText().toString());
-                    String url = "http://58.87.108.125:8888/login";
-                    client.post(url, params, new AsyncHttpResponseHandler() {
+                    client.post(requsturl, params, new AsyncHttpResponseHandler() {
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -114,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                                 MainActivity.password=mima.getText().toString();
                                 MainActivity.username=zhanghao.getText().toString();
-                                MainActivity.autologin=true;
+                                MainActivity.nickname=jsonObject.getString("nickname");
                                 pDialog.setTitleText("登录成功")
                                         .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                 pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {

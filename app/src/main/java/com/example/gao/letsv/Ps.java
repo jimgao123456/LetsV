@@ -1,27 +1,23 @@
 package com.example.gao.letsv;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.gao.letsv.MainViews.MainActivity;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -40,7 +36,7 @@ public class Ps extends AppCompatActivity implements View.OnTouchListener, Gestu
         setContentView(R.layout.ps);
         imageView = (ImageView) findViewById(R.id.imageView5);
         Class drawable  =  R.drawable.class;
-            imageView.setImageResource( getResources().getIdentifier("l"+MainActivity.num,
+            imageView.setImageResource( getResources().getIdentifier("l"+ MainActivity.num,
                 "drawable", getClass().getPackage().getName()));
         gd = new GestureDetector((GestureDetector.OnGestureListener) this);
         constraintLayout = (ConstraintLayout) findViewById(R.id.pslayout1);

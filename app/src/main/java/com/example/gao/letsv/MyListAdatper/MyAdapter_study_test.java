@@ -47,14 +47,12 @@ public class MyAdapter_study_test extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int index) {
-
-        return dataList.get(index);
+    public String getItem(int index) {
+        return dataList.get(index).get("right").toString();
     }
 
     @Override
     public long getItemId(int index) {
-
         return index;
     }
 
@@ -106,8 +104,8 @@ public class MyAdapter_study_test extends BaseAdapter {
         util.selectview.setText((String) map.get("selecttext"));
 
 
-        // 删除按钮，添加点击事件
-//        util.deleteButton.setOnClickListener(new View.OnClickListener() {
+//        // 选项被点击
+//        util.selectview.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View arg0) {
 //                dataList.remove(flag);

@@ -23,7 +23,7 @@
         </activity>
 
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainViews.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +33,7 @@
 
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".LoginViews.LoginActivity"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,11 +51,11 @@
         </activity>
 
         <activity
-            android:name=".RegisterActivity"
+            android:name=".RegisterViews.RegisterActivity"
             >
         </activity>
         <activity
-            android:name=".activity_forgetpassword_inputphone"
+            android:name=".FindOrChangePassword.activity_forgetpassword_inputphone"
             >
         </activity>
 
@@ -74,21 +74,21 @@
             android:theme="@style/style"
             >
         </activity>
-        <activity android:name=".activity_study_word_main"
+        <activity android:name=".Studyword.activity_study_word_main"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             >
         </activity>
-
-        <activity android:name=".activity_media_player"
+        <activity android:name=".Studyword.activity_study_word_test"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             >
         </activity>
-
-        <activity android:name=".activity_userpage_setting">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".Studyword.activity_study_word_grouplist"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            >
+        </activity>
+        <activity android:name=".activity_userpage_setting"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            >
         </activity>
     </application>
 

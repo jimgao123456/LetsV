@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.gao.letsv.R;
-import com.example.gao.letsv.fragment2ListItem;
+import com.example.gao.letsv.MainViews.fragment2ListItem;
 
 import java.util.List;
 

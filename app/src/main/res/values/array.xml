@@ -7,4 +7,29 @@
         <item>无图(极大影响体验！)</item>
     </string-array>
 
+    <array name="picture">
+        <item>@drawable/reading_castle</item>
+        <item>@drawable/reading_fire</item>
+        <item>@drawable/reading_light</item>
+        <item>@drawable/reading_magic</item>
+        <item>@drawable/reading_smoke</item>
+
+    </array>
+
+    <string-array name="pic_title">
+        <item>водка！！！！</item>
+        <item>Ула！！！！！</item>
+        <item>Защита заложников！！！！</item>
+        <item>Молотовский коктейль！！！</item>
+        <item>граната！！！</item>
+    </string-array>
+
+    <string-array name="pic_details">
+        <item>gaming time</item>
+        <item>没那么简单</item>
+        <item>就能找到</item>
+        <item>你的另一半~</item>
+        <item>我就是调试一下，别那么紧张~</item>
+    </string-array>
+
 </resources>

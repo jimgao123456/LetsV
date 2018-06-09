@@ -1,4 +1,4 @@
-package com.example.gao.letsv;
+package com.example.gao.letsv.LoginViews;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Toast;
+
+import com.example.gao.letsv.Player;
+import com.example.gao.letsv.R;
 
 import java.io.File;
 import java.io.IOException;
