@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.gao.letsv.MainViews.MainActivity;
 import com.example.gao.letsv.MyListAdatper.MyAdapter_study_main;
 import com.example.gao.letsv.MyWidget.MyScrollView;
 import com.example.gao.letsv.MyWidget.UnScrollListView;
@@ -52,9 +53,10 @@ public class activity_study_word_main extends AppCompatActivity implements View.
     private String[] words_array = null;
     private String cur_word = null;
     private int cur_word_sit = 0;
-    private String musicurl=null;
+    private String musicurl = null;
 
-    private static String requstrul="http://58.87.108.125:8888/studyword";
+    private static String requstrul = MainActivity.serverip + "studyword";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,7 +174,7 @@ public class activity_study_word_main extends AppCompatActivity implements View.
                 respondsjson = JSON.parseObject(str);
                 wordtitle.setText(Html.fromHtml(respondsjson.getString("WORD")));
                 memorymethod.setText(respondsjson.getString("MEMORYMETHOD"));
-                musicurl=respondsjson.getString("MUSIC");
+                musicurl = respondsjson.getString("MUSIC");
                 horn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -190,29 +192,32 @@ public class activity_study_word_main extends AppCompatActivity implements View.
                 });
 
 
-                JSONObject jsonohter = JSON.parseObject(respondsjson.getString("OTHER"));
-                int step = 0;
-                dataList = new ArrayList<Map<String, Object>>();
-                while (true) {
-                    String title = null;
-                    String content = null;
-                    if ((title = jsonohter.getString("title" + Integer.toString(step))) == null) {
-                        break;
+                if (respondsjson.getString("OTHER") != null) {
+                    JSONObject jsonohter = JSON.parseObject(respondsjson.getString("OTHER"));
+                    int step = 0;
+                    dataList = new ArrayList<Map<String, Object>>();
+                    while (true) {
+                        String title = null;
+                        String content = null;
+                        if ((title = jsonohter.getString("title" + Integer.toString(step))) == null) {
+                            break;
+                        }
+                        content = jsonohter.getString("content" + Integer.toString(step));
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("titleview", title);
+                        map.put("explainview", content);
+                        dataList.add(map);
+                        step++;
                     }
-                    content = jsonohter.getString("content" + Integer.toString(step));
-                    Map<String, Object> map = new HashMap<String, Object>();
-                    map.put("titleview", title);
-                    map.put("explainview", content);
-                    dataList.add(map);
-                    step++;
+                    MyAdapter_study_main adapter = new MyAdapter_study_main(getApplicationContext(), dataList, R.layout.study_word_main_listitem);
+                    wordinformation_listview.setAdapter(adapter);
+                    pDialog.cancel();
                 }
-                MyAdapter_study_main adapter = new MyAdapter_study_main(getApplicationContext(), dataList, R.layout.study_word_main_listitem);
-                wordinformation_listview.setAdapter(adapter);
-                pDialog.cancel();
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+            public void onFailure(int statusCode, Header[] headers,
+                                  byte[] responseBody, Throwable error) {
                 pDialog.setTitleText("未知错误")
                         .changeAlertType(SweetAlertDialog.ERROR_TYPE);
                 pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {

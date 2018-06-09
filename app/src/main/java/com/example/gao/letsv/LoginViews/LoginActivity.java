@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView zhaohuimima = null;
     EditText zhanghao = null;
     EditText mima = null;
-
+public static String requsturl=MainActivity.serverip+"login";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,8 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                     RequestParams params = new RequestParams();
                     params.put("username", zhanghao.getText().toString());
                     params.put("password", mima.getText().toString());
-                    String url = "http://58.87.108.125:8888/login";
-                    client.post(url, params, new AsyncHttpResponseHandler() {
+                    client.post(requsturl, params, new AsyncHttpResponseHandler() {
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

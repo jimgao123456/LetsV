@@ -75,15 +75,18 @@ public class Fragment_Homepage_2 extends Fragment {
         }
     }
 
-    //TODO:从服务器获得数据
+    //从服务器获得数据
     private JSONArray GetData(){
-        //TODO:post请求没写，需需要协助；
+        //post请求没写，需需要协助；
+        /*
+        *
+         */
         String  JSON_ARRAY_STR = "[{\"title\":\"lily\",\"date\":2018-06-01,\"url\",:www.baidu,com},{\"title\":\"lucy\",\"date\":2016-06-02,\"url\",:www.baidu,com}]";
         JSONArray jsonArray = JSONArray.parseArray(JSON_ARRAY_STR);
         return jsonArray;
     }
 
-    //TODO：解读json数组，
+    //解读json数组，
     /**
      * json格式
      * 标题：XXX String

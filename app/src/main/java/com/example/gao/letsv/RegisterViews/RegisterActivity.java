@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.gao.letsv.LoginViews.CustomVideoView;
+import com.example.gao.letsv.MainViews.MainActivity;
 import com.example.gao.letsv.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -46,6 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
     public int smsFlage = 0;//0:设置为初始化值 1：请求获取验证码 2：提交用户输入的验证码判断是否正确
     public SweetAlertDialog pDialog=null;
     private EventHandler eh;
+
+    public static String requsturl= MainActivity.serverip+"register";
     //TODO:判断是否位邮箱
     public boolean isEmail(String email) {
         String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
@@ -264,9 +267,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 params.put("username", sitele.getText().toString());
                                 params.put("password", sipassword.getText().toString());
                                 params.put("nickname",siname.getText().toString());
-                                String url = "http://58.87.108.125:8888/register";
-
-                                client.post(url, params, new AsyncHttpResponseHandler() {
+                                client.post(requsturl, params, new AsyncHttpResponseHandler() {
 
                                     @Override
                                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

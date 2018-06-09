@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public static boolean haschecklogin=false;
     public static String num="0";
 
+    public static String serverip="http://139.199.110.17:8888/";
 
     Fragment[] fragmentarray = new Fragment[4];
     @Override
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                         RequestParams params = new RequestParams();
                         params.put("username", username);
                         params.put("password", password);
-                        String url = "http://58.87.108.125:8888/login";
+                        String url = serverip+"login";
                         client.post(url, params, new AsyncHttpResponseHandler() {
 
                             @Override

@@ -30,7 +30,7 @@ public class activity_study_word_grouplist extends AppCompatActivity implements 
     private TextView wordlist = null;
     private TextView memoryview = null;
 
-    private static String requstrul = "http://58.87.108.125:8888/wordgrouplist";
+    private static String requstrul = MainActivity.serverip+"wordgrouplist";
     private JSONObject respondsjson = null;
     private String[] words_array = null;
 

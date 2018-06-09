@@ -41,7 +41,7 @@ public class Fragment_Homepage_0 extends Fragment {
         public void onClick(View view) {
 //              Intent intent = new Intent(getActivity(), Ps.class);
 //                    startActivity(intent);
-              if(MainActivity.autologin!=true) {
+              if(MainActivity.haschecklogin==true) {
 //                  String[] group1 = {"include", "conclude", "seclude", "exclude", "preclude", "occlude"};
 //                  String[] group2 = {"attain", "obtain", "retain", "sustain", "maintain"};
 //                  String[] group3 = {"resist", "consist", "subsist", "persist", "desist"};
