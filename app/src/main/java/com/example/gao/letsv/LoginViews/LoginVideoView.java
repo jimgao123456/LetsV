@@ -1,4 +1,4 @@
-package com.example.gao.letsv;
+package com.example.gao.letsv.LoginViews;
 
 import android.content.Context;
 import android.media.MediaPlayer;
@@ -6,20 +6,23 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.widget.VideoView;
 
+
+
 /**
- * Created by xjl on 2018/4/26.
+ * Created by gangchang on 2018/4/10.
  */
 
-public class CustomVideoView extends VideoView {
-    public CustomVideoView(Context context) {
+public class LoginVideoView extends VideoView {
+
+    public LoginVideoView(Context context) {
         super(context);
     }
 
-    public CustomVideoView(Context context, AttributeSet attrs) {
+    public LoginVideoView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public CustomVideoView(Context context, AttributeSet attrs, int defStyle) {
+    public LoginVideoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -42,3 +45,4 @@ public class CustomVideoView extends VideoView {
     }
 
 }
+

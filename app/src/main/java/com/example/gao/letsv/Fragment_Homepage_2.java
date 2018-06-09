@@ -1,7 +1,6 @@
 package com.example.gao.letsv;
 
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,12 +13,11 @@ import android.widget.ListView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.gao.letsv.LoginViews.activity_media_player;
 import com.example.gao.letsv.MyListAdatper.Fragment2_adapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by gangchang on 2018/4/25.

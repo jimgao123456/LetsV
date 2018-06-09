@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
 
-        <com.example.gao.letsv.LoginVideoView
+        <com.example.gao.letsv.LoginViews.LoginVideoView
             android:id="@+id/login_videoview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

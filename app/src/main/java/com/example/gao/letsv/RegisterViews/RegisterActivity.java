@@ -1,11 +1,8 @@
-package com.example.gao.letsv;
+package com.example.gao.letsv.RegisterViews;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.CountDownTimer;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -16,22 +13,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dd.CircularProgressButton;
+import com.example.gao.letsv.LoginViews.CustomVideoView;
+import com.example.gao.letsv.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.mob.MobSDK;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
-import java.sql.Time;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
-import cn.smssdk.gui.RegisterPage;
 import cz.msebera.android.httpclient.Header;
 
 public class RegisterActivity extends AppCompatActivity {

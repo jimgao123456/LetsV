@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.gao.letsv.LoginViews.LoginActivity;
 import com.example.gao.letsv.Studyword.activity_study_word_grouplist;
-import com.example.gao.letsv.Studyword.activity_study_word_main;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 /**
