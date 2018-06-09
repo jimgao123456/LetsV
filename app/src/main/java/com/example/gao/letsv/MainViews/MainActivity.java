@@ -1,4 +1,4 @@
-package com.example.gao.letsv;
+package com.example.gao.letsv.MainViews;
 
 import android.Manifest;
 import android.content.Intent;
@@ -11,11 +11,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.gao.letsv.LoginViews.LoginActivity;
+import com.example.gao.letsv.R;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.anno.NorIcons;
 import com.jpeng.jptabbar.anno.SeleIcons;
@@ -23,16 +23,13 @@ import com.jpeng.jptabbar.anno.Titles;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,9 +47,12 @@ public class MainActivity extends AppCompatActivity {
 
     public static  String username=null;
     public static String password=null;
-    public static boolean autologin=false;
+    public static String nickname=null;
+
     public static boolean haschecklogin=false;
     public static String num="0";
+
+    public static String serverip="http://139.199.110.17:8888/";
 
     Fragment[] fragmentarray = new Fragment[4];
     @Override
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                         RequestParams params = new RequestParams();
                         params.put("username", username);
                         params.put("password", password);
-                        String url = "http://58.87.108.125:8888/login";
+                        String url = serverip+"login";
                         client.post(url, params, new AsyncHttpResponseHandler() {
 
                             @Override
@@ -152,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject jsonObject = JSONObject.parseObject(str);
                                 int state = jsonObject.getInteger("state");
                                 if (state == 0) {
-                                    autologin = true;
                                     Toast.makeText(getApplicationContext(), "欢迎回来！", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Intent mainIntent = new Intent(MainActivity.this, MainActivity.class);

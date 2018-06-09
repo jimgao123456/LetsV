@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@android:style/Theme.NoTitleBar"
-    tools:context="com.example.gao.letsv.RegisterActivity"
+    tools:context="com.example.gao.letsv.RegisterViews.RegisterActivity"
     android:background="@drawable/registerbg2">
 
 

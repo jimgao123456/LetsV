@@ -1,4 +1,4 @@
-package com.example.gao.letsv;
+package com.example.gao.letsv.MainViews;
 
 
 import android.content.Intent;
@@ -8,8 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.gao.letsv.LoginViews.LoginActivity;
+import com.example.gao.letsv.R;
 import com.example.gao.letsv.Studyword.activity_study_word_grouplist;
-import com.example.gao.letsv.Studyword.activity_study_word_main;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 /**
@@ -40,7 +41,7 @@ public class Fragment_Homepage_0 extends Fragment {
         public void onClick(View view) {
 //              Intent intent = new Intent(getActivity(), Ps.class);
 //                    startActivity(intent);
-              if(MainActivity.autologin!=true) {
+              if(MainActivity.haschecklogin==true) {
 //                  String[] group1 = {"include", "conclude", "seclude", "exclude", "preclude", "occlude"};
 //                  String[] group2 = {"attain", "obtain", "retain", "sustain", "maintain"};
 //                  String[] group3 = {"resist", "consist", "subsist", "persist", "desist"};

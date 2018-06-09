@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.gao.letsv.MainViews.MainActivity;
 import com.example.gao.letsv.MyListAdatper.MyAdapter_study_test;
 import com.example.gao.letsv.MyWidget.UnScrollListView;
 import com.example.gao.letsv.R;
@@ -47,7 +48,7 @@ public class activity_study_word_test extends AppCompatActivity{
     private int cur_word_sit = 0;
     private String musicurl = null;
 
-    private static String requstrul = "http://58.87.108.125:8888/testword";
+    private static String requstrul = MainActivity.serverip+"testword";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
