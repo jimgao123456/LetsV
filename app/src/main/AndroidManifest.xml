@@ -90,9 +90,12 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             >
         </activity>
-        <activity android:name=".reading_mainActivity"
-            >
+        <activity android:name=".reading_mainActivity">
         </activity>
+        <activity android:name=".reading_FoldableListActivity"
+            android:label="Foldable list"/>
+        <activity android:name=".reading_UnfoldableDetailsActivity"
+            android:label="Unfoldable details"/>
 
     </application>
 
