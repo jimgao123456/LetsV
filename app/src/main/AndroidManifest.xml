@@ -84,10 +84,10 @@
         </activity>
         <activity android:name=".reading_mainActivity">
         </activity>
-        <activity android:name=".reading_FoldableListActivity"
-            android:label="Foldable list"/>
         <activity android:name=".reading_UnfoldableDetailsActivity"
-            android:label="Unfoldable details"/>
+            android:label="Unfoldable details">
+        </activity>
+        <activity android:name=".testView"></activity>
 
     </application>
 

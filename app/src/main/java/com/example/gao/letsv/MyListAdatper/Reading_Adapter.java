@@ -6,14 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alexvasilkov.android.commons.adapters.ItemsAdapter;
 import com.alexvasilkov.android.commons.ui.ContextHelper;
 import com.alexvasilkov.android.commons.ui.Views;
 import com.example.gao.letsv.GlideHelper;
 import com.example.gao.letsv.R;
-import com.example.gao.letsv.reading_FoldableListActivity;
 import com.example.gao.letsv.reading_UnfoldableDetailsActivity;
 import com.example.gao.letsv.reading_picture;
 
@@ -50,8 +48,6 @@ implements View.OnClickListener{
 
         if (activity instanceof reading_UnfoldableDetailsActivity) {
             ((reading_UnfoldableDetailsActivity) activity).openDetails(view, item);
-        } else if (activity instanceof reading_FoldableListActivity) {
-            Toast.makeText(activity, item.getPicTitle(), Toast.LENGTH_SHORT).show();
         }
     }
 
