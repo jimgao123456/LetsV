@@ -41,7 +41,7 @@ public class activity_study_word_grouplist extends AppCompatActivity implements 
     @Override
     protected void onCreate(Bundle saveinbundle) {
         super.onCreate(saveinbundle);
-
+        setContentView(R.layout.study_word_grouplist);
         //滑动手势相关
         gd = new GestureDetector((GestureDetector.OnGestureListener) this);
 

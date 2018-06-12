@@ -54,7 +54,7 @@ public class activity_study_word_test extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //获取本组单词词表
-        setContentView(R.layout.study_word);
+        setContentView(R.layout.study_word_test);
         Bundle bundle = getIntent().getExtras();
         words_array = bundle.getStringArray("words");
         cur_word_sit = 0;
