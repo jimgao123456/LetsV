@@ -8,7 +8,6 @@
         android:id="@+id/fragment2_item_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
         android:text="震惊，一代老ga王梓铭竟然公然强奸村头老母猪未遂"
         android:textSize="20dp" />
 
@@ -25,7 +24,6 @@
         android:id="@+id/fragment2_item_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:textColor="@color/gray_8f"
         android:typeface="monospace"
         android:text="2016-11-03" />

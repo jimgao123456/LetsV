@@ -4,21 +4,26 @@ package com.example.gao.letsv.MainViews;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.example.gao.letsv.LoginViews.activity_media_player;
 import com.example.gao.letsv.MyListAdatper.Fragment2_adapter;
 import com.example.gao.letsv.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by gangchang on 2018/4/25.
@@ -27,8 +32,13 @@ import java.util.List;
 public class Fragment_Homepage_2 extends Fragment {
 
     private ListView listView;
-    private List<fragment2ListItem> ItemList = new ArrayList<fragment2ListItem>();
+    private List<Map<String, Object>> ItemList = new ArrayList<Map<String, Object>>();
     private String jsonString;
+    private FloatingSearchView FloatingSearchViewReal = null;
+    private FloatingSearchView FloatingSearchViewHidden = null;
+    private  View curtainview=null;
+    private static int screenHeight = 0;
+
     public Fragment_Homepage_2() {
         // Required empty public constructor
     }
@@ -39,20 +49,38 @@ public class Fragment_Homepage_2 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_homepage_2, container, false);
-        listView =(ListView) listView.findViewById(R.id.fragment2_list_view);
-        init_item();
-        Fragment2_adapter adapter = new Fragment2_adapter(getActivity(),R.layout.fragement2_list_item,ItemList);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        WindowManager manager = getActivity().getWindowManager();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(outMetrics);
+        screenHeight = outMetrics.heightPixels;
+        listView = (ListView) view.findViewById(R.id.fragment2_list_view);
+        curtainview=(View)view.findViewById(R.id.fragment2_floating_search_view_Real_mm);
+        FloatingSearchViewHidden = view.findViewById(R.id.fragment2_floating_search_view_Hidden);
+        FloatingSearchViewHidden.setOnHomeActionClickListener(new FloatingSearchView.OnHomeActionClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //position 点击的Item位置，从0开始算
-                Intent intent=new Intent(getActivity(),activity_media_player.class);
-                intent.putExtra("url",ItemList.get(position).getUrl());//传递给下一个Activity的值
-                intent.putExtra("title",ItemList.get(position).getTitle());//传递给下一个Activity的值
-                startActivity(intent);//启动Activity
+            public void onHomeClicked() {
+                ViewGroup.LayoutParams params = FloatingSearchViewHidden.getLayoutParams();
+                params.height = 0;
+                FloatingSearchViewHidden.setLayoutParams(params);
+                FloatingSearchViewReal.setVisibility(View.VISIBLE);
+                curtainview.setVisibility(View.VISIBLE);
             }
         });
+        FloatingSearchViewReal = view.findViewById(R.id.fragment2_floating_search_view_Real);
+        curtainview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //int screenWidth = outMetrics.widthPixels;
+                ViewGroup.LayoutParams params = FloatingSearchViewHidden.getLayoutParams();
+                params.height = screenHeight;
+                FloatingSearchViewHidden.setLayoutParams(params);
+                FloatingSearchViewReal.setVisibility(View.INVISIBLE);
+                curtainview.setVisibility(View.INVISIBLE);
+            }
+        });
+        init_item();
+        Fragment2_adapter adapter = new Fragment2_adapter(getActivity(), R.layout.fragement2_list_item, ItemList);
+        listView.setAdapter(adapter);
         initView(view);
         return view;
     }
@@ -68,31 +96,38 @@ public class Fragment_Homepage_2 extends Fragment {
         //添加数据
         for (Object obj : jsonArray) {
             JSONObject jsonObject = (JSONObject) obj;
-            ItemList.add(new fragment2ListItem((String) jsonObject.getString("title"), (String) jsonObject.getString("date"),
-                    (String) jsonObject.getString("url")));
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("title", jsonObject.getString("title"));
+            map.put("data", jsonObject.getString("data"));
+            map.put("url", jsonObject.getString("url"));
+            ItemList.add(map);
+//
+//            ItemList.add(new fragment2ListItem((String) jsonObject.getString("title"), (String) jsonObject.getString("date"),
+//                    (String) jsonObject.getString("url")));
 //        fragment2ListItem one= new fragment2ListItem("我就瞎几把测一测哈哈哈哈哈哈哈哈哈", "2016-2-12");
 //        ItemList.add(one);
         }
     }
 
     //从服务器获得数据
-    private JSONArray GetData(){
+    private JSONArray GetData() {
         //post请求没写，需需要协助；
         /*
         *
          */
-        String  JSON_ARRAY_STR = "[{\"title\":\"lily\",\"date\":2018-06-01,\"url\",:www.baidu,com},{\"title\":\"lucy\",\"date\":2016-06-02,\"url\",:www.baidu,com}]";
+        String JSON_ARRAY_STR = "[{\"title\":\"lily\",\"data\":\"2018-06-01\",\"url\":\"www.baidu,com\"},{\"title\":\"lucy\",\"data\":\"2016-06-02\",\"url\":\"www.baidu,com\"}]";
         JSONArray jsonArray = JSONArray.parseArray(JSON_ARRAY_STR);
         return jsonArray;
     }
 
     //解读json数组，
+
     /**
      * json格式
      * 标题：XXX String
      * 日期：2017-16-XX String
      */
-    private void read_json(JSONArray jsonArray){
+    private void read_json(JSONArray jsonArray) {
         jsonString = JSONArray.toJSONString(jsonArray);
     }
 }
