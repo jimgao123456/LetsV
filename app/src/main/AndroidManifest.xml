@@ -89,6 +89,13 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             >
         </activity>
+        <activity android:name=".reading_mainActivity">
+        </activity>
+        <activity android:name=".reading_UnfoldableDetailsActivity"
+            android:label="Unfoldable details">
+        </activity>
+        <activity android:name=".testView"></activity>
+
     </application>
 
 </manifest>
