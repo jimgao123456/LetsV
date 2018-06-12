@@ -1,4 +1,4 @@
-package com.example.gao.letsv.MainViews;
+package com.example.gao.letsv.MainViews.Fragment0Code;
 
 
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.gao.letsv.LoginViews.LoginActivity;
+import com.example.gao.letsv.MainViews.MainActivity;
 import com.example.gao.letsv.R;
 import com.example.gao.letsv.Studyword.activity_study_word_grouplist;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;

@@ -1,4 +1,4 @@
-package com.example.gao.letsv;
+package com.example.gao.letsv.MainViews.Fragment2Code;
 
 /**
  * Created by xjl on 2018/6/5.
@@ -20,6 +20,7 @@ public class Player implements OnBufferingUpdateListener,
     public MediaPlayer mediaPlayer;
     private SeekBar skbProgress;
     private Timer mTimer=new Timer();
+
     public Player(SeekBar skbProgress)
     {
         this.skbProgress=skbProgress;
@@ -77,29 +78,42 @@ public class Player implements OnBufferingUpdateListener,
             mediaPlayer.prepare();//prepare之后自动播放
             //mediaPlayer.start();
         } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
 
+    public void onDestroy(){
+        if(mediaPlayer!=null){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer=null;
+        }
+    }
     public void pause()
     {
-        mediaPlayer.pause();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
     }
 
     public void stop()
     {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+
+            try {
+                mediaPlayer.pause();
+                mediaPlayer.seekTo(0);
+                skbProgress.setProgress(0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
         }
     }
 

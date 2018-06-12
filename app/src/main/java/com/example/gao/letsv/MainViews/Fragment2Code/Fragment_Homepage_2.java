@@ -1,4 +1,4 @@
-package com.example.gao.letsv.MainViews;
+package com.example.gao.letsv.MainViews.Fragment2Code;
 
 
 import android.content.Intent;
@@ -12,12 +12,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.arlib.floatingsearchview.FloatingSearchView;
-import com.example.gao.letsv.LoginViews.activity_media_player;
 import com.example.gao.letsv.MyListAdatper.Fragment2_adapter;
 import com.example.gao.letsv.R;
 
@@ -127,7 +125,7 @@ public class Fragment_Homepage_2 extends Fragment {
         /*
         *
          */
-        String JSON_ARRAY_STR = "[{\"title\":\"lily\",\"data\":\"2018-06-01\",\"url\":\"www.baidu,com\"},{\"title\":\"lucy\",\"data\":\"2016-06-02\",\"url\":\"www.baidu,com\"}]";
+        String JSON_ARRAY_STR = "[{\"title\":\"lily\",\"data\":\"2018-06-01\",\"url\":\"http://ww.danmu.fm:233/%E3%81%84%E3%81%91%E3%81%AA%E3%81%84%E3%83%9C%E3%83%BC%E3%83%80%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%B3.m4a\"},{\"title\":\"lucy\",\"data\":\"2016-06-02\",\"url\":\"www.baidu,com\"}]";
         JSONArray jsonArray = JSONArray.parseArray(JSON_ARRAY_STR);
         return jsonArray;
     }

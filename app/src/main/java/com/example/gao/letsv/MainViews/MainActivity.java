@@ -14,7 +14,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,10 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.gao.letsv.LoginViews.LoginActivity;
+import com.example.gao.letsv.MainViews.Fragment0Code.Fragment_Homepage_0;
+import com.example.gao.letsv.MainViews.Fragment1Code.Fragment_Homepage_1;
+import com.example.gao.letsv.MainViews.Fragment2Code.Fragment_Homepage_2;
+import com.example.gao.letsv.MainViews.Fragment3Code.Fragment_Homepage_3;
 import com.example.gao.letsv.R;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.anno.NorIcons;

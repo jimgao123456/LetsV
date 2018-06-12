@@ -10,8 +10,9 @@
             android:color="@color/white" />
         <!-- 圆角的幅度 -->
         <corners
-            android:topLeftRadius="20dip"
-            android:topRightRadius="20dip"/>
-            <!--android:bottomLeftRadius="15dip"-->
-            <!--android:bottomRightRadius="15dip"-->
+            android:topLeftRadius="10dip"
+            android:topRightRadius="10dip"
+            android:bottomLeftRadius="15dip"
+            android:bottomRightRadius="15dip"
+            />
 </shape>

@@ -72,11 +72,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onDestroy();
         SMSSDK.unregisterEventHandler(eh);
     }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        SMSSDK.unregisterEventHandler(eh);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
