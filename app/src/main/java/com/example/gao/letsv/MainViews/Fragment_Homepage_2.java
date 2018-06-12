@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -81,6 +82,17 @@ public class Fragment_Homepage_2 extends Fragment {
         init_item();
         Fragment2_adapter adapter = new Fragment2_adapter(getActivity(), R.layout.fragement2_list_item, ItemList);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String title_selected = (String)ItemList.get(i).get("title");
+                String url_selected = (String)ItemList.get(i).get("url");
+                Intent intent = new Intent(getActivity(),activity_media_player.class);
+                intent.putExtra("title",title_selected);
+                intent.putExtra("url",url_selected);
+                startActivity(intent);
+            }
+        });
         initView(view);
         return view;
     }

@@ -28,6 +28,8 @@ public class Fragment2_adapter extends ArrayAdapter {
         this.context=context;
         dataList=objects;
     }
+
+
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         fragment2ListItem util=null;
@@ -64,9 +66,11 @@ public class Fragment2_adapter extends ArrayAdapter {
         util.url.setText((String) map.get("url"));
         return view;
     }
+
+    /**
+     * 内部类，用于辅助适配
+     */
     class fragment2ListItem {
         TextView title,data,url;
-
     }
-
 }

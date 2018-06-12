@@ -66,6 +66,13 @@
             android:theme="@style/style"
             >
         </activity>
+
+        <activity
+            android:name=".LoginViews.activity_media_player"
+            android:theme="@style/Theme.Design.NoActionBar"
+            >
+        </activity>
+
         <activity android:name=".Studyword.activity_study_word_main"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             >
