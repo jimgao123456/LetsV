@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.squareup.picasso.Picasso;
 
 public class GlideHelper {
 
@@ -14,10 +15,12 @@ public class GlideHelper {
 
     public static void loadPaintingImage(ImageView image, Painting painting) {
         Glide.with(image.getContext().getApplicationContext())
-                .load(painting.getImageId())
+                .load(painting.getImageUrl())
                 .dontAnimate()
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(image);
+        //Picasso.get().load(painting.getImageUrl()).into(image);
+
     }
 
 }

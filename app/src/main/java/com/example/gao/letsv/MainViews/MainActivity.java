@@ -235,15 +235,12 @@ public class MainActivity extends AppCompatActivity {
         SpannableBuilder builder = new SpannableBuilder(this);
         builder
                 .createStyle().setFont(Typeface.DEFAULT_BOLD).apply()
-                .append("Year").append(": ")
+                .append(painting.getTitle()).append("\n")
                 .clearStyle()
-                .append(painting.getYear()).append("\n")
-                .createStyle().setFont(Typeface.DEFAULT_BOLD).apply()
-                .append("Location").append(": ")
-                .clearStyle()
-                .append(painting.getLocation());
+                .createStyle().setFont(Typeface.NORMAL).apply()
+                .append(painting.getContext())
+                .clearStyle();
         description.setText(builder.build());
-
         unfoldableView.unfold(coverView, detailsLayout);
     }
 
@@ -288,6 +285,7 @@ public class MainActivity extends AppCompatActivity {
                             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                                 // Toast.makeText(LoginActivity.this, "错误", Toast.LENGTH_SHORT).show();
                                 findViewById(R.id.activity_main_layout).setClickable(true);
+                                username=null;
                                 Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
                                 MainActivity.this.startActivity(mainIntent);
                             }

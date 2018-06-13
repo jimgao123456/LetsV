@@ -19,12 +19,14 @@ import com.example.gao.letsv.R;
 
 
 import java.util.Arrays;
+import java.util.List;
 
 public class PaintingsAdapter extends ItemsAdapter<Painting, PaintingsAdapter.ViewHolder>
         implements View.OnClickListener {
 
-    public PaintingsAdapter(Context context) {
-        setItemsList(Arrays.asList(Painting.getAllPaintings(context.getResources())));
+    public PaintingsAdapter(List<Painting> paintingList) {
+       // setItemsList(Arrays.asList(Painting.getAllPaintings(context.getResources())));
+        setItemsList(paintingList);
     }
 
     @Override

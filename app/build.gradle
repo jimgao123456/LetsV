@@ -64,7 +64,8 @@ dependencies {
     compile 'com.android.support:support-v4:26.3.0'
     compile 'com.alexvasilkov:android-commons:2.0.2'
     compile 'com.github.arimorty:floatingsearchview:2.1.1'
-
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    compile 'com.contrarywind:Android-PickerView:4.1.4'
     //MOB
     apply plugin: "com.mob.sdk"
 
