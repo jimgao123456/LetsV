@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -19,17 +20,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alexvasilkov.android.commons.texts.SpannableBuilder;
+import com.alexvasilkov.android.commons.ui.Views;
+import com.alexvasilkov.foldablelayout.UnfoldableView;
 import com.alibaba.fastjson.JSONObject;
 import com.example.gao.letsv.LoginViews.LoginActivity;
 import com.example.gao.letsv.MainViews.Fragment0Code.Fragment_Homepage_0;
 import com.example.gao.letsv.MainViews.Fragment1Code.Fragment_Homepage_1;
+import com.example.gao.letsv.MainViews.Fragment1Code.GlideHelper;
+import com.example.gao.letsv.MainViews.Fragment1Code.Painting;
 import com.example.gao.letsv.MainViews.Fragment2Code.Fragment_Homepage_2;
 import com.example.gao.letsv.MainViews.Fragment3Code.Fragment_Homepage_3;
 import com.example.gao.letsv.R;
 import com.jpeng.jptabbar.JPTabBar;
+import com.jpeng.jptabbar.OnTabSelectListener;
 import com.jpeng.jptabbar.anno.NorIcons;
 import com.jpeng.jptabbar.anno.SeleIcons;
 import com.jpeng.jptabbar.anno.Titles;
@@ -72,7 +81,15 @@ public class MainActivity extends AppCompatActivity {
     public static int screenHeight =0;
     public static int screenWidth = 0;
 
+    private static int nowfragmentindex=0;
+
     public static String serverip = "http://139.199.110.17:8888/";
+
+
+    //fragment1--真题需要的一些控件
+    public static UnfoldableView unfoldableView=null;
+    public static View listTouchInterceptor=null;
+    public static View detailsLayout=null;
 
     Fragment[] fragmentarray = new Fragment[4];
 
@@ -148,6 +165,17 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         mVp.setAdapter(adapter);
         mTabBar.setContainer(mVp);
+        mTabBar.setTabListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int index) {
+                nowfragmentindex=index;
+            }
+
+            @Override
+            public boolean onInterruptSelect(int index) {
+                return false;
+            }
+        });
         View middleView = mTabBar.getMiddleView();
         middleView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,6 +212,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (nowfragmentindex==1 && unfoldableView != null
+                && (unfoldableView.isUnfolded() || unfoldableView.isUnfolding())) {
+            unfoldableView.foldBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    public void openDetails(View coverView, Painting painting) {
+        final ImageView image = Views.find(detailsLayout, R.id.homepage_f1_details_image);
+        final TextView title = Views.find(detailsLayout, R.id.homepage_f1_details_title);
+        final TextView description = Views.find(detailsLayout, R.id.homepage_f1_details_text);
+
+        GlideHelper.loadPaintingImage(image, painting);
+        title.setText(painting.getTitle());
+
+        SpannableBuilder builder = new SpannableBuilder(this);
+        builder
+                .createStyle().setFont(Typeface.DEFAULT_BOLD).apply()
+                .append("Year").append(": ")
+                .clearStyle()
+                .append(painting.getYear()).append("\n")
+                .createStyle().setFont(Typeface.DEFAULT_BOLD).apply()
+                .append("Location").append(": ")
+                .clearStyle()
+                .append(painting.getLocation());
+        description.setText(builder.build());
+
+        unfoldableView.unfold(coverView, detailsLayout);
     }
 
     @Override
