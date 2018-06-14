@@ -234,7 +234,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     pDialog = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.PROGRESS_TYPE);
                     pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-                    pDialog.setTitleText("Loading");
+                    pDialog.setTitleText("正在注册");
                     pDialog.setCancelable(false);
                     pDialog.show();
                     // 检测验证码

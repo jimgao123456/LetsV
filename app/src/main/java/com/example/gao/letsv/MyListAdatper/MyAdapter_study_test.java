@@ -48,7 +48,7 @@ public class MyAdapter_study_test extends BaseAdapter {
 
     @Override
     public String getItem(int index) {
-        return dataList.get(index).get("right").toString();
+        return dataList.get(index).get("correct").toString();
     }
 
     @Override

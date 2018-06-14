@@ -11,7 +11,7 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="12dp"
         android:fadeScrollbars="true"
-    android:overScrollMode="never"
+        android:overScrollMode="never"
         android:listSelector="@android:color/transparent"
         android:padding="12dp"
         android:scrollbarStyle="outsideOverlay"
@@ -32,7 +32,7 @@
         <ImageView
             android:id="@+id/homepage_f1_details_image"
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="200dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop" />
 
@@ -62,7 +62,7 @@
         <TextView
             android:id="@+id/homepage_f1_details_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
@@ -76,6 +76,8 @@
     <com.alexvasilkov.foldablelayout.UnfoldableView
         android:id="@+id/homepage_f1_unfoldable_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        />
+
 
 </FrameLayout>

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -29,6 +30,7 @@ public class activity_study_word_grouplist extends AppCompatActivity implements 
     private TextView titleview = null;
     private TextView wordlist = null;
     private TextView memoryview = null;
+    private LinearLayout linearLayout=null;
 
     private static String requstrul = MainActivity.serverip+"wordgrouplist";
     private JSONObject respondsjson = null;
@@ -43,13 +45,17 @@ public class activity_study_word_grouplist extends AppCompatActivity implements 
         super.onCreate(saveinbundle);
         setContentView(R.layout.study_word_grouplist);
         //滑动手势相关
-        gd = new GestureDetector((GestureDetector.OnGestureListener) this);
+        gd = new GestureDetector(this,this);
 
         titleview = (TextView) findViewById(R.id.study_word_grouplist_grouptitle);
 
         wordlist = (TextView) findViewById(R.id.study_word_grouplist_groupwords);
 
         memoryview = (TextView) findViewById(R.id.study_word_grouplist_Memory);
+
+        linearLayout=(LinearLayout)findViewById(R.id.study_word_linearlayout);
+        //linearLayout.setOnTouchListener(this);
+       iniData();
     }
 
     private void iniData() {
@@ -67,13 +73,13 @@ public class activity_study_word_grouplist extends AppCompatActivity implements 
          */
         SweetAlertDialog pDialog = new SweetAlertDialog(activity_study_word_grouplist.this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setTitleText("Loading");
+        pDialog.setTitleText("正在拉取列表");
         pDialog.setCancelable(false);
         pDialog.show();
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        //params.put("word", word);
+        params.put("username", MainActivity.username);
         String url = requstrul;
         client.post(url, params, new AsyncHttpResponseHandler() {
 
@@ -81,9 +87,9 @@ public class activity_study_word_grouplist extends AppCompatActivity implements 
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String str = new String(responseBody);
                 respondsjson = JSON.parseObject(str);
-                wordlist.setText(respondsjson.getString("WORDS"));
-                memoryview.setText(respondsjson.getString("MEMORYMETHOD"));
-                words_array = respondsjson.getString("WORDS").split("\r\n");
+                wordlist.setText(respondsjson.getString("words"));
+                memoryview.setText(respondsjson.getString("memory"));
+                words_array = respondsjson.getString("word").split(" ");
                 pDialog.cancel();
             }
 
@@ -101,7 +107,12 @@ public class activity_study_word_grouplist extends AppCompatActivity implements 
         });
 
     }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        gd.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
 
+    }
     private static String foematInteger(int num) {
         char[] val = String.valueOf(num).toCharArray();
         int len = val.length;
@@ -153,21 +164,23 @@ public class activity_study_word_grouplist extends AppCompatActivity implements 
 
     }
 
-    @Override
+
     //e1  The first down motion event that started the fling.手势起点的移动事件
 //e2  The move motion event that triggered the current onFling.当前手势点的移动事件
 //velocityX   The velocity of this fling measured in pixels per second along the x axis.每秒x轴方向移动的像素
 //velocityY   The velocity of this fling measured in pixels per second along the y axis.每秒y轴方向移动的像素
+    @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 
-        if (e1.getX() - e2.getX() > 100 && Math.abs(velocityX) > 50) {
+        if (e1.getX() - e2.getX() > 200 && Math.abs(velocityX) > 50) {
             //向左滑,开始学习
             if (words_array != null) {
                 Intent intent = new Intent(this, activity_study_word_main.class);
                 Bundle bundle = new Bundle();
                 bundle.putStringArray("words", words_array);
+                intent.putExtras(bundle);
                 startActivity(intent);
-                finish();
+              finish();
             }
         }
         return false;

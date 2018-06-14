@@ -11,10 +11,14 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,6 +40,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,24 +50,113 @@ import cz.msebera.android.httpclient.Header;
 
 public class Fragment_Homepage_1 extends Fragment {
 
-    private  ListView listView;
-    private static String requstrul = MainActivity.serverip + "reading";
+    private ListView listView;
+    private static String requstrul = MainActivity.serverip + "passagelist";
+    private View rootView;
+    private static boolean finishload = false;
+    private TextView unfoldTextview = null;
+
+
+    //滑动处理相关
+    private int mMove;
+    private int yDown, yMove;
+    private int i = 0;
+    private static int unfoldtextheigh = 0;
+    private int unfoldtext_positonY_min = 0;
+    private int unfoldtext_positonY_max = 0;
 
     public Fragment_Homepage_1() {
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (null == rootView) {
+            View view = inflater.inflate(R.layout.fragment_homepage_1, null);
+            rootView = view;
+            if (getUserVisibleHint()) {
+                initView(view);
+                inilistItem(view);
+            }
+            MainActivity.MyTouchListener myTouchListener = new MainActivity.MyTouchListener() {
+                @Override
+                public void onTouchEvent(MotionEvent event) {
+                    if (finishload) {
+                        int y = (int) event.getY();
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                yDown = y;
+                                break;
+                            case MotionEvent.ACTION_MOVE:
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                break;
+                        }
+                    }
+                }
+            };
+
+            // 将myTouchListener注册到分发列表
+            ((MainActivity) this.getActivity()).registerMyTouchListener(myTouchListener);
+        } else {
+            ViewGroup parent = (ViewGroup) rootView.getParent();
+            if (parent != null) {
+                parent.removeView(rootView);
+            }
+        }
+
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_homepage_1, container, false);
-        initView(view);
-        inilistItem(view);
-        return view;
+
+
+        return rootView;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        /**
+         * 判断此Fragment是否正在前台显示
+         * 通过判断就知道是否要进行数据加载了
+         */
+        if (isVisibleToUser && isVisible()) {
+            if (!finishload) {
+                initView(rootView);
+                inilistItem(rootView);
+            }
+        }
+        super.setUserVisibleHint(isVisibleToUser);
     }
 
     private void initView(View view) {
+        ViewTreeObserver vto = view.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new  ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                //在这里获取View及其子控件的坐标和长宽信息
+                unfoldtext_positonY_min = (int) unfoldTextview.getY();
+                unfoldtext_positonY_max = (int) unfoldTextview.getY() + unfoldTextview.getHeight();
+            }
+        });
+        unfoldTextview = view.findViewById(R.id.homepage_f1_details_text);
+        unfoldTextview.setClickable(true);
+
+        unfoldTextview.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                unfoldTextview.scrollTo(0, 0);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                unfoldtextheigh = unfoldTextview.getLineHeight() * unfoldTextview.getLineCount() - unfoldTextview.getHeight();
+            }
+        });
+
+
         MainActivity.listTouchInterceptor = view.findViewById(R.id.homepage_f1_touch_interceptor_view);
         MainActivity.listTouchInterceptor.setClickable(false);
 
@@ -70,14 +164,56 @@ public class Fragment_Homepage_1 extends Fragment {
         MainActivity.detailsLayout.setVisibility(View.INVISIBLE);
 
         MainActivity.unfoldableView = view.findViewById(R.id.homepage_f1_unfoldable_view);
+        MainActivity.unfoldableView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (finishload) {
+                    int y = (int) event.getY();
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                         // yDown = y;
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            yMove = y;
+                            if (unfoldtext_positonY_min < yDown && unfoldtext_positonY_max > yDown) {
+                                if ((yMove - yDown) < 0) {
+                                    //向上滑动，文本向上滚动，Y增加
+                                    i = yDown-yMove;
+                                    if (unfoldTextview.getScrollY() + i +100>unfoldtextheigh)
+                                        //快要到头了，不能滚出去
+                                            unfoldTextview.scrollTo(0, unfoldtextheigh+100);
+                                    else
+                                        unfoldTextview.scrollBy(0, i);
+                                } else {
+                                    //向下滑动，文本向下滚动Y减少
+                                    i = yDown-yMove;
+                                    if (unfoldTextview.getScrollY() + i < 0)
+                                        //快要到头了，不能滚出去
+                                        unfoldTextview.scrollTo(0, 0);
+                                    else
+                                        unfoldTextview.scrollBy(0, i);
+                                }
+                                //rootView.getParent().requestDisallowInterceptTouchEvent(false);
+                                return true;
+                            }
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            break;
+                    }
+                }
+                return false;
+            }
 
-        Bitmap glance = BitmapFactory.decodeResource(getResources(), R.drawable.fill_blank);
+        });
+
+
+        Bitmap glance = BitmapFactory.decodeResource(getResources(), R.drawable.dashuibi);
         MainActivity.unfoldableView.setFoldShading(new GlanceFoldShading(glance));
 
         MainActivity.unfoldableView.setOnFoldingListener(new UnfoldableView.SimpleFoldingListener() {
             @Override
             public void onUnfolding(UnfoldableView unfoldableView) {
-                MainActivity. listTouchInterceptor.setClickable(true);
+                MainActivity.listTouchInterceptor.setClickable(true);
                 MainActivity.detailsLayout.setVisibility(View.VISIBLE);
             }
 
@@ -93,16 +229,15 @@ public class Fragment_Homepage_1 extends Fragment {
 
             @Override
             public void onFoldedBack(UnfoldableView unfoldableView) {
-                MainActivity. listTouchInterceptor.setClickable(false);
-                MainActivity. detailsLayout.setVisibility(View.INVISIBLE);
+                MainActivity.listTouchInterceptor.setClickable(false);
+                MainActivity.detailsLayout.setVisibility(View.INVISIBLE);
             }
         });
 
     }
 
 
-
-    private  void inilistItem(View view){
+    private void inilistItem(View view) {
         /*
         *url=http://58.87.108.125:8888/reading
         *请求
@@ -118,13 +253,13 @@ public class Fragment_Homepage_1 extends Fragment {
         listView = view.findViewById(R.id.homepage_f1_list_view);
         SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setTitleText("Loading");
+        pDialog.setTitleText("正在拉取阅读列表");
         pDialog.setCancelable(false);
         pDialog.show();
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-       // params.put("word", word);
+        // params.put("word", word);
         String url = requstrul;
         client.post(url, params, new AsyncHttpResponseHandler() {
 
@@ -132,24 +267,34 @@ public class Fragment_Homepage_1 extends Fragment {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String str = new String(responseBody);
                 JSONObject respondsjson = JSON.parseObject(str);
-                int step=0;
-                List<Painting> listitem=new ArrayList<Painting>();
-                while(true){
-                    String title=null;
-                    String url=null;
-                    String context=null;
-                    if((title=respondsjson.getString("title"+Integer.toString(step)))!=null){
-                        url=respondsjson.getString("url"+Integer.toString(step));
-                        context=respondsjson.getString("context"+Integer.toString(step));
+                int step = 0;
+                List<Painting> listitem = new ArrayList<Painting>();
+                while (true) {
+                    String title = null;
+                    String url = null;
+                    String date = null;
+                    String wordNumber = null;
+                    String passageId = null;
+                    String type = null;
+
+                    if ((respondsjson.getString(Integer.toString(step))) != null) {
+                        JSONObject jsonObject = JSONObject.parseObject(respondsjson.getString(Integer.toString(step)));
+                        date = jsonObject.getString("date");
+                        wordNumber = jsonObject.getString("wordNumber");
+                        url = MainActivity.serverip + jsonObject.getString("imageUrl").substring(1);
+                        passageId = jsonObject.getString("passageId");
+                        title = jsonObject.getString("title");
+                        type = jsonObject.getString("type");
                         step++;
-                        Painting paintings = new Painting(url,title,context);
+                        Painting paintings = new Painting(url, title, wordNumber, passageId, type, date);
                         listitem.add(paintings);
-                    }else{
+                    } else {
                         break;
                     }
                 }
                 listView.setAdapter(new PaintingsAdapter(listitem));
                 pDialog.cancel();
+                finishload = true;
             }
 
             @Override
@@ -157,6 +302,7 @@ public class Fragment_Homepage_1 extends Fragment {
                                   byte[] responseBody, Throwable error) {
                 pDialog.setTitleText("未知错误")
                         .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                finishload = false;
             }
         });
 

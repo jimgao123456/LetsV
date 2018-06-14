@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#181e1e"
+        android:layout_weight="0.9"
         android:overScrollMode="never"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -59,7 +60,7 @@
                 android:id="@+id/study_word_test_listitem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginVertical="100dp"
                 android:layout_weight="2"
                 android:divider="@drawable/list_item_divide"
                 android:dividerHeight="1px"
@@ -91,8 +92,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_weight="4"
-        android:background="#282d30"
+        android:layout_weight="0.1"
+        android:background="#181e1e"
         android:gravity="bottom"
         android:orientation="vertical">
 
@@ -100,7 +101,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="#282d30"
             android:layout_gravity="bottom"
             android:gravity="center"
@@ -108,18 +109,18 @@
 
             <ImageView
                 android:id="@+id/study_word_test_button_unknow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@drawable/shape_main_list_bg"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/word_unknow" />
 
             <ImageView
                 android:id="@+id/study_word_test_button_know"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@drawable/shape_main_list_bg"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/word_know" />

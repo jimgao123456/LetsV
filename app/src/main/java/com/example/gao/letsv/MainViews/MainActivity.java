@@ -1,4 +1,26 @@
 package com.example.gao.letsv.MainViews;
+/**
+ * ......................我佛慈悲....................
+ * ......................_oo0oo_.....................
+ * .....................o8888888o....................
+ * .....................88" . "88....................
+ * .....................(| -_- |)....................
+ * .....................0\  =  /0....................
+ * ...................___/`---'\___..................
+ * ..................' \\|     |// '.................
+ * ................./ \\|||  :  |||// \..............
+ * .............../ _||||| -卍-|||||- \..............
+ * ..............|   | \\\  -  /// |   |.............
+ * ..............| \_|  ''\---/''  |_/ |.............
+ * ..............\  .-\__  '-'  ___/-. /.............
+ * ............___'. .'  /--.--\  `. .'___...........
+ * .........."" '<  `.___\_<|>_/___.' >' ""..........
+ * ........| | :  `- \`.;`\ _ /`;.`/ - ` : | |.......
+ * ........\  \ `_.   \_ __\ /__ _/   .-` /  /.......
+ * ....=====`-.____`.___ \_____/___.-`___.-'=====....
+ * ......................`=---='.....................
+ * ..................佛祖开光 ,永无BUG................
+ */
 
 import android.Manifest;
 import android.content.Intent;
@@ -15,7 +37,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -37,6 +61,9 @@ import com.example.gao.letsv.MainViews.Fragment1Code.Painting;
 import com.example.gao.letsv.MainViews.Fragment2Code.Fragment_Homepage_2;
 import com.example.gao.letsv.MainViews.Fragment3Code.Fragment_Homepage_3;
 import com.example.gao.letsv.R;
+import com.example.gao.letsv.Studyword.activity_study_word_grouplist;
+import com.example.gao.letsv.Studyword.activity_study_word_test;
+import com.jpeng.jptabbar.BadgeDismissListener;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.OnTabSelectListener;
 import com.jpeng.jptabbar.anno.NorIcons;
@@ -56,9 +83,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import cz.msebera.android.httpclient.Header;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnTabSelectListener {
     @Titles
     private static final String[] mTitles = {"单词", "阅读", "听说", "我"};
 
@@ -76,20 +104,24 @@ public class MainActivity extends AppCompatActivity {
     public static String password = null;
     public static String nickname = null;
 
-    public static boolean haschecklogin = false;
+    public static boolean haschecklogin = false;//控制只在程序第一次运行的时候登录
+    public static boolean state_login = false;//控制是否登录成功
     public static String num = "0";
-    public static int screenHeight =0;
+    public static int screenHeight = 0;
     public static int screenWidth = 0;
+    public static int nowplane = 0;
 
-    private static int nowfragmentindex=0;
+    private static int nowfragmentindex = 0;
 
     public static String serverip = "http://139.199.110.17:8888/";
 
+    // 保存MyTouchListener接口的列表
+    private ArrayList<MyTouchListener> myTouchListeners = new ArrayList<MainActivity.MyTouchListener>();
 
     //fragment1--真题需要的一些控件
-    public static UnfoldableView unfoldableView=null;
-    public static View listTouchInterceptor=null;
-    public static View detailsLayout=null;
+    public static UnfoldableView unfoldableView = null;
+    public static View listTouchInterceptor = null;
+    public static View detailsLayout = null;
 
     Fragment[] fragmentarray = new Fragment[4];
 
@@ -98,8 +130,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mVp = (ViewPager) findViewById(R.id.homepage_vp);
+        mVp.setOffscreenPageLimit(0);
         mTabBar = (JPTabBar) findViewById(R.id.tabbar);
-        toptext=(EditText)findViewById(R.id.homepage_edittext);
+
+        //  mTabBar.setTabListener(this);
+        toptext = (EditText) findViewById(R.id.homepage_edittext);
         findViewById(R.id.activity_main_layout).setClickable(false);
         List<String> permissionsNeeded = new ArrayList<String>();
 
@@ -155,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
         WindowManager manager = this.getWindowManager();
         DisplayMetrics outMetrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(outMetrics);
-         screenHeight = outMetrics.heightPixels;
+        screenHeight = outMetrics.heightPixels;
         screenWidth = outMetrics.widthPixels;
         //切换
         fragmentarray[0] = new Fragment_Homepage_0();
@@ -165,28 +200,18 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         mVp.setAdapter(adapter);
         mTabBar.setContainer(mVp);
-        mTabBar.setTabListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int index) {
-                nowfragmentindex=index;
-            }
-
-            @Override
-            public boolean onInterruptSelect(int index) {
-                return false;
-            }
-        });
+        mTabBar.setTabListener(this);
         View middleView = mTabBar.getMiddleView();
         middleView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 用于PopupWindow的View
-                View contentView= LayoutInflater.from(getApplicationContext()).inflate(R.layout.search_for_words, null);
+                View contentView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.search_for_words, null);
                 // 创建PopupWindow对象，其中：
                 // 第一个参数是用于PopupWindow中的View，第二个参数是PopupWindow的宽度，
                 // 第三个参数是PopupWindow的高度，第四个参数指定PopupWindow能否获得焦点
 
-                PopupWindow window=new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT,  ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                PopupWindow window = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
                 //window.setContentView(contentView);
                 NiceSpinner niceSpinner = null;
                 niceSpinner = (NiceSpinner) contentView.findViewById(R.id.search_words_nice_spinner);
@@ -216,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (nowfragmentindex==1 && unfoldableView != null
+        if (nowfragmentindex == 1 && unfoldableView != null
                 && (unfoldableView.isUnfolded() || unfoldableView.isUnfolding())) {
             unfoldableView.foldBack();
         } else {
@@ -229,19 +254,53 @@ public class MainActivity extends AppCompatActivity {
         final TextView title = Views.find(detailsLayout, R.id.homepage_f1_details_title);
         final TextView description = Views.find(detailsLayout, R.id.homepage_f1_details_text);
 
-        GlideHelper.loadPaintingImage(image, painting);
-        title.setText(painting.getTitle());
 
-        SpannableBuilder builder = new SpannableBuilder(this);
-        builder
-                .createStyle().setFont(Typeface.DEFAULT_BOLD).apply()
-                .append(painting.getTitle()).append("\n")
-                .clearStyle()
-                .createStyle().setFont(Typeface.NORMAL).apply()
-                .append(painting.getContext())
-                .clearStyle();
-        description.setText(builder.build());
-        unfoldableView.unfold(coverView, detailsLayout);
+        SweetAlertDialog pDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("拉取文章中");
+        pDialog.setCancelable(false);
+        pDialog.show();
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("passageid", painting.getPassageId());
+        String url = MainActivity.serverip + "/passagecontent";
+        client.post(url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String str = new String(responseBody);
+                JSONObject jsonObject = JSONObject.parseObject(str);
+                painting.context = jsonObject.getString("content");
+//                Log.e("1",painting.getPassageId());
+                pDialog.cancel();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        GlideHelper.loadPaintingImage(image, painting);
+                        title.setText(painting.getTitle());
+
+//                        SpannableBuilder builder = new SpannableBuilder(getApplicationContext());
+//                        builder
+//                                .createStyle().setFont(Typeface.DEFAULT_BOLD).apply()
+//                                .append(painting.getTitle()).append("\n")
+//                                .clearStyle()
+//                                .createStyle().setFont(Typeface.NORMAL).apply()
+//                                .append(painting.getContext())
+//                                .clearStyle();
+                        description.setText(painting.getContext());
+                        unfoldableView.unfold(coverView, detailsLayout);
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers,
+                                  byte[] responseBody, Throwable error) {
+                pDialog.setTitleText("未知错误")
+                        .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+            }
+        });
     }
 
     @Override
@@ -252,6 +311,11 @@ public class MainActivity extends AppCompatActivity {
                 //加载保存的密码
                 File file = new File(getCacheDir().getPath(), "config.properties");
                 if (file.exists()) {
+                    SweetAlertDialog pDialog_login = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                    pDialog_login.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                    pDialog_login.setTitleText("登录中");
+                    pDialog_login.setCancelable(false);
+                    pDialog_login.show();
                     Properties prop = new Properties();
                     try {
                         FileInputStream s = new FileInputStream(file);
@@ -265,7 +329,6 @@ public class MainActivity extends AppCompatActivity {
                         params.put("password", password);
                         String url = serverip + "login";
                         client.post(url, params, new AsyncHttpResponseHandler() {
-
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 findViewById(R.id.activity_main_layout).setClickable(true);
@@ -273,7 +336,25 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject jsonObject = JSONObject.parseObject(str);
                                 int state = jsonObject.getInteger("state");
                                 if (state == 0) {
-                                    Toast.makeText(getApplicationContext(), "欢迎回来！", Toast.LENGTH_SHORT).show();
+                                    state_login = true;
+                                    if (Fragment_Homepage_0.planetext != null) {
+                                        switch (nowplane) {
+                                            case 0:
+                                                Fragment_Homepage_0.planetext.setText("学习计划:四级");
+                                                break;
+                                            case 1:
+                                                Fragment_Homepage_0.planetext.setText("学习计划:六级");
+                                                break;
+                                            case 2:
+                                                Fragment_Homepage_0.planetext.setText("学习计划:雅思/托福");
+                                                break;
+                                        }
+                                    }
+                                    nickname = jsonObject.getString("nickname");
+                                    nowplane = jsonObject.getInteger("plan");
+                                    pDialog_login.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                                    pDialog_login.setTitleText(nickname + " 欢迎回来!");
+//                                    Toast.makeText(getApplicationContext(), "欢迎回来！", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Intent mainIntent = new Intent(MainActivity.this, MainActivity.class);
                                     MainActivity.this.startActivity(mainIntent);
@@ -285,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
                             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                                 // Toast.makeText(LoginActivity.this, "错误", Toast.LENGTH_SHORT).show();
                                 findViewById(R.id.activity_main_layout).setClickable(true);
-                                username=null;
+                                username = null;
                                 Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
                                 MainActivity.this.startActivity(mainIntent);
                             }
@@ -303,6 +384,20 @@ public class MainActivity extends AppCompatActivity {
             haschecklogin = true;
         }
     }
+
+    @Override
+    public void onTabSelect(int index) {
+
+    }
+
+    @Override
+    public boolean onInterruptSelect(int index) {
+        if (state_login)
+            return false;
+        else
+            return true;
+    }
+
 
     //Fragment适配器
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -329,11 +424,42 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
             return fragment;
+
         }
 
         @Override
         public int getCount() {
             return 4;
         }
+    }
+
+    public interface MyTouchListener {
+        public void onTouchEvent(MotionEvent event);
+    }
+
+    /**
+     * 提供给Fragment通过getActivity()方法来注册自己的触摸事件的方法
+     *
+     * @param listener
+     */
+    public void registerMyTouchListener(MyTouchListener listener) {
+        myTouchListeners.add(listener);
+    }
+
+    /**
+     * 提供给Fragment通过getActivity()方法来取消注册自己的触摸事件的方法
+     *
+     * @param listener
+     */
+    public void unRegisterMyTouchListener(MyTouchListener listener) {
+        myTouchListeners.remove(listener);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        for (MyTouchListener listener : myTouchListeners) {
+            listener.onTouchEvent(ev);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }

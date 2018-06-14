@@ -1,5 +1,6 @@
 package com.example.gao.letsv.Studyword;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -41,12 +42,13 @@ public class activity_study_word_main extends AppCompatActivity implements View.
     private GestureDetector gd = null;
     private UnScrollListView wordinformation_listview = null;
     private TextView wordtitle = null;
+    private TextView PHONETIC_SYMBOL = null;
     private TextView memorymethod = null;
+    private TextView explain=null;
     private ImageView horn = null;
     private MyScrollView myScrollView = null;
     private ImageView word_add = null;
     private ImageView word_collection = null;
-
 
     private List<Map<String, Object>> dataList = null;
     private JSONObject respondsjson = null;
@@ -62,6 +64,8 @@ public class activity_study_word_main extends AppCompatActivity implements View.
         super.onCreate(savedInstanceState);
 
 
+
+
         //获取本组单词词表
         setContentView(R.layout.study_word);
         Bundle bundle = getIntent().getExtras();
@@ -74,8 +78,15 @@ public class activity_study_word_main extends AppCompatActivity implements View.
         //滚动布局
         myScrollView = (MyScrollView) findViewById(R.id.studay_word_MyScrollView);
 
+
         //最上方单词标题
         wordtitle = (TextView) findViewById(R.id.studay_word_title);
+
+        //音标
+        PHONETIC_SYMBOL = (TextView) findViewById(R.id.study_word_textView_PHONETIC_SYMBOL);
+
+        //含义
+        explain=(TextView)findViewById(R.id.study_word_textView_explain);
 
         //喇叭按钮
         horn = (ImageView) findViewById(R.id.study_word_horn);
@@ -158,7 +169,7 @@ public class activity_study_word_main extends AppCompatActivity implements View.
          */
         SweetAlertDialog pDialog = new SweetAlertDialog(activity_study_word_main.this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setTitleText("Loading");
+        pDialog.setTitleText("正在拉取单词信息");
         pDialog.setCancelable(false);
         pDialog.show();
 
@@ -172,9 +183,11 @@ public class activity_study_word_main extends AppCompatActivity implements View.
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String str = new String(responseBody);
                 respondsjson = JSON.parseObject(str);
-                wordtitle.setText(Html.fromHtml(respondsjson.getString("WORD")));
-                memorymethod.setText(respondsjson.getString("MEMORYMETHOD"));
-                musicurl = respondsjson.getString("MUSIC");
+                wordtitle.setText(Html.fromHtml(respondsjson.getString("word")));
+                PHONETIC_SYMBOL.setText(respondsjson.getString("ps"));
+                explain.setText(respondsjson.getString("meaning"));
+                memorymethod.setText(respondsjson.getString("memory"));
+                musicurl = respondsjson.getString("music");
                 horn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -192,27 +205,25 @@ public class activity_study_word_main extends AppCompatActivity implements View.
                 });
 
 
-                if (respondsjson.getString("OTHER") != null) {
-                    JSONObject jsonohter = JSON.parseObject(respondsjson.getString("OTHER"));
-                    int step = 0;
-                    dataList = new ArrayList<Map<String, Object>>();
-                    while (true) {
-                        String title = null;
-                        String content = null;
-                        if ((title = jsonohter.getString("title" + Integer.toString(step))) == null) {
-                            break;
-                        }
-                        content = jsonohter.getString("content" + Integer.toString(step));
-                        Map<String, Object> map = new HashMap<String, Object>();
-                        map.put("titleview", title);
-                        map.put("explainview", content);
-                        dataList.add(map);
-                        step++;
+                int step = 0;
+                dataList = new ArrayList<Map<String, Object>>();
+                while (true) {
+                    String title = null;
+                    String content = null;
+                    if ((title = respondsjson.getString("title" + Integer.toString(step))) == null) {
+                        break;
                     }
-                    MyAdapter_study_main adapter = new MyAdapter_study_main(getApplicationContext(), dataList, R.layout.study_word_main_listitem);
-                    wordinformation_listview.setAdapter(adapter);
-                    pDialog.cancel();
+                    content = respondsjson.getString("content" + Integer.toString(step));
+                    Map<String, Object> map = new HashMap<String, Object>();
+                    map.put("titleview", title);
+                    map.put("explainview", content);
+                    dataList.add(map);
+                    step++;
                 }
+                MyAdapter_study_main adapter = new MyAdapter_study_main(getApplicationContext(), dataList, R.layout.study_word_main_listitem);
+                wordinformation_listview.setAdapter(adapter);
+                pDialog.cancel();
+
             }
 
             @Override
@@ -271,12 +282,19 @@ public class activity_study_word_main extends AppCompatActivity implements View.
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        gd.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
+
+    }
+
+    @Override
     //e1  The first down motion event that started the fling.手势起点的移动事件
 //e2  The move motion event that triggered the current onFling.当前手势点的移动事件
 //velocityX   The velocity of this fling measured in pixels per second along the x axis.每秒x轴方向移动的像素
 //velocityY   The velocity of this fling measured in pixels per second along the y axis.每秒y轴方向移动的像素
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if (e1.getX() - e2.getX() > 100 && Math.abs(velocityX) > 50) {
+        if (e1.getX() - e2.getX() > 200 && Math.abs(velocityX) > 50) {
             //向左滑,下一个
             if (cur_word_sit < words_array.length - 1) {
                 cur_word_sit++;
@@ -285,15 +303,22 @@ public class activity_study_word_main extends AppCompatActivity implements View.
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        myScrollView.scrollTo(0,0);
                         initDataList(cur_word);//初始化数据
                     }
                 });
             } else {
                 //这组学完了，下一组,测试
+                Intent intent = new Intent(activity_study_word_main.this, activity_study_word_test.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putInt("type", 1);
+                mBundle.putStringArray("words",words_array);
+                intent.putExtras(mBundle);
+                startActivity(intent);
                 finish();
             }
 
-        } else if (e2.getX() - e1.getX() > 100 && Math.abs(velocityX) > 50) {
+        } else if (e2.getX() - e1.getX() > 200 && Math.abs(velocityX) > 50) {
             //向右滑,上一个
             if (cur_word_sit > 0) {
                 cur_word_sit--;

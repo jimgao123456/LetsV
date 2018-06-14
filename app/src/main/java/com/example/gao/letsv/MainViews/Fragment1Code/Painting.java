@@ -14,12 +14,21 @@ public class Painting {
 
     private final String imageurl;
     private final String title;
-    private final  String context;
+   public   String context;
+    private final  String wordNumber;
+private  final  String passageId;
+private final String type;
+private final  String Date;
 
-    public  Painting(String imageurl, String title, String context) {
+
+    public  Painting(String imageurl, String title,String wordNumber,String passageId,String type,String Date) {
+
         this.imageurl = imageurl;
         this.title = title;
-        this.context=context;
+        this.wordNumber=wordNumber;
+        this.passageId=passageId;
+        this.type=type;
+        this.Date=Date;
     }
 
     public String getImageUrl() {
@@ -34,6 +43,21 @@ public class Painting {
         return context;
     }
 
+    public String getPassageId() {
+        return passageId;
+    }
+
+    public String getwordNumber() {
+        return wordNumber;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public String getType() {
+        return type;
+    }
 
     public static Painting[] getAllPaintings(Resources res) {
 //        String[] titles = res.getStringArray(R.array.paintings_titles);

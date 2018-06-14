@@ -83,7 +83,7 @@ public static String requsturl=MainActivity.serverip+"login";
                 } else {
                     SweetAlertDialog pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.PROGRESS_TYPE);
                     pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-                    pDialog.setTitleText("Loading");
+                    pDialog.setTitleText("正在登录");
                     pDialog.setCancelable(false);
                     pDialog.show();
                     AsyncHttpClient client = new AsyncHttpClient();
@@ -116,6 +116,7 @@ public static String requsturl=MainActivity.serverip+"login";
                                 MainActivity.password=mima.getText().toString();
                                 MainActivity.username=zhanghao.getText().toString();
                                 MainActivity.nickname=jsonObject.getString("nickname");
+                               MainActivity.nowplane=Integer.parseInt(jsonObject.getString("plan"));
                                 pDialog.setTitleText("登录成功")
                                         .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                 pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {

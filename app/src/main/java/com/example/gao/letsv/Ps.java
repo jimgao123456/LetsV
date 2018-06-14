@@ -38,7 +38,7 @@ public class Ps extends AppCompatActivity implements View.OnTouchListener, Gestu
         Class drawable  =  R.drawable.class;
             imageView.setImageResource( getResources().getIdentifier("l"+ MainActivity.num,
                 "drawable", getClass().getPackage().getName()));
-        gd = new GestureDetector((GestureDetector.OnGestureListener) this);
+        gd = new GestureDetector(this,this);
         constraintLayout = (ConstraintLayout) findViewById(R.id.pslayout1);
         constraintLayout.setOnTouchListener(this);
         constraintLayout.setLongClickable(true);

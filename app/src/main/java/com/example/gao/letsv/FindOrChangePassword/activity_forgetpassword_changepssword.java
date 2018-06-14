@@ -52,7 +52,7 @@ public class activity_forgetpassword_changepssword extends AppCompatActivity {
                     //提交
                     SweetAlertDialog pDialog = new SweetAlertDialog(activity_forgetpassword_changepssword.this, SweetAlertDialog.PROGRESS_TYPE);
                     pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-                    pDialog.setTitleText("Loading");
+                    pDialog.setTitleText("正在提交请求");
                     pDialog.setCancelable(false);
                     pDialog.show();
                     AsyncHttpClient client = new AsyncHttpClient();

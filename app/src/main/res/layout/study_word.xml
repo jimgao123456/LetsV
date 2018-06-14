@@ -3,6 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/study_word_linearlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -16,8 +17,7 @@
         android:layout_height="wrap_content"
         android:background="#181e1e"
         android:overScrollMode="never"
-        android:layout_weight="1"
->
+        android:layout_weight="0.9">
 
         <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
@@ -35,6 +35,7 @@
                 android:text="TextView"
                 android:textSize="40dp"
                 android:textStyle="bold"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="persist" />
@@ -158,14 +159,14 @@
         android:orientation="vertical"
         android:layout_gravity="bottom"
         android:gravity="bottom"
-        android:layout_weight="2"
-        android:background="#282d30">
+        android:layout_weight="0.1"
+        android:background="#181e1e">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:orientation="horizontal"
             android:layout_gravity="bottom"
             android:gravity="center"
@@ -174,7 +175,7 @@
             android:id="@+id/study_word_button_add"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/shape_main_list_bg"
             app:srcCompat="@drawable/word_add"
             android:scaleType="centerInside"/>
@@ -183,7 +184,7 @@
             android:id="@+id/study_word_button_collection"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/shape_main_list_bg"
             app:srcCompat="@drawable/word_collection"
             android:scaleType="centerInside"/>
