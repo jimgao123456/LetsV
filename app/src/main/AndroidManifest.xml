@@ -90,6 +90,10 @@
             >
         </activity>
 
+        <activity
+            android:name=".MainViews.Fragment2Code.readActivity" >
+        </activity>>
+
 
     </application>
 
