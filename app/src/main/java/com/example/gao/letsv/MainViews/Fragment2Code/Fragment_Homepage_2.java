@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.example.gao.letsv.MyListAdatper.Fragment2_adapter;
 import com.example.gao.letsv.R;
 
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 /**
  * Created by gangchang on 2018/4/25.
@@ -36,12 +39,12 @@ public class Fragment_Homepage_2 extends Fragment {
     private FloatingSearchView FloatingSearchViewReal = null;
     private FloatingSearchView FloatingSearchViewHidden = null;
     private  View curtainview=null;
+    private String LastQuery = "";
     private static int screenHeight = 0;
 
     public Fragment_Homepage_2() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,7 +68,86 @@ public class Fragment_Homepage_2 extends Fragment {
                 curtainview.setVisibility(View.VISIBLE);
             }
         });
+
+        FloatingSearchViewHidden.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+            @Override
+            public void onSearchTextChanged(String oldQuery, String newQuery) {
+                if (!oldQuery.equals("") && newQuery.equals("")) {
+                    FloatingSearchViewHidden.clearSuggestions();
+                }else{
+                    FloatingSearchViewHidden.showProgress();
+                    DataHelper.findSuggestions(getActivity(), newQuery, 5,
+                            250, new DataHelper.OnFindSuggestionsListener() {
+
+                                @Override
+                                public void onResults(List<mySuggestion> results) {
+
+                                    //this will swap the data and
+                                    //render the collapse/expand animations as necessary
+                                    FloatingSearchViewHidden.swapSuggestions(results);
+
+                                    //let the users know that the background
+                                    //process has completed
+                                    FloatingSearchViewHidden.hideProgress();
+                                }
+                            });
+                }
+                Log.d("", "onSearchTextChanged()");
+            }
+        });
+
+        FloatingSearchViewHidden.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
+            @Override
+            public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
+
+                mySuggestion Suggestion = (mySuggestion) searchSuggestion;
+                DataHelper.finditem(getActivity(), Suggestion.getBody(),
+                        new DataHelper.OnFindListener() {
+
+                            @Override
+                            public void onResults(List<myWrapper> results) {
+                                //show search results
+                            }
+
+                        });
+                Log.d(TAG, "onSuggestionClicked()");
+
+                LastQuery = searchSuggestion.getBody();
+            }
+
+            @Override
+            public void onSearchAction(String query) {
+                LastQuery = query;
+
+                DataHelper.finditem(getActivity(), query,
+                        new DataHelper.OnFindListener() {
+
+                            @Override
+                            public void onResults(List<myWrapper> results) {
+                                //show search results
+                            }
+
+                        });
+                Log.d(TAG, "onSearchAction()");
+            }
+        });
+
+        FloatingSearchViewHidden.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
+            @Override
+            public void onFocus() {
+                FloatingSearchViewHidden.swapSuggestions(DataHelper.getHistory(getActivity(), 3));
+                Log.d(TAG, "onFocus()");
+            }
+
+            @Override
+            public void onFocusCleared() {
+                FloatingSearchViewHidden.setSearchBarTitle(LastQuery);
+                Log.d(TAG, "onFocusCleared()");
+            }
+        });
+
         FloatingSearchViewReal = view.findViewById(R.id.fragment2_floating_search_view_Real);
+
         curtainview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

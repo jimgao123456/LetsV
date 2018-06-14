@@ -35,14 +35,14 @@
             app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"
             app:floatingSearch_searchHint="Search...R"
             app:floatingSearch_showSearchKey="false"
-            app:floatingSearch_suggestionsListAnimDuration="250" />
+            app:floatingSearch_suggestionsListAnimDuration="250"
+            />
 
         <View
             android:id="@+id/fragment2_floating_search_view_Real_mm"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:background="@color/transparent" />
-
     </FrameLayout>
 
     <ListView
@@ -56,6 +56,5 @@
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="10dp"
         android:layout_weight="2" />
-
 
 </LinearLayout>
