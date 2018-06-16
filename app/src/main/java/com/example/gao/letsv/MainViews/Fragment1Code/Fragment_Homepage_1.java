@@ -257,7 +257,7 @@ public class Fragment_Homepage_1 extends Fragment {
         pDialog.setCancelable(false);
         pDialog.show();
 
-        AsyncHttpClient client = new AsyncHttpClient();
+        AsyncHttpClient client = new AsyncHttpClient(8888);
         RequestParams params = new RequestParams();
         // params.put("word", word);
         String url = requstrul;

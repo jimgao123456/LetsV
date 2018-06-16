@@ -139,7 +139,7 @@ public class Fragment_Homepage_0 extends Fragment {
                     pDialog.setTitleText("正在拉取今日早测列表");
                     pDialog.setCancelable(false);
                     pDialog.show();
-                    AsyncHttpClient client = new AsyncHttpClient();
+                    AsyncHttpClient client = new AsyncHttpClient(8888);
                     RequestParams params = new RequestParams();
                     params.put("username", MainActivity.username);
                     String url = MainActivity.serverip + "/gettestlist";
@@ -203,7 +203,7 @@ public class Fragment_Homepage_0 extends Fragment {
                         pDialog.setTitleText("正在提交更改");
                         pDialog.setCancelable(false);
                         pDialog.show();
-                        AsyncHttpClient client = new AsyncHttpClient();
+                        AsyncHttpClient client = new AsyncHttpClient(8888);
                         RequestParams params = new RequestParams();
                         params.put("username", MainActivity.username);
                         params.put("level", Integer.toString(options1));

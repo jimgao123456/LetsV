@@ -257,7 +257,7 @@ public class RegisterActivity extends AppCompatActivity {
                             public void run() {
                                 //提交验证码成功
                                 //注册
-                                AsyncHttpClient client = new AsyncHttpClient();
+                                AsyncHttpClient client = new AsyncHttpClient(8888);
                                 RequestParams params = new RequestParams();
                                 params.put("username", sitele.getText().toString());
                                 params.put("password", sipassword.getText().toString());

@@ -1,7 +1,9 @@
-package com.example.gao.letsv;
+package com.example.gao.letsv.Search_views;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.gao.letsv.R;
 
 import org.angmarch.views.NiceSpinner;
 

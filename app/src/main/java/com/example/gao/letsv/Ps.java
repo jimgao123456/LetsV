@@ -42,7 +42,7 @@ public class Ps extends AppCompatActivity implements View.OnTouchListener, Gestu
         constraintLayout = (ConstraintLayout) findViewById(R.id.pslayout1);
         constraintLayout.setOnTouchListener(this);
         constraintLayout.setLongClickable(true);
-        AsyncHttpClient client = new AsyncHttpClient();
+        AsyncHttpClient client = new AsyncHttpClient(8888);
         RequestParams params = new RequestParams();
         params.put("number", Integer.parseInt(MainActivity.num)-1);
         String url = "http://58.87.108.125:8888/audio";

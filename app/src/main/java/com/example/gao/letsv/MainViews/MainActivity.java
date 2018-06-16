@@ -23,26 +23,40 @@ package com.example.gao.letsv.MainViews;
  */
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -52,6 +66,7 @@ import android.widget.Toast;
 import com.alexvasilkov.android.commons.texts.SpannableBuilder;
 import com.alexvasilkov.android.commons.ui.Views;
 import com.alexvasilkov.foldablelayout.UnfoldableView;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.gao.letsv.LoginViews.LoginActivity;
 import com.example.gao.letsv.MainViews.Fragment0Code.Fragment_Homepage_0;
@@ -60,8 +75,12 @@ import com.example.gao.letsv.MainViews.Fragment1Code.GlideHelper;
 import com.example.gao.letsv.MainViews.Fragment1Code.Painting;
 import com.example.gao.letsv.MainViews.Fragment2Code.Fragment_Homepage_2;
 import com.example.gao.letsv.MainViews.Fragment3Code.Fragment_Homepage_3;
+import com.example.gao.letsv.MyListAdatper.MyAdapter_study_main;
 import com.example.gao.letsv.R;
+import com.example.gao.letsv.Search_views.RecordAudioDialogFragment;
+import com.example.gao.letsv.Search_views.search_word_result_bykeyboard;
 import com.example.gao.letsv.Studyword.activity_study_word_grouplist;
+import com.example.gao.letsv.Studyword.activity_study_word_main;
 import com.example.gao.letsv.Studyword.activity_study_word_test;
 import com.jpeng.jptabbar.BadgeDismissListener;
 import com.jpeng.jptabbar.JPTabBar;
@@ -77,10 +96,17 @@ import org.angmarch.views.NiceSpinner;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -124,6 +150,11 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
     public static View detailsLayout = null;
 
     Fragment[] fragmentarray = new Fragment[4];
+
+
+    //拍照
+    private Uri imageUri;
+    private  String  mFilePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,6 +251,81 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
                 niceSpinner.setSelectedIndex(0);
                 niceSpinner.setTextSize(18);
                 niceSpinner.setBackgroundResource(getResources().getIdentifier("selector_search_for_words_spinner", "drawable", getClass().getPackage().getName()));
+
+
+                //语音查词
+                ImageView imageButoon_searchByAudio=(ImageView)contentView.findViewById(R.id.search_words_nice_searchword_voice);
+                imageButoon_searchByAudio.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        final RecordAudioDialogFragment fragment = RecordAudioDialogFragment.newInstance();
+                        fragment.show(getSupportFragmentManager(), RecordAudioDialogFragment.class.getSimpleName());
+                        fragment.setOnCancelListener(new RecordAudioDialogFragment.OnAudioCancelListener() {
+                            @Override
+                            public void onCancel() {
+                                fragment.dismiss();
+                            }
+                        });
+                    }
+                });
+
+                //文字查词
+                EditText inputText=(EditText)contentView.findViewById(R.id.search_words_nice_input_Word) ;
+                inputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                          searchword_keyboard(inputText.getText().toString().trim());
+                        }
+                        return false;
+                    }
+                });
+
+                //拍照查词
+                ImageView imageButoon_searchByPhoto=(ImageView)contentView.findViewById(R.id.search_words_nice_searchword_photo) ;
+                imageButoon_searchByPhoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String cachePath=null;
+//                        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
+//                            //判断SD卡
+//                            cachePath = getExternalCacheDir().getPath();
+//                        } else {
+//                            cachePath = getCacheDir().getPath();
+//                        }
+
+
+//                        Intent intent_sca = new Intent("android.media.action.IMAGE_CAPTURE");
+//                        intent_sca.putExtra("return-data", false);
+//
+//                        String mFileName=getString(R.string.audio_default_file_name)+ "_" + (System.currentTimeMillis()) + ".jpeg";
+//                        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
+//                            //判断SD卡
+//                            mFilePath = getExternalCacheDir().getPath();
+//                        } else {
+//                            mFilePath = getCacheDir().getPath();
+//                        }
+//                        mFilePath += "/SoundRecorder/" + mFileName;
+//
+//                        File file = new File(mFilePath );
+//                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+//                            imageUri = Uri.fromFile(file);
+//                        } else {
+//                            PackageManager context=contentView.getContext().getPackageManager();
+//                            imageUri = FileProvider.getUriForFile(getApplication(), getApplication().getPackageName() + ".fileprovider", file);
+//                        }
+//                        intent_sca.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//                        intent_sca.putExtra("noFaceDetection", true);
+//                        startActivityForResult(intent_sca, 0);
+
+
+                        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(camera, 0);
+                        window.dismiss();
+                    }
+                });
+
+
                 // 设置PopupWindow的背景
                 window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 // 设置PopupWindow是否能响应外部点击事件
@@ -260,10 +366,11 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
         pDialog.setTitleText("拉取文章中");
         pDialog.setCancelable(false);
         pDialog.show();
-        AsyncHttpClient client = new AsyncHttpClient();
+        AsyncHttpClient client = new AsyncHttpClient(8888);
         RequestParams params = new RequestParams();
         params.put("passageid", painting.getPassageId());
         String url = MainActivity.serverip + "/passagecontent";
+
         client.post(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -322,12 +429,13 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
                         prop.load(s);
                         username = prop.get("username").toString();
                         password = prop.get("password").toString();
-                        AsyncHttpClient client = new AsyncHttpClient();
+                        AsyncHttpClient client = new AsyncHttpClient(8888);
                         //封装需要传递的参数
                         RequestParams params = new RequestParams();
                         params.put("username", username);
                         params.put("password", password);
-                        String url = serverip + "login";
+                       String url = serverip + "login";
+
                         client.post(url, params, new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -336,6 +444,8 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
                                 JSONObject jsonObject = JSONObject.parseObject(str);
                                 int state = jsonObject.getInteger("state");
                                 if (state == 0) {
+                                    nickname = jsonObject.getString("nickname");
+                                    nowplane = jsonObject.getInteger("plan");
                                     state_login = true;
                                     if (Fragment_Homepage_0.planetext != null) {
                                         switch (nowplane) {
@@ -350,8 +460,7 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
                                                 break;
                                         }
                                     }
-                                    nickname = jsonObject.getString("nickname");
-                                    nowplane = jsonObject.getInteger("plan");
+
                                     pDialog_login.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                                     pDialog_login.setTitleText(nickname + " 欢迎回来!");
 //                                    Toast.makeText(getApplicationContext(), "欢迎回来！", Toast.LENGTH_SHORT).show();
@@ -365,6 +474,7 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
                             @Override
                             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                                 // Toast.makeText(LoginActivity.this, "错误", Toast.LENGTH_SHORT).show();
+                                pDialog_login.cancel();
                                 findViewById(R.id.activity_main_layout).setClickable(true);
                                 username = null;
                                 Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
@@ -461,5 +571,88 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
             listener.onTouchEvent(ev);
         }
         return super.dispatchTouchEvent(ev);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 0:
+                //相机拍照结束
+                if (resultCode == Activity.RESULT_OK && data!=null){
+                    Bundle bundle = data.getExtras();
+                    //获取相机返回的数据，并转换为图片格式
+                    Bitmap bitmap = (Bitmap) bundle.get("data");
+                    savePic(bitmap);
+                  //  iv.setImageBitmap(bitmap);//显示图片
+                }
+        }
+    }
+    private  void searchword_keyboard(String word){
+        SweetAlertDialog pDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("正在拉取单词信息");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+        AsyncHttpClient client = new AsyncHttpClient(8888);
+        RequestParams params = new RequestParams();
+        params.put("word", word);
+        String url = serverip + "studyword";
+
+        client.post(url, params, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                pDialog.cancel();
+                String str = new String(responseBody);
+                Intent intent = new Intent(MainActivity.this, search_word_result_bykeyboard.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putString("json", str);
+                intent.putExtras(mBundle);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers,
+                                  byte[] responseBody, Throwable error) {
+                pDialog.setTitleText("未知错误")
+                        .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+            }
+        });
+    }
+    /**
+     * 保存图片
+     *
+     * @param bitmap
+     * @return
+     */
+    private String savePic(Bitmap bitmap) {
+        String sdState = Environment.getExternalStorageState();
+        if (!sdState.equals(Environment.MEDIA_MOUNTED)) {
+            return "";
+        }
+        new DateFormat();
+        String name = DateFormat.format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+
+        FileOutputStream fout = null;
+        File file = new File("/sdcard/pintu/");
+        file.mkdirs();
+        String filename = file.getPath() + name;
+        try {
+            fout = new FileOutputStream(filename);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fout);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fout != null) {
+                    fout.flush();
+                    fout.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return filename;
     }
 }

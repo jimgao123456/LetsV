@@ -120,7 +120,7 @@ public class activity_study_word_test extends AppCompatActivity {
         pDialog.setCancelable(false);
         pDialog.show();
 
-        AsyncHttpClient client = new AsyncHttpClient();
+        AsyncHttpClient client = new AsyncHttpClient(8888);
         RequestParams params = new RequestParams();
         params.put("word", word);
         String url = requstrul;
@@ -179,7 +179,7 @@ public class activity_study_word_test extends AppCompatActivity {
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                                     pDialog_right.changeAlertType(SweetAlertDialog.PROGRESS_TYPE);
                                     pDialog_right.setTitleText("正在提交选择信息");
-                                    AsyncHttpClient client = new AsyncHttpClient();
+                                    AsyncHttpClient client = new AsyncHttpClient(8888);
                                     RequestParams params = new RequestParams();
                                     params.put("username", MainActivity.username);
                                     params.put("word", cur_word);
@@ -272,7 +272,7 @@ public class activity_study_word_test extends AppCompatActivity {
         pDialog_finishtest.setTitleText("正在提交信息");
         pDialog_finishtest.setCancelable(false);
         pDialog_finishtest.show();
-        AsyncHttpClient client = new AsyncHttpClient();
+        AsyncHttpClient client = new AsyncHttpClient(8888);
         RequestParams params = new RequestParams();
         params.put("username", MainActivity.username);
         String url = MainActivity.serverip + "/updategroup";
@@ -312,7 +312,7 @@ public class activity_study_word_test extends AppCompatActivity {
             pDialog.setTitleText("正在拉取今日总测列表");
             pDialog.setCancelable(false);
             pDialog.show();
-            AsyncHttpClient client = new AsyncHttpClient();
+            AsyncHttpClient client = new AsyncHttpClient(8888);
             RequestParams params = new RequestParams();
             params.put("username", MainActivity.username);
             String url = MainActivity.serverip + "/gettestlist";

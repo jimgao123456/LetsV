@@ -5,4 +5,6 @@
     <string name="Upload">正在登录汤不热</string>
     <string name="register">注册汤不热账号</string>
     <string name="RegisterComplete">注册成功</string>
+    <string name="audio_default_file_name">My Recording</string>
+    <string name="photo_default_file_name">My Photo</string>
 </resources>
