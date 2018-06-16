@@ -2,16 +2,21 @@ package com.example.gao.letsv.MainViews.Fragment2Code;
 
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -31,7 +36,7 @@ import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
  * Created by gangchang on 2018/4/25.
  */
 
-public class Fragment_Homepage_2 extends Fragment {
+public class Fragment_Homepage_2 extends Fragment implements PopupWindow.OnDismissListener{
 
     private ListView listView;
     private List<Map<String, Object>> ItemList = new ArrayList<Map<String, Object>>();
@@ -39,8 +44,11 @@ public class Fragment_Homepage_2 extends Fragment {
     private FloatingSearchView FloatingSearchViewReal = null;
     private FloatingSearchView FloatingSearchViewHidden = null;
     private  View curtainview=null;
+    private String title_selected,url_selected;
     private String LastQuery = "";
     private static int screenHeight = 0;
+    private PopupWindow popupWindow;
+    private int navigationHeight;
 
     public Fragment_Homepage_2() {
         // Required empty public constructor
@@ -55,9 +63,13 @@ public class Fragment_Homepage_2 extends Fragment {
         DisplayMetrics outMetrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(outMetrics);
         screenHeight = outMetrics.heightPixels;
+
         listView = (ListView) view.findViewById(R.id.fragment2_list_view);
         curtainview=(View)view.findViewById(R.id.fragment2_floating_search_view_Real_mm);
         FloatingSearchViewHidden = view.findViewById(R.id.fragment2_floating_search_view_Hidden);
+
+        //开始FloatingSearch的108种时间设置
+        //Home键监听
         FloatingSearchViewHidden.setOnHomeActionClickListener(new FloatingSearchView.OnHomeActionClickListener() {
             @Override
             public void onHomeClicked() {
@@ -68,7 +80,7 @@ public class Fragment_Homepage_2 extends Fragment {
                 curtainview.setVisibility(View.VISIBLE);
             }
         });
-
+        //文本变动监听
         FloatingSearchViewHidden.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
             @Override
             public void onSearchTextChanged(String oldQuery, String newQuery) {
@@ -95,7 +107,7 @@ public class Fragment_Homepage_2 extends Fragment {
                 Log.d("", "onSearchTextChanged()");
             }
         });
-
+        //搜索监听
         FloatingSearchViewHidden.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
             public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
@@ -131,7 +143,7 @@ public class Fragment_Homepage_2 extends Fragment {
                 Log.d(TAG, "onSearchAction()");
             }
         });
-
+        //焦点变动监听
         FloatingSearchViewHidden.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
             @Override
             public void onFocus() {
@@ -146,8 +158,10 @@ public class Fragment_Homepage_2 extends Fragment {
             }
         });
 
+
         FloatingSearchViewReal = view.findViewById(R.id.fragment2_floating_search_view_Real);
 
+        //不知道什么监监听
         curtainview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,18 +173,27 @@ public class Fragment_Homepage_2 extends Fragment {
                 curtainview.setVisibility(View.INVISIBLE);
             }
         });
+
+        //获取设备高度
+        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        navigationHeight = getResources().getDimensionPixelSize(resourceId);
+
+        //读取列表
         init_item();
         Fragment2_adapter adapter = new Fragment2_adapter(getActivity(), R.layout.fragement2_list_item, ItemList);
+
+        //listview点击监听
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String title_selected = (String)ItemList.get(i).get("title");
-                String url_selected = (String)ItemList.get(i).get("url");
-                Intent intent = new Intent(getActivity(),activity_media_player.class);
-                intent.putExtra("title",title_selected);
-                intent.putExtra("url",url_selected);
-                startActivity(intent);
+                title_selected = (String)ItemList.get(i).get("title");
+                url_selected = (String)ItemList.get(i).get("url");
+                openPopupWindow(getView());
+//                Intent intent = new Intent(getActivity(),activity_media_player.class);
+//                intent.putExtra("title",title_selected);
+//                intent.putExtra("url",url_selected);
+//                startActivity(intent);
             }
         });
         initView(view);
@@ -201,7 +224,7 @@ public class Fragment_Homepage_2 extends Fragment {
         }
     }
 
-    //从服务器获得数据
+    //从服务器获得数据(POST没写)
     private JSONArray GetData() {
         //post请求没写，需需要协助；
         /*
@@ -213,7 +236,6 @@ public class Fragment_Homepage_2 extends Fragment {
     }
 
     //解读json数组，
-
     /**
      * json格式
      * 标题：XXX String
@@ -221,5 +243,85 @@ public class Fragment_Homepage_2 extends Fragment {
      */
     private void read_json(JSONArray jsonArray) {
         jsonString = JSONArray.toJSONString(jsonArray);
+    }
+
+    //打开弹出菜单
+    private void openPopupWindow(View v) {
+        //防止重复按按钮
+        if (popupWindow != null && popupWindow.isShowing()) {
+            return;
+        }
+        //设置PopupWindow的View
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.popupwindow_choice, null);
+        popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        //设置背景,这个没什么效果，不添加会报错
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        //设置点击弹窗外隐藏自身
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        //设置动画
+        popupWindow.setAnimationStyle(R.style.PopupWindow);
+        //设置位置
+        popupWindow.showAtLocation(v, Gravity.BOTTOM, 0, navigationHeight);
+        //设置消失监听
+        popupWindow.setOnDismissListener(this);
+        //设置PopupWindow的View点击事件
+        setOnPopupViewClick(view);
+        //设置背景色
+        setBackgroundAlpha(0.5f);
+    }
+
+    //设置屏幕背景透明效果
+    public void setBackgroundAlpha(float alpha) {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = alpha;
+        getActivity().getWindow().setAttributes(lp);
+    }
+
+    //popwindow点击监听
+    private void setOnPopupViewClick(View view) {
+        TextView poptitle, poplisten, popread,popcancel;
+        poptitle = (TextView)view.findViewById(R.id.popupwin_title);
+        poplisten = (TextView)view.findViewById(R.id.popupwin_listen);
+        popread = (TextView)view.findViewById(R.id.popupwin_read);
+        popcancel = (TextView)view.findViewById(R.id.popupwin_cancel);
+        poptitle.setText(title_selected);
+        //全文泛听点击监听
+        poplisten.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),activity_media_player.class);
+                intent.putExtra("title",title_selected);
+                intent.putExtra("url",url_selected);
+                startActivity(intent);
+                popupWindow.dismiss();
+            }
+        });
+
+        //跟读监听
+        popread.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),readActivity.class);
+                intent.putExtra("title",title_selected);
+                intent.putExtra("url",url_selected);
+                startActivity(intent);
+                popupWindow.dismiss();
+            }
+        });
+        //取消监听
+        popcancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+    //实现dismiss接口
+    @Override
+    public void onDismiss() {
+        setBackgroundAlpha(1);
     }
 }
