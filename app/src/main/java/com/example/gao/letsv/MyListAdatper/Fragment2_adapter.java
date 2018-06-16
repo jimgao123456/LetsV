@@ -28,7 +28,21 @@ public class Fragment2_adapter extends ArrayAdapter {
         this.context=context;
         dataList=objects;
     }
+    @Override
+    public int getCount() {
 
+        return dataList.size();
+    }
+
+    @Override
+    public Map<String, Object> getItem(int index) {
+        return dataList.get(index);
+    }
+
+    @Override
+    public long getItemId(int index) {
+        return index;
+    }
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {

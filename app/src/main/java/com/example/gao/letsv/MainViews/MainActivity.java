@@ -137,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
     public static int screenWidth = 0;
     public static int nowplane = 0;
 
-    private static int nowfragmentindex = 0;
 
     public static String serverip = "http://139.199.110.17:8888/";
 
@@ -347,7 +346,7 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
 
     @Override
     public void onBackPressed() {
-        if (nowfragmentindex == 1 && unfoldableView != null
+        if (unfoldableView != null
                 && (unfoldableView.isUnfolded() || unfoldableView.isUnfolding())) {
             unfoldableView.foldBack();
         } else {

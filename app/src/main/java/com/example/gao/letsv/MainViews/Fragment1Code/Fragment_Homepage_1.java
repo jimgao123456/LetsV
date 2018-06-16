@@ -134,6 +134,7 @@ public class Fragment_Homepage_1 extends Fragment {
                 //在这里获取View及其子控件的坐标和长宽信息
                 unfoldtext_positonY_min = (int) unfoldTextview.getY();
                 unfoldtext_positonY_max = (int) unfoldTextview.getY() + unfoldTextview.getHeight();
+                view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
         unfoldTextview = view.findViewById(R.id.homepage_f1_details_text);

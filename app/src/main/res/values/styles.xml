@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="actionSheetStyle">@style/ActionSheetStyleiOS7</item>
     </style>
 
     <style name="style">
@@ -20,4 +21,5 @@
         <item name="android:windowEnterAnimation">@anim/window_in</item>
         <item name="android:windowExitAnimation">@anim/window_out</item>
     </style>
+
 </resources>

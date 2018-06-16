@@ -123,19 +123,19 @@ public class Player implements OnBufferingUpdateListener,
      */
     public void onPrepared(MediaPlayer arg0) {
         arg0.start();
-        Log.e("mediaPlayer", "onPrepared");
+        //Log.e("mediaPlayer", "onPrepared");
     }
 
     @Override
     public void onCompletion(MediaPlayer arg0) {
-        Log.e("mediaPlayer", "onCompletion");
+     //   Log.e("mediaPlayer", "onCompletion");
     }
 
     @Override
     public void onBufferingUpdate(MediaPlayer arg0, int bufferingProgress) {
         skbProgress.setSecondaryProgress(bufferingProgress);
-        int currentProgress=skbProgress.getMax()*mediaPlayer.getCurrentPosition()/mediaPlayer.getDuration();
-        Log.e(currentProgress+"% play", bufferingProgress + "% buffer");
+     //   int currentProgress=skbProgress.getMax()*mediaPlayer.getCurrentPosition()/mediaPlayer.getDuration();
+      //  Log.e(currentProgress+"% play", bufferingProgress + "% buffer");
     }
 
 }
