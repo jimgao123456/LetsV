@@ -72,26 +72,26 @@ public class search_word_result_bykeyboard extends AppCompatActivity {
         //滑动手势相关
         //gd = new GestureDetector(this, this);
         //滚动布局
-        myScrollView = (MyScrollView) findViewById(R.id.studay_word_MyScrollView);
+        myScrollView = (MyScrollView) findViewById(R.id.search_word_result_bykeyboard_MyScrollView);
 
 
         //最上方单词标题
-        wordtitle = (TextView) findViewById(R.id.studay_word_title);
+        wordtitle = (TextView) findViewById(R.id.search_word_result_bykeyboard_title);
 
         //音标
-        PHONETIC_SYMBOL = (TextView) findViewById(R.id.study_word_textView_PHONETIC_SYMBOL);
+        PHONETIC_SYMBOL = (TextView) findViewById(R.id.search_word_result_bykeyboard_textView_PHONETIC_SYMBOL);
 
         //含义
-        explain = (TextView) findViewById(R.id.study_word_textView_explain);
+        explain = (TextView) findViewById(R.id.search_word_result_bykeyboard_textView_explain);
 
         //喇叭按钮
-        horn = (ImageView) findViewById(R.id.study_word_horn);
+        horn = (ImageView) findViewById(R.id.search_word_result_bykeyboard_horn);
 
         //记忆方法
-        memorymethod = (TextView) findViewById(R.id.study_word_textView_TYPE_MEMORY_METHOD);
+        memorymethod = (TextView) findViewById(R.id.search_word_result_bykeyboard_textView_TYPE_MEMORY_METHOD);
 
         //详细信息列表
-        wordinformation_listview = (UnScrollListView) findViewById(R.id.study_word_listitem);
+        wordinformation_listview = (UnScrollListView) findViewById(R.id.search_word_result_bykeyboard_listitem);
         wordinformation_listview.setFocusable(false);
 
 //        //添加按钮

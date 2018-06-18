@@ -26,6 +26,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -67,6 +68,7 @@ import com.alexvasilkov.android.commons.texts.SpannableBuilder;
 import com.alexvasilkov.android.commons.ui.Views;
 import com.alexvasilkov.foldablelayout.UnfoldableView;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.gao.letsv.LoginViews.LoginActivity;
 import com.example.gao.letsv.MainViews.Fragment0Code.Fragment_Homepage_0;
@@ -82,6 +84,14 @@ import com.example.gao.letsv.Search_views.search_word_result_bykeyboard;
 import com.example.gao.letsv.Studyword.activity_study_word_grouplist;
 import com.example.gao.letsv.Studyword.activity_study_word_main;
 import com.example.gao.letsv.Studyword.activity_study_word_test;
+import com.iflytek.cloud.ErrorCode;
+import com.iflytek.cloud.InitListener;
+import com.iflytek.cloud.RecognizerResult;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechUtility;
+import com.iflytek.cloud.ui.RecognizerDialog;
+import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.jpeng.jptabbar.BadgeDismissListener;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.OnTabSelectListener;
@@ -137,7 +147,6 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
     public static int screenWidth = 0;
     public static int nowplane = 0;
 
-
     public static String serverip = "http://139.199.110.17:8888/";
 
     // 保存MyTouchListener接口的列表
@@ -153,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
 
     //拍照
     private Uri imageUri;
-    private  String  mFilePath;
+    private String mFilePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +176,28 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
         toptext = (EditText) findViewById(R.id.homepage_edittext);
         findViewById(R.id.activity_main_layout).setClickable(false);
         List<String> permissionsNeeded = new ArrayList<String>();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionsNeeded.add(Manifest.permission.CAMERA);
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_SETTINGS)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionsNeeded.add(Manifest.permission.WRITE_SETTINGS);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionsNeeded.add(Manifest.permission.RECORD_AUDIO);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CHANGE_NETWORK_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionsNeeded.add(Manifest.permission.CHANGE_NETWORK_STATE);
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -215,6 +246,10 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
             }
             ActivityCompat.requestPermissions(this, permission, 1);
         }
+
+        //语音识别
+        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5b276195");
+
         //屏幕宽高
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         WindowManager manager = this.getWindowManager();
@@ -251,73 +286,50 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
                 niceSpinner.setTextSize(18);
                 niceSpinner.setBackgroundResource(getResources().getIdentifier("selector_search_for_words_spinner", "drawable", getClass().getPackage().getName()));
 
-
                 //语音查词
-                ImageView imageButoon_searchByAudio=(ImageView)contentView.findViewById(R.id.search_words_nice_searchword_voice);
+                ImageView imageButoon_searchByAudio = (ImageView) contentView.findViewById(R.id.search_words_nice_searchword_voice);
                 imageButoon_searchByAudio.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        final RecordAudioDialogFragment fragment = RecordAudioDialogFragment.newInstance();
-                        fragment.show(getSupportFragmentManager(), RecordAudioDialogFragment.class.getSimpleName());
-                        fragment.setOnCancelListener(new RecordAudioDialogFragment.OnAudioCancelListener() {
-                            @Override
-                            public void onCancel() {
-                                fragment.dismiss();
-                            }
-                        });
+//                        final RecordAudioDialogFragment fragment = RecordAudioDialogFragment.newInstance();
+//                        fragment.show(getSupportFragmentManager(), RecordAudioDialogFragment.class.getSimpleName());
+//                        fragment.setOnCancelListener(new RecordAudioDialogFragment.OnAudioCancelListener() {
+//                            @Override
+//                            public void onCancel() {
+//                                fragment.dismiss();
+//                            }
+//                        });
+
+                        //1.创建 RecognizerDialog 对象
+                        RecognizerDialog mDialog = new RecognizerDialog(MainActivity.this, mInitListener);
+                        mDialog.setListener(mRecognizerDialogListener);
+                       // mDialog.setParameter(SpeechConstant.AUDIO_SOURCE,"-1");
+                        mDialog.setParameter(SpeechConstant.LANGUAGE, "en_us");
+                        mDialog.setParameter(SpeechConstant.ACCENT, null);
+                        mDialog.show();
+                        TextView txt =(TextView)mDialog.getWindow().getDecorView().findViewWithTag("textlink");
+                        txt.setText("");
                     }
                 });
 
                 //文字查词
-                EditText inputText=(EditText)contentView.findViewById(R.id.search_words_nice_input_Word) ;
+                EditText inputText = (EditText) contentView.findViewById(R.id.search_words_nice_input_Word);
                 inputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                     @Override
                     public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                          searchword_keyboard(inputText.getText().toString().trim());
+                            searchword_keyboard(inputText.getText().toString().trim());
                         }
                         return false;
                     }
                 });
 
                 //拍照查词
-                ImageView imageButoon_searchByPhoto=(ImageView)contentView.findViewById(R.id.search_words_nice_searchword_photo) ;
+                ImageView imageButoon_searchByPhoto = (ImageView) contentView.findViewById(R.id.search_words_nice_searchword_photo);
                 imageButoon_searchByPhoto.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String cachePath=null;
-//                        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
-//                            //判断SD卡
-//                            cachePath = getExternalCacheDir().getPath();
-//                        } else {
-//                            cachePath = getCacheDir().getPath();
-//                        }
-
-
-//                        Intent intent_sca = new Intent("android.media.action.IMAGE_CAPTURE");
-//                        intent_sca.putExtra("return-data", false);
-//
-//                        String mFileName=getString(R.string.audio_default_file_name)+ "_" + (System.currentTimeMillis()) + ".jpeg";
-//                        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
-//                            //判断SD卡
-//                            mFilePath = getExternalCacheDir().getPath();
-//                        } else {
-//                            mFilePath = getCacheDir().getPath();
-//                        }
-//                        mFilePath += "/SoundRecorder/" + mFileName;
-//
-//                        File file = new File(mFilePath );
-//                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
-//                            imageUri = Uri.fromFile(file);
-//                        } else {
-//                            PackageManager context=contentView.getContext().getPackageManager();
-//                            imageUri = FileProvider.getUriForFile(getApplication(), getApplication().getPackageName() + ".fileprovider", file);
-//                        }
-//                        intent_sca.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-//                        intent_sca.putExtra("noFaceDetection", true);
-//                        startActivityForResult(intent_sca, 0);
-
-
+                        String cachePath = null;
                         Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(camera, 0);
                         window.dismiss();
@@ -433,7 +445,7 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
                         RequestParams params = new RequestParams();
                         params.put("username", username);
                         params.put("password", password);
-                       String url = serverip + "login";
+                        String url = serverip + "login";
 
                         client.post(url, params, new AsyncHttpResponseHandler() {
                             @Override
@@ -571,22 +583,24 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
         }
         return super.dispatchTouchEvent(ev);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 0:
                 //相机拍照结束
-                if (resultCode == Activity.RESULT_OK && data!=null){
+                if (resultCode == Activity.RESULT_OK && data != null) {
                     Bundle bundle = data.getExtras();
                     //获取相机返回的数据，并转换为图片格式
                     Bitmap bitmap = (Bitmap) bundle.get("data");
                     savePic(bitmap);
-                  //  iv.setImageBitmap(bitmap);//显示图片
+                    //  iv.setImageBitmap(bitmap);//显示图片
                 }
         }
     }
-    private  void searchword_keyboard(String word){
+
+    private void searchword_keyboard(String word) {
         SweetAlertDialog pDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         pDialog.setTitleText("正在拉取单词信息");
@@ -604,11 +618,20 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 pDialog.cancel();
                 String str = new String(responseBody);
-                Intent intent = new Intent(MainActivity.this, search_word_result_bykeyboard.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putString("json", str);
-                intent.putExtras(mBundle);
-                startActivity(intent);
+                JSONObject jsonObject=JSON.parseObject(str);
+                if(jsonObject.getString("meaning").equals("")){
+                    SweetAlertDialog pDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.WARNING_TYPE);
+                    pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                    pDialog.setTitleText("后台偷懒了，没收录 "+word+" 这个单词");
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                }else {
+                    Intent intent = new Intent(MainActivity.this, search_word_result_bykeyboard.class);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("json", str);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                }
             }
 
             @Override
@@ -619,6 +642,7 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
             }
         });
     }
+
     /**
      * 保存图片
      *
@@ -654,4 +678,93 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
         }
         return filename;
     }
+
+
+    /**
+     * 初始化监听器。
+     */
+    private InitListener mInitListener = new InitListener() {
+
+        @Override
+        public void onInit(int code) {
+            //  Log.d(TAG, "SpeechRecognizer init() code = " + code);
+            if (code != ErrorCode.SUCCESS) {
+                // showTip("初始化失败，错误码：" + code);
+                SweetAlertDialog pDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.ERROR_TYPE);
+                pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                pDialog.setTitleText("初始化失败");
+                pDialog.setCancelable(false);
+                pDialog.show();
+            }
+        }
+    };
+    /**
+     * 听写UI监听器
+     */
+    private RecognizerDialogListener mRecognizerDialogListener = new RecognizerDialogListener() {
+        public void onResult(RecognizerResult results, boolean isLast) {
+            JSONObject jsonObject = JSON.parseObject(results.getResultString());
+            //编号
+            if(jsonObject.getString("sn").equals("1")) {
+                JSONArray jsonArray=JSON.parseArray(jsonObject.getString("ws"));
+                String temp=jsonArray.getJSONObject(0).getString("cw");
+                JSONObject jsonObject_words=JSON.parseObject(temp.substring(1,temp.length()-1));
+                String word = jsonObject_words.getString("w");
+                SweetAlertDialog pDialog2 = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                pDialog2.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                pDialog2.setTitleText("正在拉取单词信息");
+                pDialog2.setCancelable(false);
+                pDialog2.show();
+
+                AsyncHttpClient client = new AsyncHttpClient(8888);
+                RequestParams params = new RequestParams();
+                params.put("word", word);
+                String url = serverip + "studyword";
+
+                client.post(url, params, new AsyncHttpResponseHandler() {
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        pDialog2.cancel();
+                        String str1 = new String(responseBody);
+                        JSONObject jsonObject1=JSON.parseObject(str1);
+                        if(jsonObject1.getString("meaning")==null || jsonObject1.getString("meaning").equals("")){
+                            SweetAlertDialog pDialog1 = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.WARNING_TYPE);
+                            pDialog1.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                            pDialog1.setTitleText("后台偷懒了，没收录 "+word+" 这个单词");
+                            pDialog1.setCancelable(false);
+                            pDialog1.show();
+                        }else {
+                            Intent intent = new Intent(MainActivity.this, search_word_result_bykeyboard.class);
+                            Bundle mBundle = new Bundle();
+                            mBundle.putString("json", str1);
+                            intent.putExtras(mBundle);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers,
+                                          byte[] responseBody, Throwable error) {
+                        pDialog2.setTitleText("未知错误")
+                                .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                    }
+                });
+            }
+
+        }
+
+        /**
+         * 识别回调错误.
+         */
+        public void onError(SpeechError error) {
+            SweetAlertDialog pDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.ERROR_TYPE);
+            pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+            pDialog.setTitleText("语音识别未知错误");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+    };
+
 }

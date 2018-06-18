@@ -51,19 +51,7 @@
                 app:layout_constraintTop_toTopOf="@+id/search_word_result_bykeyboard_title"
                 app:srcCompat="@drawable/word_horn" />
 
-            <com.example.gao.letsv.MyWidget.UnScrollListView
-                android:id="@+id/search_word_result_bykeyboard_listitem"
-                android:layout_width="wrap_content"
-                android:layout_height="500dp"
-                android:layout_marginTop="8dp"
-                android:divider="@drawable/list_item_divide"
-                android:dividerHeight="1px"
-                android:clickable="false"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/search_word_result_bykeyboard_sep1" />
+
 
             <TextView
                 android:id="@+id/search_word_result_bykeyboard_textView_PHONETIC_SYMBOL"
@@ -144,8 +132,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/study_word_textView_TYPE_MEMORY_METHOD" />
+                app:layout_constraintTop_toBottomOf="@+id/search_word_result_bykeyboard_textView_TYPE_MEMORY_METHOD" />
 
+            <com.example.gao.letsv.MyWidget.UnScrollListView
+                android:id="@+id/search_word_result_bykeyboard_listitem"
+                android:layout_width="wrap_content"
+                android:layout_height="500dp"
+                android:layout_marginTop="8dp"
+                android:divider="@drawable/list_item_divide"
+                android:dividerHeight="1px"
+                android:clickable="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_word_result_bykeyboard_sep1" />
 
         </android.support.constraint.ConstraintLayout>
 
