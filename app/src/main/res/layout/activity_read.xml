@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center"
     android:background="@drawable/fragment2_bg"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -23,15 +23,21 @@
             android:textColor="@color/gray"
             android:textSize="30dip" />
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
         android:id="@+id/read_btn_record_sound"
         android:layout_width="280dp"
         android:layout_height="40dp"
+        android:layout_gravity="bottom|center"
         android:layout_marginVertical="10dp"
         android:text="开始录音"
         android:textColor="@color/blue"
         android:textSize="20sp" />
+</LinearLayout>
     <!--<com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton-->
         <!--android:id="@+id/read_btn_play_sound"-->
         <!--android:layout_width="280dp"-->

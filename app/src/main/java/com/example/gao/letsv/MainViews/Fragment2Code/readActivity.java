@@ -185,7 +185,7 @@ public class readActivity extends AppCompatActivity {
                 sentence=sentence.substring(1);
                 //原句比较
                 float sim = getSimilarityRatio(sentence,nowsen);
-                sim=(sim<10)?0:sim;
+                sim=(sim*100<10)?0:sim;
                 SweetAlertDialog pDialog1 = new SweetAlertDialog(readActivity.this, SweetAlertDialog.SUCCESS_TYPE);
                 pDialog1.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                 pDialog1.setTitleText("得分"+(int)(sim*100)+"分:");
