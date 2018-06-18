@@ -4,6 +4,7 @@ package com.example.gao.letsv.MainViews.Fragment3Code;
 import android.app.LauncherActivity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,10 +16,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.baoyz.actionsheet.ActionSheet;
+import com.example.gao.letsv.LoginViews.LoginActivity;
+import com.example.gao.letsv.MainViews.Fragment2Code.activity_media_player;
+import com.example.gao.letsv.MainViews.Fragment2Code.readActivity;
+import com.example.gao.letsv.MainViews.MainActivity;
 import com.example.gao.letsv.R;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by gangchang on 2018/4/25.
@@ -28,6 +37,7 @@ public class Fragment_Homepage_3 extends Fragment {
     // 声明ListView控件
     private ListView mListView;
     private ArrayList<ListItem> mList;
+    private CircleImageView circleImageView;
 
     public Fragment_Homepage_3() {
         // Required empty public constructor
@@ -45,6 +55,45 @@ public class Fragment_Homepage_3 extends Fragment {
 
     private void initView(View view) {
         mListView = (ListView) view.findViewById(R.id.homepage_f3_listView);
+        circleImageView=(CircleImageView)view.findViewById(R.id.homepage_f3_circlrimge);
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActionSheet.createBuilder(getActivity(), getActivity().getSupportFragmentManager())
+                        .setCancelButtonTitle("取消")
+                        .setOtherButtonTitles( "给伟大的程序猿点赞","注销")
+                        .setCancelableOnTouchOutside(true)
+                        .setListener(new ActionSheet.ActionSheetListener() {
+                            @Override
+                            public void onDismiss(ActionSheet actionSheet, boolean isCancel) {
+
+                            }
+
+                            @Override
+                            public void onOtherButtonClick(ActionSheet actionSheet, int index) {
+                                switch (index) {
+                                    case 0:
+                                        //全文泛听
+                                        SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE);
+                                        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                                        pDialog.setTitleText("万分感谢");
+                                        pDialog.setCancelable(false);
+                                        pDialog.show();
+                                        break;
+                                    case 1:
+                                        //语音跟读
+                                        MainActivity.username="";
+                                        MainActivity.password="";
+                                        MainActivity.state_login=false;
+                                        MainActivity.mTabBar.setSelectTab(0);
+                                        Intent mainIntent = new Intent(getActivity(), LoginActivity.class);
+                                        startActivity(mainIntent);
+                                        break;
+                                }
+                            }
+                        }).show();
+            }
+        });
         // 获取Resources对象
         Resources res = this.getResources();
 

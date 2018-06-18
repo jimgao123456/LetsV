@@ -132,8 +132,8 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
     @NorIcons
     private static final int[] mNormalIcons = {R.drawable.homepage_fragment_0_0, R.drawable.homepage_fragment_1_0, R.drawable.homepage_fragment_2_0, R.drawable.homepage_fragment_3_0};
 
-    private ViewPager mVp;
-    private JPTabBar mTabBar;
+    private static ViewPager mVp;
+    public static JPTabBar mTabBar;
     private EditText toptext;
 
     public static String username = null;

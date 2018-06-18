@@ -70,8 +70,8 @@ dependencies {
     compile 'com.baoyz.actionsheet:library:1.1.7'
     //MOB
     apply plugin: "com.mob.sdk"
-    implementation files('E:/study/practice/Letsv/libs/Sunflower.jar')
-    implementation files('E:/study/practice/Letsv/libs/Msc.jar')
+    implementation files('H:/AndroidCode/Letsv/libs/Sunflower.jar')
+    implementation files('H:/AndroidCode/Letsv/libs/Msc.jar')
 }
 
 MobSDK {

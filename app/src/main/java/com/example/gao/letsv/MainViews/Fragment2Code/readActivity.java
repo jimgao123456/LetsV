@@ -184,23 +184,28 @@ public class readActivity extends AppCompatActivity {
                 }
                 sentence=sentence.substring(1);
                 //原句比较
-                SweetAlertDialog pDialog1 = new SweetAlertDialog(readActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                float sim = getSimilarityRatio(sentence,nowsen);
+                sim=(sim<10)?0:sim;
+                SweetAlertDialog pDialog1 = new SweetAlertDialog(readActivity.this, SweetAlertDialog.SUCCESS_TYPE);
                 pDialog1.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-                pDialog1.setTitleText("正在对比相似度");
+                pDialog1.setTitleText("得分"+(int)(sim*100)+"分:");
                 pDialog1.setCancelable(false);
                 pDialog1.show();
-                float sim = getSimilarityRatio(sentence,nowsen);
-                pDialog1.cancel();
-                pDialog1.setCancelable(true);
-                pDialog1.setTitleText("得分:"+(int)sim+"分");
-                //调笑一句或结束窗口
-                if (position<wenzhang.size()) {
-                    position++;
-                    nowText.setText(wenzhang.get(position));
-                    nowsen = wenzhang.get(position);
-                }else{
-                    finish();
-                }
+                pDialog1.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        pDialog1.cancel();
+                        //调笑一句或结束窗口
+                        if (position<wenzhang.size()) {
+                            position++;
+                            nowText.setText(wenzhang.get(position));
+                            nowsen = wenzhang.get(position);
+                        }else{
+                            finish();
+                        }
+                    }
+                });
+
             }
 
         }
