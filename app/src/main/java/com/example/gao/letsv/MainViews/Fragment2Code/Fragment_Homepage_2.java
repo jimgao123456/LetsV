@@ -59,6 +59,7 @@ public class Fragment_Homepage_2 extends Fragment {
     private FloatingSearchView FloatingSearchViewReal = null;
 
     private String LastQuery = "";
+
     private static boolean finishload = false;
 
     public Fragment_Homepage_2() {
@@ -230,46 +231,77 @@ public class Fragment_Homepage_2 extends Fragment {
 
                 //listview点击监听
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String title_selected = (String) adapter.getItem(i).get("title");
-                        String url_selected = (String) adapter.getItem(i).get("url");
-                        ActionSheet.createBuilder(getActivity(), getActivity().getSupportFragmentManager())
-                                .setCancelButtonTitle("取消")
-                                .setOtherButtonTitles("全文泛听", "语音跟读")
-                                .setCancelableOnTouchOutside(true)
-                                .setListener(new ActionSheet.ActionSheetListener() {
-                                    @Override
-                                    public void onDismiss(ActionSheet actionSheet, boolean isCancel) {
+                        String AudioID = (String)adapter.getItem(i).get("audioId");
+                        SweetAlertDialog pDialog1 = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+                        pDialog1.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                        pDialog1.setTitleText("正在拉取音频");
+                        pDialog1.setCancelable(false);
+                        pDialog1.show();
 
-                                    }
+                        AsyncHttpClient client = new AsyncHttpClient(8888);
+                        RequestParams params = new RequestParams();
+                        params.put("audioid",AudioID);
+                        String url = MainActivity.serverip+"audio";
+                        client.post(url, params, new AsyncHttpResponseHandler() {
 
-                                    @Override
-                                    public void onOtherButtonClick(ActionSheet actionSheet, int index) {
-                                        switch (index) {
-                                            case 0:
-                                                //全文泛听
-                                                Intent intent_quanwen = new Intent(getActivity(), activity_media_player.class);
-                                                intent_quanwen.putExtra("title", title_selected);
-                                                intent_quanwen.putExtra("url", url_selected);
-                                                startActivity(intent_quanwen);
-                                                break;
-                                            case 1:
-                                                //语音跟读
-                                                Intent intent_gendu = new Intent(getActivity(), readActivity.class);
-                                                intent_gendu.putExtra("title", title_selected);
-                                                intent_gendu.putExtra("url", url_selected);
-                                                startActivity(intent_gendu);
-                                                break;
-                                        }
-                                    }
-                                }).show();
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                String str1 = new String(responseBody);
+                                JSONObject respondsjson1 = JSON.parseObject(str1);
+                                String audioUrl =respondsjson1.getString("audioUrl");
+                                //播放音频url
+                               String url_selected = MainActivity.serverip+audioUrl;
+
+                                ActionSheet.createBuilder(getActivity(), getActivity().getSupportFragmentManager())
+                                        .setCancelButtonTitle("取消")
+                                        .setOtherButtonTitles("全文泛听", "语音跟读")
+                                        .setCancelableOnTouchOutside(true)
+                                        .setListener(new ActionSheet.ActionSheetListener() {
+                                            @Override
+                                            public void onDismiss(ActionSheet actionSheet, boolean isCancel) {
+
+                                            }
+
+                                            @Override
+                                            public void onOtherButtonClick(ActionSheet actionSheet, int index) {
+                                                switch (index) {
+                                                    case 0:
+                                                        //全文泛听
+                                                        Intent intent_quanwen = new Intent(getActivity(), activity_media_player.class);
+                                                        intent_quanwen.putExtra("title", title_selected);
+                                                        intent_quanwen.putExtra("url", url_selected);
+                                                        startActivity(intent_quanwen);
+                                                        break;
+                                                    case 1:
+                                                        //语音跟读
+                                                        Intent intent_gendu = new Intent(getActivity(), readActivity.class);
+                                                        intent_gendu.putExtra("title", title_selected);
+                                                        intent_gendu.putExtra("url", url_selected);
+                                                        startActivity(intent_gendu);
+                                                        break;
+                                                }
+                                            }
+                                        }).show();
+                                pDialog1.cancel();
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers,
+                                                  byte[] responseBody, Throwable error) {
+                                pDialog1.setTitleText("未知错误")
+                                        .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                            }
+                        });
+
                     }
                 });
 
                 pDialog.cancel();
 
-                finishload = true;
             }
 
             @Override
@@ -277,7 +309,6 @@ public class Fragment_Homepage_2 extends Fragment {
                                   byte[] responseBody, Throwable error) {
                 pDialog.setTitleText("未知错误")
                         .changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                finishload = false;
             }
         });
 
