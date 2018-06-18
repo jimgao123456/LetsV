@@ -134,6 +134,7 @@ public class Fragment_Homepage_1 extends Fragment {
                 //在这里获取View及其子控件的坐标和长宽信息
                 unfoldtext_positonY_min = (int) unfoldTextview.getY();
                 unfoldtext_positonY_max = (int) unfoldTextview.getY() + unfoldTextview.getHeight();
+                view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
         unfoldTextview = view.findViewById(R.id.homepage_f1_details_text);
@@ -257,7 +258,7 @@ public class Fragment_Homepage_1 extends Fragment {
         pDialog.setCancelable(false);
         pDialog.show();
 
-        AsyncHttpClient client = new AsyncHttpClient();
+        AsyncHttpClient client = new AsyncHttpClient(8888);
         RequestParams params = new RequestParams();
         // params.put("word", word);
         String url = requstrul;

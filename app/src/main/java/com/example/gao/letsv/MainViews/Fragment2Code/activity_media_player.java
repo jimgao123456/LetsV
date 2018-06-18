@@ -51,7 +51,7 @@ public class activity_media_player extends Activity {
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
         url = intent.getStringExtra("url");
-        url="http://ww.danmu.fm:233/いけないボーダーライン.m4a";
+        //url="http://ww.danmu.fm:233/いけないボーダーライン.m4a";
         this.setTitle(title);
 
         circleImageView = (CircleImageView) this.findViewById(R.id.media_player_circleimg);

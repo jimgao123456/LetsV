@@ -117,29 +117,13 @@ public class Fragment_Homepage_0 extends Fragment {
         btn_startstudy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//              Intent intent = new Intent(getActivity(), Ps.class);
-//                    startActivity(intent);
                 if (MainActivity.state_login == true) {
-//                  String[] group1 = {"include", "conclude", "seclude", "exclude", "preclude", "occlude"};
-//                  String[] group2 = {"attain", "obtain", "retain", "sustain", "maintain"};
-//                  String[] group3 = {"resist", "consist", "subsist", "persist", "desist"};
-//                  int nGroup = 1;
-//                  int nNum = 1;
-//                  Bundle mBundle = new Bundle();
-//                  mBundle.putStringArray("group1", group1);
-//                  mBundle.putStringArray("group2", group2);
-//                  mBundle.putStringArray("group3", group3);
-//                  mBundle.putInt("ngroup", nGroup);
-//                  mBundle.putInt("nnum", nNum);
-//                  Intent mainIntent = new Intent(getActivity(), PhraseActivity.class);
-//                  mainIntent.putExtras(mBundle);
-//                  startActivity(mainIntent);
                     SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
                     pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                     pDialog.setTitleText("正在拉取今日早测列表");
                     pDialog.setCancelable(false);
                     pDialog.show();
-                    AsyncHttpClient client = new AsyncHttpClient();
+                    AsyncHttpClient client = new AsyncHttpClient(8888);
                     RequestParams params = new RequestParams();
                     params.put("username", MainActivity.username);
                     String url = MainActivity.serverip + "/gettestlist";
@@ -203,7 +187,7 @@ public class Fragment_Homepage_0 extends Fragment {
                         pDialog.setTitleText("正在提交更改");
                         pDialog.setCancelable(false);
                         pDialog.show();
-                        AsyncHttpClient client = new AsyncHttpClient();
+                        AsyncHttpClient client = new AsyncHttpClient(8888);
                         RequestParams params = new RequestParams();
                         params.put("username", MainActivity.username);
                         params.put("level", Integer.toString(options1));

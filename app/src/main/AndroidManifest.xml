@@ -89,6 +89,10 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             >
         </activity>
+        <activity android:name=".Search_views.search_word_result_bykeyboard"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            >
+        </activity>
 
         <activity
             android:name=".MainViews.Fragment2Code.readActivity" >

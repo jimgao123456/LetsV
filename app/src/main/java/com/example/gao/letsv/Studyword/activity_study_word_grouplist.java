@@ -77,7 +77,7 @@ public class activity_study_word_grouplist extends AppCompatActivity implements 
         pDialog.setCancelable(false);
         pDialog.show();
 
-        AsyncHttpClient client = new AsyncHttpClient();
+        AsyncHttpClient client = new AsyncHttpClient(8888);
         RequestParams params = new RequestParams();
         params.put("username", MainActivity.username);
         String url = requstrul;

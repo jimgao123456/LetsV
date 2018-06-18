@@ -20,6 +20,20 @@ public class Player implements OnBufferingUpdateListener,
     public MediaPlayer mediaPlayer;
     private SeekBar skbProgress;
     private Timer mTimer=new Timer();
+    private   MyHandler handleProgress;
+
+    class MyHandler extends  Handler{
+        @Override
+        public void handleMessage(Message msg) {
+            int position = mediaPlayer.getCurrentPosition();
+            int duration = mediaPlayer.getDuration();
+
+            if (duration > 0) {
+                long pos = skbProgress.getMax() * position / duration;
+                skbProgress.setProgress((int) pos);
+            }
+        }
+    }
 
     public Player(SeekBar skbProgress)
     {
@@ -33,6 +47,7 @@ public class Player implements OnBufferingUpdateListener,
         } catch (Exception e) {
             Log.e("mediaPlayer", "error", e);
         }
+        handleProgress = new MyHandler();
 
         mTimer.schedule(mTimerTask, 0, 1000);
     }
@@ -40,29 +55,18 @@ public class Player implements OnBufferingUpdateListener,
     /*******************************************************
      * 通过定时器和Handler来更新进度条
      ******************************************************/
-    TimerTask mTimerTask = new TimerTask() {
+    private TimerTask mTimerTask = new TimerTask() {
         @Override
         public void run() {
             if(mediaPlayer==null)
                 return;
-            if (mediaPlayer.isPlaying() && skbProgress.isPressed() == false) {
+            if (mediaPlayer.isPlaying() && !skbProgress.isPressed()) {
                 handleProgress.sendEmptyMessage(0);
             }
         }
     };
 
-    Handler handleProgress = new Handler() {
-        public void handleMessage(Message msg) {
 
-            int position = mediaPlayer.getCurrentPosition();
-            int duration = mediaPlayer.getDuration();
-
-            if (duration > 0) {
-                long pos = skbProgress.getMax() * position / duration;
-                skbProgress.setProgress((int) pos);
-            }
-        };
-    };
     //*****************************************************
 
     public void play()
@@ -123,19 +127,19 @@ public class Player implements OnBufferingUpdateListener,
      */
     public void onPrepared(MediaPlayer arg0) {
         arg0.start();
-        Log.e("mediaPlayer", "onPrepared");
+        //Log.e("mediaPlayer", "onPrepared");
     }
 
     @Override
     public void onCompletion(MediaPlayer arg0) {
-        Log.e("mediaPlayer", "onCompletion");
+     //   Log.e("mediaPlayer", "onCompletion");
     }
 
     @Override
     public void onBufferingUpdate(MediaPlayer arg0, int bufferingProgress) {
         skbProgress.setSecondaryProgress(bufferingProgress);
-        int currentProgress=skbProgress.getMax()*mediaPlayer.getCurrentPosition()/mediaPlayer.getDuration();
-        Log.e(currentProgress+"% play", bufferingProgress + "% buffer");
+     //   int currentProgress=skbProgress.getMax()*mediaPlayer.getCurrentPosition()/mediaPlayer.getDuration();
+      //  Log.e(currentProgress+"% play", bufferingProgress + "% buffer");
     }
 
 }

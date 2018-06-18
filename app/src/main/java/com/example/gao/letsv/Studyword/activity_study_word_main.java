@@ -74,7 +74,7 @@ public class activity_study_word_main extends AppCompatActivity implements View.
         cur_word = words_array[cur_word_sit];
 
         //滑动手势相关
-        gd = new GestureDetector((GestureDetector.OnGestureListener) this);
+        gd = new GestureDetector(this, this);
         //滚动布局
         myScrollView = (MyScrollView) findViewById(R.id.studay_word_MyScrollView);
 
@@ -173,7 +173,7 @@ public class activity_study_word_main extends AppCompatActivity implements View.
         pDialog.setCancelable(false);
         pDialog.show();
 
-        AsyncHttpClient client = new AsyncHttpClient();
+        AsyncHttpClient client = new AsyncHttpClient(8888);
         RequestParams params = new RequestParams();
         params.put("word", word);
         String url = requstrul;

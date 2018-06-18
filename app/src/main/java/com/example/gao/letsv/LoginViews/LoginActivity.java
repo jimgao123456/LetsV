@@ -86,7 +86,7 @@ public static String requsturl=MainActivity.serverip+"login";
                     pDialog.setTitleText("正在登录");
                     pDialog.setCancelable(false);
                     pDialog.show();
-                    AsyncHttpClient client = new AsyncHttpClient();
+                    AsyncHttpClient client = new AsyncHttpClient(8888);
                     //封装需要传递的参数
                     RequestParams params = new RequestParams();
                     params.put("username", zhanghao.getText().toString());
@@ -116,6 +116,7 @@ public static String requsturl=MainActivity.serverip+"login";
                                 MainActivity.password=mima.getText().toString();
                                 MainActivity.username=zhanghao.getText().toString();
                                 MainActivity.nickname=jsonObject.getString("nickname");
+                                MainActivity.state_login=true;
                                MainActivity.nowplane=Integer.parseInt(jsonObject.getString("plan"));
                                 pDialog.setTitleText("登录成功")
                                         .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);

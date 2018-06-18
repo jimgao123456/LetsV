@@ -55,7 +55,7 @@ public class activity_forgetpassword_changepssword extends AppCompatActivity {
                     pDialog.setTitleText("正在提交请求");
                     pDialog.setCancelable(false);
                     pDialog.show();
-                    AsyncHttpClient client = new AsyncHttpClient();
+                    AsyncHttpClient client = new AsyncHttpClient(8888);
                     //封装需要传递的参数
                     RequestParams params = new RequestParams();
                     params.put("username", phonenumber);
