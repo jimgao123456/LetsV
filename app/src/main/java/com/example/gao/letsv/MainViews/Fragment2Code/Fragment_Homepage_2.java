@@ -38,8 +38,10 @@ import com.loopj.android.http.RequestParams;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import cz.msebera.android.httpclient.Header;
@@ -247,12 +249,12 @@ public class Fragment_Homepage_2 extends Fragment {
                         params.put("audioid",AudioID);
                         String url = MainActivity.serverip+"audio";
                         client.post(url, params, new AsyncHttpResponseHandler() {
-
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 String str1 = new String(responseBody);
                                 JSONObject respondsjson1 = JSON.parseObject(str1);
                                 String audioUrl =respondsjson1.getString("audioUrl");
+                                String content = respondsjson1.getString("content");
                                 //播放音频url
                                String url_selected = MainActivity.serverip+audioUrl;
 
@@ -279,7 +281,7 @@ public class Fragment_Homepage_2 extends Fragment {
                                                     case 1:
                                                         //语音跟读
                                                         Intent intent_gendu = new Intent(getActivity(), readActivity.class);
-                                                        intent_gendu.putExtra("title", title_selected);
+                                                        intent_gendu.putExtra("content", content);
                                                         intent_gendu.putExtra("url", url_selected);
                                                         startActivity(intent_gendu);
                                                         break;

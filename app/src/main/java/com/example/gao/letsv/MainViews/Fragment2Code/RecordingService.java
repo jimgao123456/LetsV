@@ -61,10 +61,10 @@ public class RecordingService extends Service {
 
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+        //mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);原代码
         mRecorder.setOutputFile(mFilePath);
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);//源神需求
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-        mRecorder.setAudioChannels(1);
         mRecorder.setAudioSamplingRate(44100);
         mRecorder.setAudioEncodingBitRate(192000);
 
@@ -84,7 +84,7 @@ public class RecordingService extends Service {
         do {
             count++;
             mFileName = getString(R.string.default_file_name)
-                    + "_" + (System.currentTimeMillis()) + ".mp4";
+                    + "_" + (System.currentTimeMillis()) + ".aac";
             mFilePath = Environment.getExternalStorageDirectory().getAbsolutePath();
             mFilePath += "/SoundRecorder/" + mFileName;
             f = new File(mFilePath);
