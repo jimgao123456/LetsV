@@ -709,7 +709,7 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
                 JSONArray jsonArray=JSON.parseArray(jsonObject.getString("ws"));
                 String temp=jsonArray.getJSONObject(0).getString("cw");
                 JSONObject jsonObject_words=JSON.parseObject(temp.substring(1,temp.length()-1));
-                String word = jsonObject_words.getString("w");
+                String word = jsonObject_words.getString("w").trim().toLowerCase();
                 SweetAlertDialog pDialog2 = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.PROGRESS_TYPE);
                 pDialog2.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                 pDialog2.setTitleText("正在拉取单词信息");
