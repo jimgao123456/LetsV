@@ -24,6 +24,7 @@ package com.example.gao.letsv.MainViews;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -104,11 +105,15 @@ import com.loopj.android.http.RequestParams;
 
 import org.angmarch.views.NiceSpinner;
 
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -121,6 +126,13 @@ import java.util.Properties;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import cz.msebera.android.httpclient.Header;
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements OnTabSelectListener {
     @Titles
@@ -147,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
     public static int screenWidth = 0;
     public static int nowplane = 0;
 
-    public static String serverip = "http://139.199.110.17:8888/";
+    public static String serverip = "http://47.93.25.104:8888/";
 
     // 保存MyTouchListener接口的列表
     private ArrayList<MyTouchListener> myTouchListeners = new ArrayList<MainActivity.MyTouchListener>();
@@ -594,8 +606,15 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
                     Bundle bundle = data.getExtras();
                     //获取相机返回的数据，并转换为图片格式
                     Bitmap bitmap = (Bitmap) bundle.get("data");
-                    savePic(bitmap);
-                    //  iv.setImageBitmap(bitmap);//显示图片
+                    String filename = savePic(bitmap);
+                    //iv.setImageBitmap(bitmap);//显示图片
+
+                    try {
+                        UploadFile.uploadFile(MainActivity.this,filename,"http://47.93.25.104:5000/upload","");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                 }
         }
     }
@@ -660,10 +679,10 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
         FileOutputStream fout = null;
         File file = new File("/sdcard/pintu/");
         file.mkdirs();
-        String filename = file.getPath() + name;
+        String filename = file.getPath() + "/" + name;
         try {
             fout = new FileOutputStream(filename);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fout);
+            boolean w = bitmap.compress(Bitmap.CompressFormat.JPEG, 95, fout);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } finally {
@@ -709,7 +728,7 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
                 JSONArray jsonArray=JSON.parseArray(jsonObject.getString("ws"));
                 String temp=jsonArray.getJSONObject(0).getString("cw");
                 JSONObject jsonObject_words=JSON.parseObject(temp.substring(1,temp.length()-1));
-                String word = jsonObject_words.getString("w");
+                String word = jsonObject_words.getString("w").toLowerCase();
                 SweetAlertDialog pDialog2 = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.PROGRESS_TYPE);
                 pDialog2.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                 pDialog2.setTitleText("正在拉取单词信息");
@@ -766,5 +785,6 @@ public class MainActivity extends AppCompatActivity implements OnTabSelectListen
         }
 
     };
+
 
 }
